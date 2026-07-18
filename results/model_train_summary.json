@@ -1,0 +1,15 @@
+{
+  "hormonal_state": {
+    "ok": true,
+    "balanced_accuracy": 0.2814,
+    "macro_f1": 0.2688,
+    "path": "models/hormonal_state_v0.1.joblib"
+  },
+  "menopause_stage": {
+    "ok": true,
+    "balanced_accuracy": 0.9924,
+    "macro_f1": 0.9924,
+    "data_source": "synthetic_swan_like",
+    "path": "models/menopause_stage_v0.1.joblib"
+  }
+}

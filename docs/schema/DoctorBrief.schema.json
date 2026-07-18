@@ -1,0 +1,93 @@
+{
+  "$defs": {
+    "AnalysisMode": {
+      "description": "Mandatory, no implicit default anywhere it is consumed.\n\nretrospective: may use later-confirmed information (e.g. next menstrual onset)\n               to reconstruct past phase. Valid for describing past patterns.\ncausal:        may use ONLY information available at/before the analysis time.\n               Mandatory for any forward-looking / predictive claim.",
+      "enum": [
+        "retrospective",
+        "causal"
+      ],
+      "title": "AnalysisMode",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "default": "0.1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "subject_id": {
+      "title": "Subject Id",
+      "type": "string"
+    },
+    "analysis_mode": {
+      "$ref": "#/$defs/AnalysisMode"
+    },
+    "opening_statement": {
+      "description": "~30-second appointment opener.",
+      "title": "Opening Statement",
+      "type": "string"
+    },
+    "strongest_findings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Strongest Findings",
+      "type": "array"
+    },
+    "unresolved_questions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Questions",
+      "type": "array"
+    },
+    "established": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Established",
+      "type": "array"
+    },
+    "possible": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Possible",
+      "type": "array"
+    },
+    "not_established": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Not Established",
+      "type": "array"
+    },
+    "missing": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing",
+      "type": "array"
+    },
+    "finding_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Finding Ids",
+      "type": "array"
+    },
+    "disclaimer": {
+      "default": "This prototype organizes health information and detects temporal patterns. It does not diagnose, recommend treatment, or establish causation.",
+      "title": "Disclaimer",
+      "type": "string"
+    }
+  },
+  "required": [
+    "subject_id",
+    "analysis_mode",
+    "opening_statement"
+  ],
+  "title": "DoctorBrief",
+  "type": "object"
+}

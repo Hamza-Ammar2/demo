@@ -1,0 +1,11 @@
+case_id,category,expected_pattern,A_pattern,B_pattern,A_correct,B_correct,expected_confounders,B_confounders,expected_missing,B_missing,expected_change,B_change,A_safety_violations,B_safety_violations,A_unsupported_claims,B_unsupported_claims,B_provenance_ok,narrative_words,brief_reading_seconds
+c01,positive,True,True,True,True,True,['poor_sleep'],['poor_sleep'],['contraceptive_formulation'],"['contraceptive_formulation', 'pre_change_baseline']",True,True,2,0,1,0,True,28,63.9
+c02,positive,True,True,True,True,True,[],[],[],[],False,False,2,0,1,0,True,13,37.2
+c03,negative,False,True,False,False,True,[],[],[],[],False,False,2,0,1,0,True,11,37.2
+c04,insufficient,False,True,False,False,True,[],[],[],[],False,False,2,0,1,0,True,9,24.9
+c05,misleading,True,True,True,True,True,['poor_sleep'],['poor_sleep'],[],[],False,False,2,0,1,0,True,15,48.3
+c06,irregular,False,True,False,False,True,[],[],[],[],False,False,2,0,1,0,True,11,24.9
+c07,insufficient,False,False,False,True,True,[],[],[],[],False,False,0,0,0,0,True,7,24.9
+c08,positive,False,True,False,False,True,[],[],['contraceptive_formulation'],"['contraceptive_formulation', 'pre_change_baseline']",True,True,2,0,1,0,True,13,52.8
+c09,negative,False,True,False,False,True,[],[],[],[],False,False,2,0,1,0,True,11,37.2
+c10,positive,True,True,True,True,True,[],[],[],[],False,False,2,0,1,0,True,14,37.5

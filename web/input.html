@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contribute data — Case Compiler</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand"><a href="/">Case<em>Compiler</em></a></div>
+      <a class="nav-back" href="/">← Home</a>
+    </header>
+
+    <main class="page">
+      <h1>Contribute data</h1>
+      <p class="sub">For scientists and researchers. Paste a CycleBench JSON case (or load the Sarah fixture) and compile it through the deterministic engine. Nothing is stored permanently.</p>
+
+      <div class="panel">
+        <div class="label">Case JSON</div>
+        <textarea id="case-json" placeholder='{"subject": {...}, "events": [...], ...}'></textarea>
+        <div class="chat-actions" style="margin-top:14px">
+          <button type="button" class="ghost" id="btn-load-sarah">Load Sarah fixture shape</button>
+          <button type="button" id="btn-compile">Compile case</button>
+        </div>
+        <p class="muted" style="margin-top:10px;font-size:0.85rem">Schema entities: SubjectProfile · HealthEvent · CycleContext · Finding · DoctorBrief</p>
+      </div>
+
+      <div id="out" hidden></div>
+    </main>
+  </div>
+  <script src="/static/shared.js"></script>
+  <script src="/static/input.js"></script>
+</body>
+</html>

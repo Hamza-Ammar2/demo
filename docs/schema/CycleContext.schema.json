@@ -1,0 +1,110 @@
+{
+  "$defs": {
+    "AnalysisMode": {
+      "description": "Mandatory, no implicit default anywhere it is consumed.\n\nretrospective: may use later-confirmed information (e.g. next menstrual onset)\n               to reconstruct past phase. Valid for describing past patterns.\ncausal:        may use ONLY information available at/before the analysis time.\n               Mandatory for any forward-looking / predictive claim.",
+      "enum": [
+        "retrospective",
+        "causal"
+      ],
+      "title": "AnalysisMode",
+      "type": "string"
+    },
+    "Certainty": {
+      "enum": [
+        "high",
+        "medium",
+        "low",
+        "unknown"
+      ],
+      "title": "Certainty",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "default": "0.1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "cycle_id": {
+      "title": "Cycle Id",
+      "type": "string"
+    },
+    "subject_id": {
+      "title": "Subject Id",
+      "type": "string"
+    },
+    "period_onset": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Period Onset"
+    },
+    "next_known_onset": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Only populated/consumed in retrospective mode.",
+      "title": "Next Known Onset"
+    },
+    "estimated_phase": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Estimated Phase"
+    },
+    "phase_confidence": {
+      "$ref": "#/$defs/Certainty",
+      "default": "unknown"
+    },
+    "analysis_mode": {
+      "$ref": "#/$defs/AnalysisMode",
+      "description": "Mandatory. No implicit default."
+    },
+    "anchor_source": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Anchor Source"
+    },
+    "used_future_data": {
+      "default": false,
+      "description": "True if next_known_onset (future info) informed the phase estimate. Must be False in causal mode.",
+      "title": "Used Future Data",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "cycle_id",
+    "subject_id",
+    "analysis_mode"
+  ],
+  "title": "CycleContext",
+  "type": "object"
+}

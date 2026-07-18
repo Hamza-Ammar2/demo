@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A short look — Case Compiler</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand"><a href="/">Case<em>Compiler</em></a></div>
+      <a class="nav-back" href="/">← Home</a>
+    </header>
+
+    <main class="page">
+      <h1>A short look</h1>
+      <p class="sub">Answer a few quick questions. We’ll sketch one small pattern read — cycle window, sleep overlap, and what’s still missing. Cute, not clinical.</p>
+
+      <div class="cols-2">
+        <div class="panel">
+          <div class="label">Chat</div>
+          <div class="chat" id="chat"></div>
+          <div class="chat-actions" id="actions"></div>
+        </div>
+        <div class="panel" id="result" hidden>
+          <div class="label">Your tiny read</div>
+          <div id="result-body"></div>
+        </div>
+      </div>
+      <p class="disclaimer">Association sketch only — not a diagnosis.</p>
+    </main>
+  </div>
+  <script src="/static/shared.js"></script>
+  <script src="/static/analyse.js"></script>
+</body>
+</html>

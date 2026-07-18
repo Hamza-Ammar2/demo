@@ -1,0 +1,134 @@
+{
+  "accuracy": 0.3091,
+  "balanced_accuracy": 0.2814,
+  "macro_f1": 0.2688,
+  "confusion_matrix": [
+    [
+      43,
+      125,
+      188,
+      15
+    ],
+    [
+      48,
+      169,
+      217,
+      35
+    ],
+    [
+      57,
+      144,
+      259,
+      43
+    ],
+    [
+      32,
+      95,
+      150,
+      43
+    ]
+  ],
+  "labels": [
+    "Fertility",
+    "Follicular",
+    "Luteal",
+    "Menstrual"
+  ],
+  "report": {
+    "Fertility": {
+      "precision": 0.2388888888888889,
+      "recall": 0.11590296495956873,
+      "f1-score": 0.1560798548094374,
+      "support": 371.0
+    },
+    "Follicular": {
+      "precision": 0.3170731707317073,
+      "recall": 0.3603411513859275,
+      "f1-score": 0.3373253493013972,
+      "support": 469.0
+    },
+    "Luteal": {
+      "precision": 0.3181818181818182,
+      "recall": 0.5149105367793241,
+      "f1-score": 0.3933181473044799,
+      "support": 503.0
+    },
+    "Menstrual": {
+      "precision": 0.3161764705882353,
+      "recall": 0.134375,
+      "f1-score": 0.18859649122807018,
+      "support": 320.0
+    },
+    "accuracy": 0.3090799759470836,
+    "macro avg": {
+      "precision": 0.2975800870976624,
+      "recall": 0.28138241328120506,
+      "f1-score": 0.26882996066084613,
+      "support": 1663.0
+    },
+    "weighted avg": {
+      "precision": 0.29979375825895266,
+      "recall": 0.3090799759470836,
+      "f1-score": 0.28520813003234663,
+      "support": 1663.0
+    }
+  },
+  "n_train_rows": 3995,
+  "n_test_rows": 1663,
+  "n_train_participants": 32,
+  "n_test_participants": 10,
+  "feature_importances": [
+    {
+      "feature": "resting_hr",
+      "importance": 0.15932
+    },
+    {
+      "feature": "hrv_rmssd",
+      "importance": 0.11727
+    },
+    {
+      "feature": "glucose_mean",
+      "importance": 0.11397
+    },
+    {
+      "feature": "wrist_temp_delta",
+      "importance": 0.1065
+    },
+    {
+      "feature": "steps_sum",
+      "importance": 0.08502
+    },
+    {
+      "feature": "sleep_minutes",
+      "importance": 0.07353
+    },
+    {
+      "feature": "stress_score_mean",
+      "importance": 0.0677
+    },
+    {
+      "feature": "cramps_ord",
+      "importance": 0.06503
+    },
+    {
+      "feature": "sleep_efficiency",
+      "importance": 0.06499
+    },
+    {
+      "feature": "sleep_awake",
+      "importance": 0.04956
+    },
+    {
+      "feature": "sorebreasts_ord",
+      "importance": 0.02223
+    },
+    {
+      "feature": "headaches_ord",
+      "importance": 0.01587
+    }
+  ],
+  "split": "participant_held_out_25pct",
+  "chance_balanced_accuracy": 0.25,
+  "leakage_guard": "Mira hormone metabolites (lh/estrogen/pdg) excluded from features; participant-level split (no person in both train and test).",
+  "majority_baseline_accuracy": 0.3025
+}

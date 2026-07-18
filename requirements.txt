@@ -1,0 +1,11 @@
+# CycleBench / Case Compiler — pinned Python dependencies (reproducibility)
+pydantic==2.13.4
+pandas==3.0.3
+numpy==2.5.1
+scipy>=1.14,<2
+scikit-learn>=1.5,<2
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+python-dotenv>=1.0,<2
+pytest>=8,<9
+joblib>=1.3,<2

@@ -1,0 +1,21 @@
+.venv/
+.env
+__pycache__/
+*.pyc
+.DS_Store
+*.egg-info/
+.pytest_cache/
+node_modules/
+web/.next/
+
+# --- DATA LICENSING GUARDRAIL ---
+# mcPHASES is RESTRICTED (PhysioNet DUA): never commit raw or per-participant data.
+data/mcphases/
+# SWAN raw ICPSR downloads (place harmonized CSV under data/swan/ when ready)
+data/swan/
+# NHANES raw + working copies (public domain, but large; harmonized export is committed separately)
+data/raw/
+data/processed/
+data/docs/
+# The ONE publishable data artifact is the harmonized NHANES export:
+!data/nhanes_harmonized/

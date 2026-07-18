@@ -1,0 +1,50 @@
+{
+  "dataset": "mcPHASES v1.0.0 (PhysioNet, restricted \u2014 aggregate stats only)",
+  "n_participants": 42,
+  "n_participant_days": 5658,
+  "episode_threshold": "High or Very High (>=4 on 0-5 ordinal)",
+  "symptom_phase_clustering": {
+    "headaches": {
+      "n_days_with_report": 3327,
+      "n_episodes": 342,
+      "episode_rate_by_phase": {
+        "Fertility": 0.075,
+        "Follicular": 0.126,
+        "Luteal": 0.0859,
+        "Menstrual": 0.1336
+      },
+      "dominant_phase": "Menstrual",
+      "chi2": 18.891,
+      "p_value": 0.00029
+    },
+    "fatigue": {
+      "n_days_with_report": 3330,
+      "n_episodes": 926,
+      "episode_rate_by_phase": {
+        "Fertility": 0.2657,
+        "Follicular": 0.2771,
+        "Luteal": 0.2621,
+        "Menstrual": 0.3218
+      },
+      "dominant_phase": "Menstrual",
+      "chi2": 5.823,
+      "p_value": 0.12057
+    }
+  },
+  "sleep_confounder": {
+    "n_headache_episode_days": 342,
+    "n_also_high_sleep_issue": 131,
+    "overlap_fraction": 0.383
+  },
+  "engine_cycle_alignment_validation": {
+    "description": "CycleBench engine phase (from bleeding onsets) vs mcPHASES Mira label",
+    "n_days_compared": 4978,
+    "agreement": 0.4946,
+    "n_participants_with_enough_cycles": 28
+  },
+  "per_participant_symptom_enrichment": {
+    "n_participants_analyzed": 28,
+    "n_enriched_gt_1_2x": 23,
+    "note": "counts only; no per-participant identifiers or rows are emitted"
+  }
+}

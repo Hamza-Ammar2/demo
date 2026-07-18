@@ -1,0 +1,7 @@
+nhanes_variable,analyte,unit,assay
+LBXEST,estradiol,pg/mL,ID-LC-MS/MS
+LBXSHBG,shbg,nmol/L,immunoassay (chemiluminescence)
+LBXFSH,fsh,mIU/mL,immunoassay
+LBXLUH,lh,mIU/mL,immunoassay
+LBXAND,androstenedione,ng/dL,ID-LC-MS/MS
+LBXPG4,progesterone,ng/dL,ID-LC-MS/MS

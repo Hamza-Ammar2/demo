@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use CycleBench / Case Compiler, please cite it as below."
+title: "Case Compiler / CycleBench: open schema, deterministic engine, leakage audit, and benchmark for longitudinal women's hormonal-health cases"
+version: 0.1.0
+date-released: 2026-07-18
+license: MIT
+type: software
+authors:
+  - name: "Case Compiler / CycleBench contributors"
+keywords:
+  - women's health
+  - menstrual cycle
+  - hormonal health
+  - benchmark
+  - data leakage
+  - open science
+references:
+  - type: data
+    title: "mcPHASES: Menstrual Cycle Physiological, Hormonal, and Self-reported Events and Symptoms"
+    notes: "PhysioNet, restricted access. Used for aggregate validation only; not redistributed."
+    url: "https://physionet.org/content/mcphases/1.0.0/"
+  - type: data
+    title: "National Health and Nutrition Examination Survey (NHANES) 2017-March 2020"
+    notes: "CDC/NCHS, US public domain. Harmonized female-hormone export redistributed under CC-BY-4.0."
+    url: "https://wwwn.cdc.gov/nchs/nhanes/"
