@@ -18,7 +18,7 @@ from cyclebench.reference import load_reference, symptom_cohort_context
 QUESTION_SPECS: list[dict] = [
     {
         "id": "symptoms", "mode": "multi",
-        "prompt": "What have you been feeling? Tap all that fit, then Continue.",
+        "prompt": "What have you been feeling? Tap all that fit, then continue.",
         "chips": [
             ["Headaches / migraine", "headache"], ["Cramps", "cramps"],
             ["Pelvic pain", "pelvic_pain"], ["Fatigue", "fatigue"],

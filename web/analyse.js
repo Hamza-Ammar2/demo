@@ -48,7 +48,7 @@ let currentId = null;
 /* Fallback question set so the page ALWAYS works, even if the data-driven
    /analyse/question-plan endpoint is unavailable (e.g. server not restarted). */
 const DEFAULT_QUESTIONS = [
-  { id: "symptoms", mode: "multi", prompt: "What have you been feeling? Tap all that fit, then Continue.",
+  { id: "symptoms", mode: "multi", prompt: "What have you been feeling? Tap all that fit, then continue.",
     chips: [["Headaches / migraine", "headache"], ["Cramps", "cramps"], ["Pelvic pain", "pelvic_pain"],
       ["Fatigue", "fatigue"], ["Brain fog", "brain_fog"], ["Mood changes", "mood"],
       ["Bloating", "bloating"], ["Sore breasts", "sore_breasts"], ["Nausea", "nausea"]], maps_to: ["engine"] },
