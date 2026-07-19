@@ -206,6 +206,26 @@ def model_federated_sync() -> dict:
     return res
 
 
+class ConsentRequest(BaseModel):
+    consent: bool
+
+
+@app.post("/models/consent")
+def model_consent(req: ConsentRequest) -> dict:
+    from cyclebench.model.pfl import set_user_consent
+    set_user_consent(req.consent)
+    return {"ok": True, "consent": req.consent}
+
+
+@app.post("/models/huggingface-sync")
+def model_huggingface_sync() -> dict:
+    from cyclebench.model.pfl import sync_local_to_huggingface
+    res = sync_local_to_huggingface()
+    if not res.get("ok"):
+        raise HTTPException(403, res.get("error"))
+    return res
+
+
 # Static frontend (served last so API routes take precedence).
 if WEB.exists():
     @app.get("/")

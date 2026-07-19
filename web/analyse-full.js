@@ -64,6 +64,14 @@ function startChat() {
         { label: "Heavy", value: "heavy" },
       ],
     },
+    {
+      id: "consent",
+      bot: "Do you consent to share anonymized tracking logs with the Hugging Face research database?",
+      choices: [
+        { label: "Yes, share anonymously", value: true },
+        { label: "No, keep local only", value: false },
+      ],
+    },
   ];
   let i = 0;
   const go = () => {
@@ -81,7 +89,14 @@ function startChat() {
         i += 1;
         actions.innerHTML = "";
         if (i < steps.length) go();
-        else runFull({ source: "intake", intake });
+        else {
+          api("/models/consent", {
+            method: "POST",
+            body: JSON.stringify({ consent: intake.consent }),
+          }).then(() => {
+            runFull({ source: "intake", intake });
+          });
+        }
       };
       actions.appendChild(b);
     });
@@ -108,19 +123,43 @@ async function runFull({ source, intake: answers = {} }) {
   try {
     const d = await api("/demo/sarah?mode=retrospective");
 
-    // Hormonal state model (multi-source) — menstrual-leaning demo vector
+    // Dynamic features derived from user answers
+    const symptom_load = answers.symptom_load || "medium";
+    const pain_days = answers.pain_days ?? 3;
+    const hot_flashes = answers.hot_flashes ?? 0;
+    
+    // Map ordinal values based on symptom load
+    const load_val = symptom_load === "heavy" ? 5 : symptom_load === "light" ? 1 : 3;
+    const cramps_val = pain_days >= 6 ? 5 : pain_days >= 3 ? 3 : 1;
+    const hot_flash_impact = hot_flashes >= 4 ? 4 : hot_flashes >= 2 ? 2 : 1;
+
+    // Hormonal state model (multi-source) — dynamic vector
     let phasePred = null;
     try {
       phasePred = await api("/models/hormonal-state", {
         method: "POST",
         body: JSON.stringify({
           features: {
-            headaches_ord: 5, cramps_ord: 4, fatigue_ord: 4, sleepissue_ord: 4,
-            moodswing_ord: 3, stress_ord: 3, bloating_ord: 3, sorebreasts_ord: 2,
-            foodcravings_ord: 2, indigestion_ord: 2, appetite_ord: 3,
-            sleep_minutes: 340, sleep_efficiency: 80, resting_hr: 76,
-            steps_sum: 5200, stress_score_mean: 65, wrist_temp_delta: 0.05,
-            glucose_mean: 98, hrv_rmssd: 28, is_weekend: 0,
+            headaches_ord: load_val, 
+            cramps_ord: cramps_val, 
+            fatigue_ord: load_val, 
+            sleepissue_ord: hot_flash_impact >= 2 ? 4 : 2,
+            moodswing_ord: load_val, 
+            stress_ord: hot_flash_impact >= 2 ? 4 : 2, 
+            bloating_ord: load_val, 
+            sorebreasts_ord: load_val >= 3 ? 3 : 1,
+            foodcravings_ord: load_val >= 3 ? 3 : 1, 
+            indigestion_ord: load_val >= 3 ? 2 : 1, 
+            appetite_ord: load_val >= 3 ? 3 : 2,
+            sleep_minutes: hot_flash_impact >= 4 ? 300 : 380, 
+            sleep_efficiency: hot_flash_impact >= 4 ? 75 : 85, 
+            resting_hr: hot_flash_impact >= 4 ? 78 : 72,
+            steps_sum: load_val >= 5 ? 3000 : 7500, 
+            stress_score_mean: hot_flash_impact >= 4 ? 75 : 45, 
+            wrist_temp_delta: cramps_val >= 4 ? 0.25 : 0.05,
+            glucose_mean: 98, 
+            hrv_rmssd: hot_flash_impact >= 4 ? 22 : 38, 
+            is_weekend: 0,
           },
         }),
       });

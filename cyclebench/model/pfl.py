@@ -6,15 +6,19 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
 import copy
+import uuid
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Paths
 ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(ROOT / ".env")
 MODELS_DIR = ROOT / "models"
 RESULTS_DIR = ROOT / "results"
 LOCAL_DATA_PATH = RESULTS_DIR / "local_patient_data.csv"
 LOCAL_MODEL_PATH = MODELS_DIR / "local_patient_model.pt"
 GLOBAL_MODEL_PATH = MODELS_DIR / "global_pfl_model.pt"
+GLOBAL_SCALER_PATH = MODELS_DIR / "global_scaler.pt"
 
 # Classes and Features matching McPhases setup
 CLASSES = ["Menstrual", "Follicular", "Fertility", "Luteal"]
@@ -76,6 +80,72 @@ class PersonalizedClientModel(nn.Module):
         out = self.head(latent)
         return out
 
+def get_anonymous_client_id() -> str:
+    client_id_file = RESULTS_DIR / "client_id.txt"
+    if client_id_file.exists():
+        return client_id_file.read_text().strip()
+    client_id = f"client_{uuid.uuid4().hex[:12]}"
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    client_id_file.write_text(client_id)
+    return client_id
+
+def check_user_consent() -> bool:
+    consent_file = RESULTS_DIR / "user_consent.txt"
+    if not consent_file.exists():
+        return False
+    content = consent_file.read_text().strip()
+    return content in ("1", "true", "True")
+
+def set_user_consent(consent: bool):
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    consent_file = RESULTS_DIR / "user_consent.txt"
+    consent_file.write_text("1" if consent else "0")
+
+def load_global_scaler():
+    if GLOBAL_SCALER_PATH.exists():
+        try:
+            scaler = torch.load(GLOBAL_SCALER_PATH)
+            return scaler["mean"], scaler["std"]
+        except Exception:
+            pass
+    # Reasonable defaults if scaler file is not yet built
+    mean = np.zeros(len(FEATURE_COLS))
+    std = np.ones(len(FEATURE_COLS))
+    return mean, std
+
+def sync_local_to_huggingface() -> dict:
+    if not check_user_consent():
+        return {"ok": False, "error": "Sync aborted: User consent required to upload data."}
+        
+    hf_token = os.environ.get("HF_TOKEN")
+    hf_repo = os.environ.get("HF_DATASET_REPO")
+    if not hf_token or not hf_repo:
+        return {"ok": False, "error": "Hugging Face credentials not configured in .env"}
+        
+    if not LOCAL_DATA_PATH.exists():
+        return {"ok": True, "message": "No local logs to upload."}
+        
+    client_id = get_anonymous_client_id()
+    try:
+        from huggingface_hub import HfApi
+        api = HfApi()
+        
+        # Verify/create repo
+        api.create_repo(repo_id=hf_repo, repo_type="dataset", exist_ok=True, token=hf_token)
+        
+        # Upload full local CSV file (effectively appending new rows to history)
+        remote_path = f"data/{client_id}.csv"
+        api.upload_file(
+            path_or_fileobj=str(LOCAL_DATA_PATH),
+            path_in_repo=remote_path,
+            repo_id=hf_repo,
+            repo_type="dataset",
+            token=hf_token
+        )
+        return {"ok": True, "client_id": client_id, "uploaded_file": remote_path}
+    except Exception as e:
+        return {"ok": False, "error": f"Failed to upload to Hugging Face: {str(e)}"}
+
 def save_local_log(features: dict, phase: str):
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     row = {f: features.get(f, 0.0) for f in FEATURE_COLS}
@@ -86,6 +156,11 @@ def save_local_log(features: dict, phase: str):
         df.to_csv(LOCAL_DATA_PATH, mode='a', header=False, index=False)
     else:
         df.to_csv(LOCAL_DATA_PATH, mode='w', header=True, index=False)
+        
+    # Asynchronously upload to Hugging Face if user has consented
+    if check_user_consent():
+        import threading
+        threading.Thread(target=sync_local_to_huggingface).start()
 
 def build_sequential_dataset(df, w=5):
     df[FEATURE_COLS] = df[FEATURE_COLS].interpolate(method='linear').ffill().bfill().fillna(0.0)
@@ -106,26 +181,44 @@ def build_sequential_dataset(df, w=5):
     return np.array(X_seq), np.array(y_seq)
 
 def train_global_pfl_model():
-    from cyclebench.model.features_mcphases import build_mcphases_table
+    hf_token = os.environ.get("HF_TOKEN")
+    hf_repo = os.environ.get("HF_DATASET_REPO")
+    if not hf_token or not hf_repo:
+        return {"ok": False, "error": "Hugging Face credentials not configured."}
+        
+    from huggingface_hub import list_repo_files, hf_hub_download
     try:
-        mcp_df = build_mcphases_table()
+        files = list_repo_files(repo_id=hf_repo, repo_type="dataset", token=hf_token)
     except Exception as e:
-        return {"ok": False, "error": f"Failed to load McPhases database: {str(e)}"}
+        return {"ok": False, "error": f"Failed to list repo files: {str(e)}"}
+        
+    csv_files = [f for f in files if f.startswith("data/") and f.endswith(".csv")]
+    if not csv_files:
+        return {"ok": False, "error": "No data files found in Hugging Face repository."}
         
     X_all = []
     y_all = []
-    unique_ids = mcp_df["id"].unique()
     
-    for pid in unique_ids:
-        sub_df = mcp_df[mcp_df["id"] == pid].copy()
-        X_o, y_o = build_sequential_dataset(sub_df, w=5)
-        if X_o is None or len(X_o) < 5:
+    # Exclude local client logs if they match the pseudonymized client ID
+    client_id = get_anonymous_client_id()
+    own_file = f"data/{client_id}.csv"
+    
+    for f in csv_files:
+        if f == own_file:
             continue
-        X_all.append(X_o)
-        y_all.append(y_o)
-        
+        try:
+            local_path = hf_hub_download(repo_id=hf_repo, filename=f, repo_type="dataset", token=hf_token)
+            sub_df = pd.read_csv(local_path)
+            X_o, y_o = build_sequential_dataset(sub_df, w=5)
+            if X_o is None or len(X_o) < 5:
+                continue
+            X_all.append(X_o)
+            y_all.append(y_o)
+        except Exception:
+            continue
+            
     if not X_all:
-        return {"ok": False, "error": "No sequential data available in McPhases."}
+        return {"ok": False, "error": "No valid sequential peer logs in Hugging Face dataset."}
         
     X = np.concatenate(X_all, axis=0)
     y = np.concatenate(y_all, axis=0)
@@ -133,6 +226,11 @@ def train_global_pfl_model():
     mean = np.mean(X.reshape(-1, len(FEATURE_COLS)), axis=0)
     std = np.std(X.reshape(-1, len(FEATURE_COLS)), axis=0)
     std[std == 0] = 1.0
+    
+    # Save the computed global scaling parameters
+    MODELS_DIR.mkdir(parents=True, exist_ok=True)
+    torch.save({"mean": mean, "std": std}, GLOBAL_SCALER_PATH)
+    
     X_scaled = ((X.reshape(-1, len(FEATURE_COLS)) - mean) / std).reshape(X.shape)
     
     tensor_x = torch.tensor(X_scaled, dtype=torch.float32)
@@ -154,9 +252,8 @@ def train_global_pfl_model():
             loss.backward()
             optimizer.step()
             
-    MODELS_DIR.mkdir(parents=True, exist_ok=True)
     torch.save(model.state_dict(), GLOBAL_MODEL_PATH)
-    return {"ok": True, "global_model_path": str(GLOBAL_MODEL_PATH), "samples": len(X)}
+    return {"ok": True, "global_model_path": str(GLOBAL_MODEL_PATH), "samples": len(X), "peers_loaded": len(X_all)}
 
 def train_local_pfl():
     if not LOCAL_DATA_PATH.exists():
@@ -170,9 +267,7 @@ def train_local_pfl():
     if X is None or len(X) < 3:
         return {"ok": False, "error": "Insufficient sequential data to create sliding windows."}
         
-    mean = np.mean(X.reshape(-1, len(FEATURE_COLS)), axis=0)
-    std = np.std(X.reshape(-1, len(FEATURE_COLS)), axis=0)
-    std[std == 0] = 1.0
+    mean, std = load_global_scaler()
     X_scaled = ((X.reshape(-1, len(FEATURE_COLS)) - mean) / std).reshape(X.shape)
     
     tensor_x = torch.tensor(X_scaled, dtype=torch.float32)
@@ -240,21 +335,32 @@ def train_local_pfl():
         "sequences_trained": len(train_ds)
     }
 
+def average_state_dicts(state_dicts):
+    avg_dict = copy.deepcopy(state_dicts[0])
+    for key in avg_dict.keys():
+        for i in range(1, len(state_dicts)):
+            avg_dict[key] += state_dicts[i][key]
+        avg_dict[key] = avg_dict[key] / float(len(state_dicts))
+    return avg_dict
+
 def federated_sync_pfl():
+    # 1. Sync local data to Hugging Face if user consented
+    if check_user_consent():
+        sync_local_to_huggingface()
+        
     if not LOCAL_MODEL_PATH.exists():
         if GLOBAL_MODEL_PATH.exists():
             model = PersonalizedClientModel()
             model.load_state_dict(torch.load(GLOBAL_MODEL_PATH))
             torch.save(model.state_dict(), LOCAL_MODEL_PATH)
         else:
-            train_global_pfl_model()
-            if GLOBAL_MODEL_PATH.exists():
-                model = PersonalizedClientModel()
-                model.load_state_dict(torch.load(GLOBAL_MODEL_PATH))
-                torch.save(model.state_dict(), LOCAL_MODEL_PATH)
-            else:
-                return {"ok": False, "error": "Global base model not initialized."}
-                
+            train_res = train_global_pfl_model()
+            if not train_res.get("ok"):
+                return train_res
+            model = PersonalizedClientModel()
+            model.load_state_dict(torch.load(GLOBAL_MODEL_PATH))
+            torch.save(model.state_dict(), LOCAL_MODEL_PATH)
+            
     local_model = PersonalizedClientModel()
     local_model.load_state_dict(torch.load(LOCAL_MODEL_PATH))
     
@@ -264,11 +370,10 @@ def federated_sync_pfl():
     else:
         X_local = None
         
+    mean_g, std_g = load_global_scaler()
+    
     if X_local is not None and len(X_local) >= 2:
-        mean_l = np.mean(X_local.reshape(-1, len(FEATURE_COLS)), axis=0)
-        std_l = np.std(X_local.reshape(-1, len(FEATURE_COLS)), axis=0)
-        std_l[std_l == 0] = 1.0
-        X_local_scaled = ((X_local.reshape(-1, len(FEATURE_COLS)) - mean_l) / std_l).reshape(X_local.shape)
+        X_local_scaled = ((X_local.reshape(-1, len(FEATURE_COLS)) - mean_g) / std_g).reshape(X_local.shape)
         tensor_xl = torch.tensor(X_local_scaled, dtype=torch.float32)
         tensor_yl = torch.tensor(y_local, dtype=torch.long)
         dataset_l = TensorDataset(tensor_xl, tensor_yl)
@@ -292,48 +397,62 @@ def federated_sync_pfl():
         test_ds_l = None
         acc_before = 0.6500
         
-    from cyclebench.model.features_mcphases import build_mcphases_table
-    try:
-        mcp_df = build_mcphases_table()
-    except Exception as e:
-        return {"ok": False, "error": f"Failed to load McPhases database: {str(e)}"}
+    # Download active peer client files from Hugging Face
+    hf_token = os.environ.get("HF_TOKEN")
+    hf_repo = os.environ.get("HF_DATASET_REPO")
+    if not hf_token or not hf_repo:
+        return {"ok": False, "error": "Hugging Face credentials not configured."}
         
-    other_encoders = []
-    unique_ids = mcp_df["id"].unique()
+    from huggingface_hub import list_repo_files, hf_hub_download
+    try:
+        files = list_repo_files(repo_id=hf_repo, repo_type="dataset", token=hf_token)
+    except Exception as e:
+        return {"ok": False, "error": f"Failed to list repo files: {str(e)}"}
+        
+    csv_files = [f for f in files if f.startswith("data/") and f.endswith(".csv")]
     
-    for pid in unique_ids[:11]:
-        sub_df = mcp_df[mcp_df["id"] == pid].copy()
-        X_o, y_o = build_sequential_dataset(sub_df, w=5)
-        if X_o is None or len(X_o) < 5:
+    # Exclude own client logs from the federated aggregation pool
+    client_id = get_anonymous_client_id()
+    own_file = f"data/{client_id}.csv"
+    csv_files = [f for f in csv_files if f != own_file]
+    
+    other_encoders = []
+    
+    # Process and train on up to 11 peer datasets downloaded from HF
+    for f in csv_files[:11]:
+        try:
+            local_path = hf_hub_download(repo_id=hf_repo, filename=f, repo_type="dataset", token=hf_token)
+            sub_df = pd.read_csv(local_path)
+            X_o, y_o = build_sequential_dataset(sub_df, w=5)
+            if X_o is None or len(X_o) < 5:
+                continue
+                
+            X_o_scaled = ((X_o.reshape(-1, len(FEATURE_COLS)) - mean_g) / std_g).reshape(X_o.shape)
+            
+            tensor_xo = torch.tensor(X_o_scaled, dtype=torch.float32)
+            tensor_yo = torch.tensor(y_o, dtype=torch.long)
+            dataset_o = TensorDataset(tensor_xo, tensor_yo)
+            loader_o = DataLoader(dataset_o, batch_size=8, shuffle=True, drop_last=(len(dataset_o) > 8))
+            
+            o_model = PersonalizedClientModel()
+            o_opt = optim.Adam(o_model.parameters(), lr=0.005)
+            o_crit = nn.CrossEntropyLoss()
+            
+            o_model.train()
+            for epoch in range(2):
+                for bx, by in loader_o:
+                    o_opt.zero_grad()
+                    logits = o_model(bx)
+                    loss = o_crit(logits, by)
+                    loss.backward()
+                    o_opt.step()
+                    
+            other_encoders.append(o_model.encoder.state_dict())
+        except Exception:
             continue
             
-        mean_o = np.mean(X_o.reshape(-1, len(FEATURE_COLS)), axis=0)
-        std_o = np.std(X_o.reshape(-1, len(FEATURE_COLS)), axis=0)
-        std_o[std_o == 0] = 1.0
-        X_o_scaled = ((X_o.reshape(-1, len(FEATURE_COLS)) - mean_o) / std_o).reshape(X_o.shape)
-        
-        tensor_xo = torch.tensor(X_o_scaled, dtype=torch.float32)
-        tensor_yo = torch.tensor(y_o, dtype=torch.long)
-        dataset_o = TensorDataset(tensor_xo, tensor_yo)
-        loader_o = DataLoader(dataset_o, batch_size=8, shuffle=True, drop_last=(len(dataset_o) > 8))
-        
-        o_model = PersonalizedClientModel()
-        o_opt = optim.Adam(o_model.parameters(), lr=0.005)
-        o_crit = nn.CrossEntropyLoss()
-        
-        o_model.train()
-        for epoch in range(2):
-            for bx, by in loader_o:
-                o_opt.zero_grad()
-                logits = o_model(bx)
-                loss = o_crit(logits, by)
-                loss.backward()
-                o_opt.step()
-                
-        other_encoders.append(o_model.encoder.state_dict())
-        
     if not other_encoders:
-        return {"ok": False, "error": "No active peers found in the network."}
+        return {"ok": False, "error": "No active peer datasets found in Hugging Face repository."}
         
     avg_encoder_state = average_state_dicts(other_encoders)
     local_model.encoder.load_state_dict(avg_encoder_state)
@@ -389,9 +508,8 @@ def run_pfl_inference(features: dict) -> dict:
     else:
         seq = np.repeat(curr_row, 5, axis=0)
         
-    mean = np.mean(seq, axis=0)
-    std = np.std(seq, axis=0)
-    std[std == 0] = 1.0
+    # Scale using the global population mean and std, preventing all-zero sequences
+    mean, std = load_global_scaler()
     seq_scaled = (seq - mean) / std
     
     tensor_seq = torch.tensor(seq_scaled, dtype=torch.float32).unsqueeze(0)
