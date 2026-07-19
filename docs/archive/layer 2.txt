@@ -1,0 +1,348 @@
+LAYER 02 — AI MODEL INFRASTRUCTURE
+Case Compiler / CycleBench — options memo
+========================================
+
+HOW TO READ THIS FILE
+---------------------
+- SECTION A  = short, logical brief for Luke + teammate (read this first)
+- SECTION B  = challenge.txt mapping (what Layer 02 actually asks)
+- SECTION C  = options ranked (what we could build)
+- SECTION D  = long internal reasoning (for the build agent / deep dive)
+- SECTION E  = recommendation + how it plugs into what we already have
+- SECTION F  = explicit NON-GOALS (things that look clever but fail rigor)
+
+
+========================================================================
+SECTION A — SHORT BRIEF FOR THE TEAM
+========================================================================
+
+What Layer 02 wants
+  Train a small, reproducible, explainable model that other researchers can
+  reuse — not a giant foundation model, not a diagnostic chatbot.
+
+What we already have (Layers 01 + 03)
+  Open schema, deterministic engine, leakage audit, benchmark, NHANES export,
+  Case Compiler app. That is NOT a trained model. Layer 02 adds the model piece.
+
+Best way to add Layer 02 to THIS project
+  Train a focused hormonal-STATE classifier on mcPHASES:
+    inputs  = wearables + sleep + symptoms (+ optional CGM)
+    target  = Mira cycle phase (Menstrual / Follicular / Fertility / Luteal)
+  Publish: code, train/val/test split method, metrics, feature-importance
+  explanations, model checkpoint (weights — not the restricted raw data).
+
+Why this wins
+  - Hits the bullet "hormonal-state prediction" honestly.
+  - Hits "explainable AI integrating multiple data sources."
+  - Hits "reproducibility / rigor / explainability over sheer size."
+  - Uses the longitudinal multimodal data we already have.
+  - Plugs into Case Compiler: the app can show "model says Fertility
+    (prob 0.72); top features: resting HR ↑, sleep ↓" WITHOUT diagnosing.
+  - Our CycleBench-Audit already exists to catch future-information leakage
+    in the split — that is a scientific differentiator most hackathon models lack.
+
+What we should NOT claim
+  - Menopause onset prediction (cohort is ~20s–early 30s; no menopause labels).
+  - Clinical hormone-level diagnosis from Mira urine strips (noisy consumer proxy, n=42).
+  - Clinical-trial efficacy/safety prediction (no trial outcome data).
+  - "Convert female data to male so AI can diagnose" (wrong direction vs the
+    cardiology Cross-Sex Translator paper; menstrual phenotypes have no male twin).
+
+If we want a second, smaller model (optional stretch)
+  NHANES cross-sex hormone REFERENCE translator for shared analytes only
+  (estradiol, SHBG, FSH, LH…): map age-band male ↔ female distributions.
+  That borrows the cardiology idea correctly. It does NOT replace the
+  cycle-phase model and must never be used for cycle dynamics.
+
+
+========================================================================
+SECTION B — WHAT challenge.txt ACTUALLY SAYS (Layer 02)
+========================================================================
+
+From challenge.txt lines 73–84:
+
+  "Train a focused model that contributes toward future foundation models —
+   optimizing for reproducibility, scientific rigor, and explainability
+   over sheer size."
+
+  Example bullets (menu of ideas, not a checklist of all three):
+    1. Hormone-level OR hormonal-state prediction, including biological
+       signatures of early or late menopause onset.
+    2. Explainable AI that integrates multiple data sources and interprets
+       findings in the context of hormonal variability.
+    3. Prediction of clinical trials where women's hormonal variability
+       may affect efficacy or safety.
+
+  Goal: reusable model researchers can reproduce, extend, and combine.
+
+Also remember the surrounding brief:
+  - Header: "Build One Reusable Layer" — layers are options; we already did
+    01+03; adding 02 makes us stronger, not "finally complete."
+  - Weak submissions: unsupported medical/diagnostic claims; polished UI
+    without scientific validation.
+  - Open science: publish code, checkpoints, eval pipelines when possible.
+    (mcPHASES RAW data stays restricted; weights + methodology can be open.)
+
+Reading the bullets carefully:
+  - "Hormone-level OR hormonal-state" — state is enough; we don't need levels.
+  - "including ... menopause" — an EXAMPLE of hormonal-state work, not a
+    mandatory target. If the data cannot support menopause, do not fake it.
+  - Clinical-trial prediction — another EXAMPLE; we have no trial endpoints.
+  - The binding constraints are: focused, reproducible, rigorous, explainable,
+    reusable.
+
+
+========================================================================
+SECTION C — OPTIONS (ranked)
+========================================================================
+
+OPTION 1 (RECOMMENDED) — Hormonal-state / cycle-phase classifier
+----------------------------------------------------------------
+Task
+  Predict Mira phase label from same-day (and strictly past-only) multimodal
+  features: heart rate / HRV / resting HR, sleep metrics, steps/activity,
+  temperature, self-report symptoms, optional CGM summary stats.
+
+Model family (keep small + explainable)
+  Logistic regression and/or Random Forest / Gradient Boosting.
+  Optional tiny MLP for comparison. Prefer interpretable primary model.
+
+Eval
+  Participant-held-out splits (never put the same person in train and test).
+  Causal / time-respecting features only (no future days).
+  Metrics: accuracy, balanced accuracy, macro-F1, confusion matrix,
+  calibration, per-phase recall.
+  Baselines: majority class; our deterministic cycle-alignment engine (~49.5%
+  agreement today) as a non-ML baseline.
+
+Explainability
+  Feature importances / SHAP or coefficients; show top drivers per prediction
+  in the app ("sleep issue High + resting HR elevated → Menstrual-like").
+
+Deliverables for open science
+  cyclebench/model/  (train script, feature builder, eval, export)
+  results/model_metrics.json + .csv
+  models/phase_classifier.joblib (checkpoint; no raw rows)
+  docs/MODEL_CARD.md (intended use, limits, data, metrics)
+  Wired into CycleBench-Audit (honest split passes; leaking split fails)
+
+Fits Layer 02 bullets
+  ✓ hormonal-state prediction
+  ✓ explainable multi-source AI in hormonal context
+  ✗ menopause (honestly out)
+  ✗ clinical-trial prediction (honestly out)
+
+Effort
+  Medium. Highest scientific payoff for this repo.
+
+
+OPTION 2 — Symptom-risk given hormonal state (secondary head)
+-------------------------------------------------------------
+Task
+  P(headache episode | phase features + sleep + HR…), or next-3-day risk.
+
+Why interesting
+  Closer to "personalized insight" and Case Compiler's Sarah story.
+
+Risk
+  Easy to overclaim ("predicts migraines"). Must stay probabilistic + associative.
+  Class imbalance; confounding by sleep (we already know ~38% overlap).
+
+Use
+  Only as a SECOND head after Option 1 is solid, or as an ablation.
+
+
+OPTION 3 — NHANES "cross-sex hormone reference translator" (stretch)
+--------------------------------------------------------------------
+Inspired by Grandi Lab ECG Cross-Sex Translator (JACC Clin Electrophysiol 2025):
+  map shared ECG features male ↔ female for drug-response gaps.
+
+Our version (ONLY for shared serum analytes in NHANES)
+  Learn a mapping between age-matched male and female distributions / features
+  for estradiol, SHBG, FSH, LH, androstenedione, progesterone where present.
+  Output: "given this male-panel context, estimated female-equivalent reference
+  band" (or vice versa) — for RESEARCH CONTEXT, not diagnosis.
+
+Why this is the correct borrowing of the teammate's idea
+  - Same measurement space exists in both sexes (serum hormones).
+  - Direction fills the underrepresented sex's context, not "make women male."
+  - Does NOT apply to menstrual-cycle phenotypes (no male twin).
+
+Why it is NOT the primary Layer 02 play
+  - Cross-sectional only; no longitudinal hormonal state.
+  - Weaker story for "hormonal variability over time."
+  - Easy for judges to confuse with the wrong female→male conversion pitch.
+
+Use
+  Optional companion model + short model card section linking to the cardiology paper.
+
+
+OPTION 4 — Hormone-LEVEL regression (Mira LH / E3G / PdG)
+---------------------------------------------------------
+Predict next-day or same-day hormone metabolite values from wearables.
+
+Why tempting
+  Literally matches "hormone-level prediction" wording.
+
+Why we rank it LOW
+  Mira = semi-quantitative, manually entered, noisy; n=42.
+  Our own LIMITATIONS.md already says we will not treat this as clinical output.
+  Easy to look flashy and get crushed on scientific validity.
+
+Possible compromise
+  Frame ONLY as "state proxy reconstruction" with large error bars, never as
+  clinical hormone measurement. Still inferior to Option 1.
+
+
+OPTION 5 — Menopause onset / early–late menopause signatures
+------------------------------------------------------------
+challenge.txt mentions this explicitly as an example.
+
+HARD NO with current data
+  mcPHASES birth years ~1995–2000 → reproductive-age young adults.
+  No peri/post-menopausal participants, no menopause labels, no follow-up to onset.
+  Training a menopause model here would be scientific theater.
+
+Only path if team insists later
+  Bring in a DIFFERENT open dataset that actually has menopause outcomes
+  (and update the registry). Do not invent it from mcPHASES.
+
+
+OPTION 6 — Clinical-trial efficacy/safety under hormonal variability
+--------------------------------------------------------------------
+challenge.txt example #3.
+
+HARD NO with current data
+  We have no trial endpoints, no drug exposure outcomes, no RCT tables.
+  A "simulator" without external trial data is speculation.
+
+Cardiology paper analogy note
+  Their translator helps *interpret* sex differences in drug-ECG response.
+  We could ONE DAY use Option 3 + literature priors to discuss sex-specific
+  reference context — but that is not trial prediction.
+
+
+OPTION 7 — Teammate pitch: "female→male phenotype conversion so AI can diagnose"
+--------------------------------------------------------------------------------
+Related idea: cardiology Cross-Sex Translator; sometimes called phenotype matching.
+
+Verdict for THIS project
+  Reject as primary architecture.
+  Reasons (short):
+    1. Cardiology maps SHARED ECG features across sexes; cycles are not shared.
+    2. Paper direction is male → estimate FEMALE response (fill the gap), not
+       erase female physiology into a male latent space for diagnosis.
+    3. Our safety layer forbids diagnostic/treatment language by design.
+    4. Judges explicitly punish unsupported diagnostic claims.
+
+Acceptable rename / salvage
+  Call Option 3 "cross-sex reference phenotype matching" (NHANES shared analytes).
+  Call Option 1 "within-female hormonal-state phenotype classification."
+  Do NOT call Option 1 a Cross-Sex Translator.
+
+
+========================================================================
+SECTION D — LONG THOUGHTS (FOR THE BUILD AGENT / DEEP DIVE)
+========================================================================
+
+D1. What "contributes toward future foundation models" means here
+  Not "train GPT for hormones." It means: a small, well-specified module with
+  clean I/O, documented splits, and metrics that a larger system can call as a
+  component — e.g. a phase encoder that a future multimodal foundation model
+  could use as a supervised head or as a teacher signal.
+  CycleBench schema is already the interface language. The model should emit
+  predictions that attach to HealthEvent / Finding with evidence_class=inferred
+  and full provenance (features used, model version, split id).
+
+D2. Leakage is the real scientific story
+  Cycle / hormone prediction is infamous for accidental future leakage
+  (using next period onset, using same-day Mira label features while claiming
+  wearable-only prediction, random row splits that leak person identity).
+  We already built CycleBench-Audit. Layer 02 should be the flagship consumer
+  of that audit: every model release ships with audit results.
+  That is more distinctive than +2% accuracy.
+
+D3. n=42 is small — design for honesty, not leaderboard theater
+  Use nested participant-level CV, report confidence intervals, prefer simple
+  models, publish negative results (e.g. fatigue may not beat sleep confound).
+  Our mcPHASES validation already showed headaches cluster by phase (p=0.0003)
+  while fatigue does not (p=0.12). The model writeup should continue that honesty.
+
+D4. Relationship to the deterministic engine
+  Do NOT replace the engine with the model.
+  Engine = audit trail for doctor brief (associations, confounders, missingness).
+  Model = probabilistic hormonal-state estimate from multimodal sensors.
+  Together: "deterministic brief + optional model phase posterior."
+  If they disagree, surface the disagreement (that is explainability).
+
+D5. Licensing constraint
+  Cannot publish mcPHASES rows. Can publish:
+    - training code + feature definitions
+    - split algorithm (participant IDs hashed / listed only if DUA allows —
+      prefer publishing the SPLIT PROCEDURE, not IDs)
+    - metrics, confusion matrices, calibration plots
+    - model weights (typically OK if they don't memorize raw PII; still check DUA)
+    - synthetic smoke-test fixtures for CI
+  NHANES-derived translator weights and reference maps are redistributable.
+
+D6. Cross-sex translator literature — precise takeaway
+  Grandi et al. build male & female biophysical ventricular models, extract
+  QRS/QT/T-wave features, fit lasso coefficients mapping male→female features,
+  validate on held-out sims and age-matched clinical ECGs under drugs (~5–6% error).
+  Key prerequisites we must copy if we claim the analogy:
+    - shared feature ontology across sexes
+    - age matching
+    - clear input/output sex
+    - validation against actual other-sex observations
+  Menstrual phase fails prerequisite #1. NHANES shared hormones pass it.
+
+D7. "Phenotype matching" as a better umbrella term
+  Good umbrella for judges:
+    - Within-person / within-female: match current multimodal snapshot to
+      hormonal-state phenotype classes (Option 1).
+    - Cross-sex: match shared lab phenotype across sexes (Option 3).
+  Avoid "translator that makes women look like men."
+
+
+========================================================================
+SECTION E — RECOMMENDATION
+========================================================================
+
+Build now
+  OPTION 1 as the Layer 02 centerpiece.
+  Wire predictions into Case Compiler as an optional "Hormonal state (model)"
+  panel with probabilities + top features + disclaimer.
+  Ship MODEL_CARD.md + metrics under results/ + checkpoint under models/.
+  Run every split through CycleBench-Audit.
+
+If time remains
+  OPTION 3 as a small companion "NHANES cross-sex reference matcher,"
+  clearly scoped, citing the cardiology paper as inspiration (not a clone).
+
+Do not build for this hackathon
+  Options 5, 6, and the female→male diagnostic converter.
+  Option 4 only if Option 1 is done and framed as noisy proxy reconstruction.
+
+One-sentence pitch for demos
+  "We trained a small, leakage-audited, explainable model that estimates
+   hormonal state from wearables and symptoms — and we open-sourced the
+   training pipeline so others can extend it — while Case Compiler keeps
+   every clinical-facing sentence association-only and provenance-linked."
+
+
+========================================================================
+SECTION F — NON-GOALS (POST ON THE WALL)
+========================================================================
+
+1. No menopause model on mcPHASES.
+2. No diagnostic or treatment recommendations from the model.
+3. No claiming clinical-grade hormone-level prediction from Mira.
+4. No female→male conversion as the path to "AI that understands women."
+5. No random shuffle splits that leak participants across train/test.
+6. No replacing the deterministic doctor brief with model prose.
+7. No redistributing mcPHASES raw data.
+
+
+========================================================================
+END
+========================================================================

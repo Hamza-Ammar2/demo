@@ -1,0 +1,121 @@
+{
+  "$defs": {
+    "Certainty": {
+      "enum": [
+        "high",
+        "medium",
+        "low",
+        "unknown"
+      ],
+      "title": "Certainty",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "default": "0.1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "subject_id": {
+      "description": "Anonymous, non-identifying subject id.",
+      "title": "Subject Id",
+      "type": "string"
+    },
+    "age_range": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Coarse age band, e.g. '30-39'. Never an exact DOB.",
+      "title": "Age Range"
+    },
+    "life_stage": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Reproductive/life-stage context when supplied.",
+      "title": "Life Stage"
+    },
+    "contraception_status": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Contraception Status"
+    },
+    "contraception_formulation": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Contraception Formulation"
+    },
+    "menopause_status": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Menopause Status"
+    },
+    "hrt_status": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Hrt Status"
+    },
+    "timezone": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Timezone"
+    },
+    "source_quality": {
+      "$ref": "#/$defs/Certainty",
+      "default": "unknown"
+    }
+  },
+  "required": [
+    "subject_id"
+  ],
+  "title": "SubjectProfile",
+  "type": "object"
+}

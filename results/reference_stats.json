@@ -1,0 +1,668 @@
+{
+  "sources": {
+    "mcphases": {
+      "n_participants": 42,
+      "n_participant_days": 5658,
+      "license": "PhysioNet restricted \u2014 aggregate stats only, no rows shipped"
+    },
+    "nhanes": {
+      "license": "public domain (CDC/NHANES)"
+    }
+  },
+  "symptom_phase": {
+    "headaches": {
+      "n_episodes": 342,
+      "episode_rate_by_phase": {
+        "Fertility": 0.075,
+        "Follicular": 0.126,
+        "Luteal": 0.0859,
+        "Menstrual": 0.1336
+      },
+      "dominant_phase": "Menstrual",
+      "chi2": 18.89,
+      "p_value": 0.00029,
+      "significant": true
+    },
+    "cramps": {
+      "n_episodes": 199,
+      "episode_rate_by_phase": {
+        "Fertility": 0.0301,
+        "Follicular": 0.0143,
+        "Luteal": 0.0439,
+        "Menstrual": 0.1821
+      },
+      "dominant_phase": "Menstrual",
+      "chi2": 203.9,
+      "p_value": 0.0,
+      "significant": true
+    },
+    "sorebreasts": {
+      "n_episodes": 86,
+      "episode_rate_by_phase": {
+        "Fertility": 0.0109,
+        "Follicular": 0.0,
+        "Luteal": 0.0412,
+        "Menstrual": 0.0502
+      },
+      "dominant_phase": "Menstrual",
+      "chi2": 52.82,
+      "p_value": 0.0,
+      "significant": true
+    },
+    "fatigue": {
+      "n_episodes": 926,
+      "episode_rate_by_phase": {
+        "Fertility": 0.2657,
+        "Follicular": 0.2771,
+        "Luteal": 0.2621,
+        "Menstrual": 0.3218
+      },
+      "dominant_phase": "Menstrual",
+      "chi2": 5.82,
+      "p_value": 0.12057,
+      "significant": false
+    },
+    "sleepissue": {
+      "n_episodes": 563,
+      "episode_rate_by_phase": {
+        "Fertility": 0.179,
+        "Follicular": 0.1653,
+        "Luteal": 0.1682,
+        "Menstrual": 0.1648
+      },
+      "dominant_phase": "Fertility",
+      "chi2": 0.57,
+      "p_value": 0.9038,
+      "significant": false
+    },
+    "moodswing": {
+      "n_episodes": 352,
+      "episode_rate_by_phase": {
+        "Fertility": 0.097,
+        "Follicular": 0.0882,
+        "Luteal": 0.1085,
+        "Menstrual": 0.1359
+      },
+      "dominant_phase": "Menstrual",
+      "chi2": 8.45,
+      "p_value": 0.03749,
+      "significant": true
+    },
+    "stress": {
+      "n_episodes": 900,
+      "episode_rate_by_phase": {
+        "Fertility": 0.2773,
+        "Follicular": 0.2723,
+        "Luteal": 0.2509,
+        "Menstrual": 0.2951
+      },
+      "dominant_phase": "Menstrual",
+      "chi2": 3.15,
+      "p_value": 0.36918,
+      "significant": false
+    },
+    "foodcravings": {
+      "n_episodes": 544,
+      "episode_rate_by_phase": {
+        "Fertility": 0.1462,
+        "Follicular": 0.1607,
+        "Luteal": 0.1719,
+        "Menstrual": 0.1727
+      },
+      "dominant_phase": "Menstrual",
+      "chi2": 2.19,
+      "p_value": 0.53347,
+      "significant": false
+    },
+    "bloating": {
+      "n_episodes": 427,
+      "episode_rate_by_phase": {
+        "Fertility": 0.1189,
+        "Follicular": 0.0904,
+        "Luteal": 0.1244,
+        "Menstrual": 0.1962
+      },
+      "dominant_phase": "Menstrual",
+      "chi2": 32.97,
+      "p_value": 0.0,
+      "significant": true
+    }
+  },
+  "menopause": {
+    "classes": [
+      "early_perimenopause",
+      "late_perimenopause",
+      "postmenopausal",
+      "premenopausal"
+    ],
+    "feature_importances": [
+      {
+        "feature": "amenorrhea_months",
+        "importance": 0.60058
+      },
+      {
+        "feature": "fsh_miu_ml",
+        "importance": 0.27789
+      },
+      {
+        "feature": "sleep_disturbance",
+        "importance": 0.06504
+      },
+      {
+        "feature": "cycle_irregularity",
+        "importance": 0.05136
+      },
+      {
+        "feature": "hot_flash_freq",
+        "importance": 0.00168
+      },
+      {
+        "feature": "estradiol_pg_ml",
+        "importance": 0.00116
+      },
+      {
+        "feature": "age_years",
+        "importance": 0.00071
+      },
+      {
+        "feature": "bmi",
+        "importance": 0.00064
+      },
+      {
+        "feature": "shbg_nmol_l",
+        "importance": 0.00049
+      },
+      {
+        "feature": "night_sweat_freq",
+        "importance": 0.00044
+      }
+    ],
+    "data_source": "synthetic_swan_like",
+    "balanced_accuracy": 0.9924,
+    "note": "Feature priorities from the trained menopause-stage model."
+  },
+  "nhanes": {
+    "reference_ranges": [
+      {
+        "analyte": "androstenedione",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "18-27",
+        "n": 575,
+        "median": 128.0,
+        "p2_5": 47.37,
+        "p97_5": 303.95
+      },
+      {
+        "analyte": "androstenedione",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "28-37",
+        "n": 588,
+        "median": 113.0,
+        "p2_5": 43.225,
+        "p97_5": 304.25
+      },
+      {
+        "analyte": "androstenedione",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "38-47",
+        "n": 584,
+        "median": 82.55,
+        "p2_5": 30.433,
+        "p97_5": 213.975
+      },
+      {
+        "analyte": "androstenedione",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "48-57",
+        "n": 645,
+        "median": 52.6,
+        "p2_5": 16.78,
+        "p97_5": 148.8
+      },
+      {
+        "analyte": "androstenedione",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "58-67",
+        "n": 695,
+        "median": 45.6,
+        "p2_5": 12.035,
+        "p97_5": 126.95
+      },
+      {
+        "analyte": "androstenedione",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "68-77",
+        "n": 416,
+        "median": 42.7,
+        "p2_5": 13.0,
+        "p97_5": 109.625
+      },
+      {
+        "analyte": "androstenedione",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "78-87",
+        "n": 294,
+        "median": 40.65,
+        "p2_5": 9.4,
+        "p97_5": 113.375
+      },
+      {
+        "analyte": "androstenedione",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "under_18",
+        "n": 1075,
+        "median": 68.3,
+        "p2_5": 5.811,
+        "p97_5": 243.45
+      },
+      {
+        "analyte": "estradiol",
+        "unit": "pg/mL",
+        "sex": "female",
+        "age_band": "18-27",
+        "n": 560,
+        "median": 58.35,
+        "p2_5": 1.727,
+        "p97_5": 1281.5
+      },
+      {
+        "analyte": "estradiol",
+        "unit": "pg/mL",
+        "sex": "female",
+        "age_band": "28-37",
+        "n": 572,
+        "median": 81.25,
+        "p2_5": 7.362,
+        "p97_5": 4114.75
+      },
+      {
+        "analyte": "estradiol",
+        "unit": "pg/mL",
+        "sex": "female",
+        "age_band": "38-47",
+        "n": 567,
+        "median": 79.3,
+        "p2_5": 2.801,
+        "p97_5": 409.0
+      },
+      {
+        "analyte": "estradiol",
+        "unit": "pg/mL",
+        "sex": "female",
+        "age_band": "48-57",
+        "n": 624,
+        "median": 7.84,
+        "p2_5": 1.22,
+        "p97_5": 273.6
+      },
+      {
+        "analyte": "estradiol",
+        "unit": "pg/mL",
+        "sex": "female",
+        "age_band": "58-67",
+        "n": 663,
+        "median": 6.02,
+        "p2_5": 1.22,
+        "p97_5": 36.19
+      },
+      {
+        "analyte": "estradiol",
+        "unit": "pg/mL",
+        "sex": "female",
+        "age_band": "68-77",
+        "n": 394,
+        "median": 5.655,
+        "p2_5": 1.22,
+        "p97_5": 23.34
+      },
+      {
+        "analyte": "estradiol",
+        "unit": "pg/mL",
+        "sex": "female",
+        "age_band": "78-87",
+        "n": 277,
+        "median": 4.29,
+        "p2_5": 1.22,
+        "p97_5": 22.76
+      },
+      {
+        "analyte": "estradiol",
+        "unit": "pg/mL",
+        "sex": "female",
+        "age_band": "under_18",
+        "n": 1035,
+        "median": 26.6,
+        "p2_5": 1.22,
+        "p97_5": 273.15
+      },
+      {
+        "analyte": "fsh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "18-27",
+        "n": 574,
+        "median": 5.015,
+        "p2_5": 0.21,
+        "p97_5": 11.008
+      },
+      {
+        "analyte": "fsh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "28-37",
+        "n": 586,
+        "median": 5.47,
+        "p2_5": 0.21,
+        "p97_5": 11.909
+      },
+      {
+        "analyte": "fsh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "38-47",
+        "n": 581,
+        "median": 6.82,
+        "p2_5": 1.395,
+        "p97_5": 89.495
+      },
+      {
+        "analyte": "fsh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "48-57",
+        "n": 643,
+        "median": 52.44,
+        "p2_5": 3.851,
+        "p97_5": 127.895
+      },
+      {
+        "analyte": "fsh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "58-67",
+        "n": 697,
+        "median": 57.69,
+        "p2_5": 9.53,
+        "p97_5": 123.26
+      },
+      {
+        "analyte": "fsh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "68-77",
+        "n": 416,
+        "median": 58.155,
+        "p2_5": 20.29,
+        "p97_5": 131.35
+      },
+      {
+        "analyte": "fsh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "78-87",
+        "n": 294,
+        "median": 63.6,
+        "p2_5": 21.033,
+        "p97_5": 129.77
+      },
+      {
+        "analyte": "fsh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "under_18",
+        "n": 879,
+        "median": 4.21,
+        "p2_5": 0.73,
+        "p97_5": 9.831
+      },
+      {
+        "analyte": "lh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "18-27",
+        "n": 575,
+        "median": 6.61,
+        "p2_5": 0.07,
+        "p97_5": 37.32
+      },
+      {
+        "analyte": "lh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "28-37",
+        "n": 587,
+        "median": 6.77,
+        "p2_5": 0.07,
+        "p97_5": 33.659
+      },
+      {
+        "analyte": "lh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "38-47",
+        "n": 583,
+        "median": 7.22,
+        "p2_5": 0.751,
+        "p97_5": 57.438
+      },
+      {
+        "analyte": "lh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "48-57",
+        "n": 645,
+        "median": 31.67,
+        "p2_5": 4.001,
+        "p97_5": 75.452
+      },
+      {
+        "analyte": "lh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "58-67",
+        "n": 697,
+        "median": 30.22,
+        "p2_5": 7.022,
+        "p97_5": 62.782
+      },
+      {
+        "analyte": "lh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "68-77",
+        "n": 416,
+        "median": 27.835,
+        "p2_5": 9.334,
+        "p97_5": 60.763
+      },
+      {
+        "analyte": "lh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "78-87",
+        "n": 294,
+        "median": 29.5,
+        "p2_5": 8.891,
+        "p97_5": 60.386
+      },
+      {
+        "analyte": "lh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "under_18",
+        "n": 916,
+        "median": 3.69,
+        "p2_5": 0.07,
+        "p97_5": 24.247
+      },
+      {
+        "analyte": "progesterone",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "18-27",
+        "n": 572,
+        "median": 10.7,
+        "p2_5": 1.921,
+        "p97_5": 2501.75
+      },
+      {
+        "analyte": "progesterone",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "28-37",
+        "n": 585,
+        "median": 13.0,
+        "p2_5": 1.25,
+        "p97_5": 3976.0
+      },
+      {
+        "analyte": "progesterone",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "38-47",
+        "n": 583,
+        "median": 15.7,
+        "p2_5": 0.979,
+        "p97_5": 1992.5
+      },
+      {
+        "analyte": "progesterone",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "48-57",
+        "n": 642,
+        "median": 3.65,
+        "p2_5": 0.608,
+        "p97_5": 829.65
+      },
+      {
+        "analyte": "progesterone",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "58-67",
+        "n": 685,
+        "median": 2.73,
+        "p2_5": 0.608,
+        "p97_5": 17.19
+      },
+      {
+        "analyte": "progesterone",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "68-77",
+        "n": 409,
+        "median": 2.64,
+        "p2_5": 0.608,
+        "p97_5": 10.46
+      },
+      {
+        "analyte": "progesterone",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "78-87",
+        "n": 291,
+        "median": 2.78,
+        "p2_5": 0.608,
+        "p97_5": 10.925
+      },
+      {
+        "analyte": "progesterone",
+        "unit": "ng/dL",
+        "sex": "female",
+        "age_band": "under_18",
+        "n": 1073,
+        "median": 5.03,
+        "p2_5": 0.608,
+        "p97_5": 1224.0
+      },
+      {
+        "analyte": "shbg",
+        "unit": "nmol/L",
+        "sex": "female",
+        "age_band": "18-27",
+        "n": 574,
+        "median": 47.37,
+        "p2_5": 12.469,
+        "p97_5": 298.89
+      },
+      {
+        "analyte": "shbg",
+        "unit": "nmol/L",
+        "sex": "female",
+        "age_band": "28-37",
+        "n": 586,
+        "median": 48.915,
+        "p2_5": 16.335,
+        "p97_5": 306.238
+      },
+      {
+        "analyte": "shbg",
+        "unit": "nmol/L",
+        "sex": "female",
+        "age_band": "38-47",
+        "n": 583,
+        "median": 50.45,
+        "p2_5": 17.055,
+        "p97_5": 178.99
+      },
+      {
+        "analyte": "shbg",
+        "unit": "nmol/L",
+        "sex": "female",
+        "age_band": "48-57",
+        "n": 645,
+        "median": 41.33,
+        "p2_5": 15.052,
+        "p97_5": 154.38
+      },
+      {
+        "analyte": "shbg",
+        "unit": "nmol/L",
+        "sex": "female",
+        "age_band": "58-67",
+        "n": 697,
+        "median": 47.81,
+        "p2_5": 15.73,
+        "p97_5": 131.44
+      },
+      {
+        "analyte": "shbg",
+        "unit": "nmol/L",
+        "sex": "female",
+        "age_band": "68-77",
+        "n": 416,
+        "median": 54.215,
+        "p2_5": 18.015,
+        "p97_5": 127.2
+      },
+      {
+        "analyte": "shbg",
+        "unit": "nmol/L",
+        "sex": "female",
+        "age_band": "78-87",
+        "n": 294,
+        "median": 73.19,
+        "p2_5": 24.219,
+        "p97_5": 183.725
+      },
+      {
+        "analyte": "shbg",
+        "unit": "nmol/L",
+        "sex": "female",
+        "age_band": "under_18",
+        "n": 902,
+        "median": 46.775,
+        "p2_5": 13.401,
+        "p97_5": 151.655
+      }
+    ]
+  }
+}

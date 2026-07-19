@@ -1,0 +1,118 @@
+{
+  "accuracy": 0.8971,
+  "balanced_accuracy": 0.8646,
+  "macro_f1": 0.8778,
+  "confusion_matrix": [
+    [
+      88,
+      4
+    ],
+    [
+      10,
+      34
+    ]
+  ],
+  "labels": [
+    "0",
+    "1"
+  ],
+  "report": {
+    "0": {
+      "precision": 0.8979591836734694,
+      "recall": 0.9565217391304348,
+      "f1-score": 0.9263157894736842,
+      "support": 92.0
+    },
+    "1": {
+      "precision": 0.8947368421052632,
+      "recall": 0.7727272727272727,
+      "f1-score": 0.8292682926829268,
+      "support": 44.0
+    },
+    "accuracy": 0.8970588235294118,
+    "macro avg": {
+      "precision": 0.8963480128893663,
+      "recall": 0.8646245059288538,
+      "f1-score": 0.8777920410783056,
+      "support": 136.0
+    },
+    "weighted avg": {
+      "precision": 0.8969166614014028,
+      "recall": 0.8970588235294118,
+      "f1-score": 0.8949180699237332,
+      "support": 136.0
+    }
+  },
+  "chance_balanced_accuracy": 0.5,
+  "majority_baseline_accuracy": 0.6765,
+  "n_train_rows": 405,
+  "n_test_rows": 136,
+  "split": "stratified_row_25pct",
+  "population": "541 patients from clinics in Kerala, India (Kaggle PCOS dataset)",
+  "provenance": "Kaggle: shreyasvedpathak/pcos-dataset",
+  "feature_importances": [
+    {
+      "feature": "Follicle No. (R)",
+      "importance": 0.4524
+    },
+    {
+      "feature": "Follicle No. (L)",
+      "importance": 0.10362
+    },
+    {
+      "feature": "hair growth(Y/N)",
+      "importance": 0.07095
+    },
+    {
+      "feature": "Skin darkening (Y/N)",
+      "importance": 0.05526
+    },
+    {
+      "feature": "Weight gain(Y/N)",
+      "importance": 0.05516
+    },
+    {
+      "feature": "AMH(ng/mL)",
+      "importance": 0.02353
+    },
+    {
+      "feature": "Endometrium (mm)",
+      "importance": 0.0223
+    },
+    {
+      "feature": "Cycle(R/I)",
+      "importance": 0.02199
+    },
+    {
+      "feature": "RBS(mg/dl)",
+      "importance": 0.01728
+    },
+    {
+      "feature": "I beta-HCG(mIU/mL)",
+      "importance": 0.01714
+    },
+    {
+      "feature": "Weight (Kg)",
+      "importance": 0.01698
+    },
+    {
+      "feature": "FSH/LH",
+      "importance": 0.01594
+    },
+    {
+      "feature": "Age (yrs)",
+      "importance": 0.01291
+    },
+    {
+      "feature": "Hip(inch)",
+      "importance": 0.01186
+    },
+    {
+      "feature": "Avg. F size (R) (mm)",
+      "importance": 0.01176
+    }
+  ],
+  "data_source": "kaggle_pcos",
+  "data_redistributable": false,
+  "disclaimer": "Trained on the Kaggle PCOS clinic cohort. Raw CSV is not redistributed; re-download to retrain. Research/demo risk signal only \u2014 not a clinical diagnosis."
+}

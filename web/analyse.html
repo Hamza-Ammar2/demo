@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I've been feeling off — Aestra</title>
+  <link rel="stylesheet" href="/static/styles.css?v=flo24" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand"><a href="/">Aes<em>tra</em></a></div>
+      <a class="nav-back" href="/">← Home</a>
+    </header>
+
+    <main class="page">
+      <h1>I've been feeling off</h1>
+      <p class="sub">Tell me what's going on, one message at a time. I won't guess what's wrong — I'll show the <strong>patterns</strong> against real cohort data and help you <strong>explain them</strong> at your next doctors appointment.</p>
+      <p class="muted grounding-line" id="grounding">Loading what the data can ground…</p>
+
+      <div class="cols-2" id="layout">
+        <!-- LEFT: conversation -->
+        <div class="panel chat-panel" id="chat-panel">
+          <div class="label">Chat</div>
+          <div class="chat" id="chat"></div>
+          <div class="chip-row" id="quick"></div>
+        </div>
+
+        <!-- RIGHT: live intake + next question + grounded read -->
+        <div class="panel results-panel" id="results-panel">
+          <div class="label">What I've noted</div>
+          <ul class="noted" id="noted"><li class="muted">Nothing yet — tap a chip to begin.</li></ul>
+
+          <div class="next-box" id="next-box">
+            <div class="label" style="margin-top:18px">Next</div>
+            <div id="next-q" class="next-q">Getting ready…</div>
+            <div id="why" class="muted" style="font-size:0.78rem;margin-top:4px"></div>
+          </div>
+
+          <div class="intake-done" id="intake-done" hidden>
+            <p class="intake-done-title">Soft read</p>
+            <p class="intake-done-sub">Grounded in cohort data — associations, not diagnoses.</p>
+          </div>
+
+          <div id="soft-read" hidden>
+            <div class="label" style="margin-top:18px">A soft read — grounded in the data</div>
+            <div id="soft-body"></div>
+          </div>
+        </div>
+      </div>
+      <p class="disclaimer">This surfaces associations for your conversation with a clinician. It does not diagnose, name a condition, or establish a cause.</p>
+    </main>
+  </div>
+  <script src="/static/shared.js"></script>
+  <script src="/static/analyse.js?v=18"></script>
+</body>
+</html>

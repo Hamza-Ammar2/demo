@@ -1,0 +1,204 @@
+LAYER 02 — MORE INTERESTING PREDICTION TARGETS
+Dataset research memo (for Luke + teammate)
+============================================
+
+YOUR POINT (fair)
+-----------------
+Cycle-phase / period prediction is a real ML task, but Flo, Clue, Natural Cycles,
+Oura, Apple, etc. already sell versions of it. For a hackathon Layer 02, "we
+predict your period" is easy to dismiss unless the story is sharper
+(hormone-verified labels + leakage audit + open reusable pipeline).
+
+Better bar: predict something clinicians and researchers still struggle with,
+where open data exists, and where "unsupported diagnostic claim" risk is managed.
+
+
+THE RULE THAT STILL HOLDS
+-------------------------
+You can add any dataset you want — but only if it contains labels for the thing
+you want to predict. More NHANES ≠ cysts. Apple/Clue big data ≠ downloadable.
+
+
+========================================================================
+TIER S — MOST INTERESTING + HACKATHON-REALISTIC
+========================================================================
+
+1) MENOPAUSE TRANSITION / HORMONAL AGING  —  SWAN (Study of Women's Health Across the Nation)
+   What it is
+     Multi-site US longitudinal study of midlife women (~3,300). Public-use files
+     on ICPSR (baseline through Visit 10); fuller access via NIA Aging Research Biobank.
+   Labels / targets you can actually train
+     - Menopausal stage / transition (pre → early peri → late peri → post)
+     - Hormone trajectories: E2, FSH, T, SHBG, DHEAS, AMH
+     - Symptom burden across the transition (vasomotor, sleep, mood)
+     - THIS is the real answer to challenge.txt's "early or late menopause" bullet
+   Why it's more interesting than cycle phase
+     Menopause timing / stage is clinically consequential, under-modeled in consumer
+     apps, and explicitly named in the brief. Almost no Flo-clone does this well
+     with open reproducible code.
+   Access
+     ICPSR public-use: relatively fast (account + accept terms). Ideal for students.
+     Biobank: proposal + IRB/DUA — slower.
+   Fit with our project
+     Strong Layer 02. Weak direct plug into Sarah demo unless we add a "midlife"
+     persona. Still excellent as the trained scientific asset.
+   Risk
+     Not "diagnose menopause in clinic from a wearable tomorrow" — stage/trajectory
+     prediction with clear limits.
+
+
+2) ENDOMETRIOSIS SYMPTOM DYNAMICS  —  KI EndoLIST (PhysioNet, restricted)
+   What it is
+     34 Israeli patients with confirmed endometriosis; daily individualized symptom
+     tracking over months; MedDRA-mapped symptoms; high engagement.
+     https://physionet.org/content/ki-endolist/1.0.0/
+   Labels / targets
+     NOT "do you have endometriosis?" (everyone already does).
+     YES: next-day / next-week symptom flare severity, symptom co-occurrence,
+     individualized burden phenotypes, cycle-linked pain patterns.
+   Why interesting
+     Diagnosis delay is 4–12 years; the unsolved problem is heterogeneous day-to-day
+     burden and communication with clinicians — which is EXACTLY Case Compiler's
+     product shape (timeline → doctor brief), but for a disease cohort.
+   Access
+     Same PhysioNet restricted path as mcPHASES (you already know how).
+   Fit
+     Best narrative upgrade to the APP: "Case Compiler for endometriosis flares."
+     Model = flare / severity predictor; engine = provenance brief.
+   Risk
+     Small n (34). Must not claim diagnostic screening.
+
+
+3) SEX-SPECIFIC DRUG–ECG RESPONSE  —  PhysioNet clinical pharmacology ECGs
+   Datasets
+     - ECGDMMLD: dofetilide/moxifloxacin ± other drugs; healthy M/F; PK + ECG features
+       https://physionet.org/content/ecgdmmld/
+     - ECGRDVQ: ranolazine, dofetilide, verapamil, quinidine vs placebo
+       https://physionet.org/content/ecgrdvq/
+   Labels / targets
+     Predict ΔQTc / ECG feature change under drug, stratified by sex; or learn a
+     cross-sex translator of drug-response ECG features (the real Grandi-lab idea).
+   Why interesting
+     Directly hits challenge bullet #3: "clinical trials where women's hormonal /
+     sex biology affects efficacy or safety." Women have higher drug-induced
+     torsades risk. Almost nobody in a women's-health hackathon ships this.
+   Fit
+     Strong Layer 02 science story; weaker tie to Case Compiler UI unless framed as
+     "infra for sex-aware trial safety."
+   Risk
+     Small trials (~22 subjects each). Not hormonal-cycle data. Team must explain
+     the bridge ("women's physiology → drug safety gap").
+
+
+========================================================================
+TIER A — INTERESTING, BUT QUALITY / CLAIM RISKS
+========================================================================
+
+4) PCOS RISK / SCREENING FROM CLINICAL FEATURES  —  Kaggle PCOS (~541 patients)
+   Features: age, BMI, FSH, LH, AMH, follicle counts, symptoms (hirsutism, acne…).
+   Target: PCOS Y/N.
+   Why people like it: "disease prediction," explainable XGBoost, easy demo.
+   Why be careful:
+     - Recycled in dozens of student papers → judges may yawn or smell homework.
+     - Follicle counts / ultrasound-derived features can make the task nearly
+       circular (you're almost reading the diagnosis criteria back).
+     - License / provenance of the Kaggle dump is often murky.
+   Verdict: doable in a weekend; scientifically softer than SWAN / EndoLIST /
+   drug-ECG unless you add a harsh external validation story.
+
+
+5) PCOS / CYST FROM ULTRASOUND IMAGES  —  Kaggle / PCOSGen (Zenodo)
+   Target: polycystic ovary appearance on US frames.
+   Interesting clinically; totally different stack (CNNs, imaging).
+   Weak glue to Case Compiler (text/timeline app). High risk of diagnostic framing.
+   Verdict: only if the team wants an imaging side-quest, not the main bet.
+
+
+6) IVF / EMBRYO OUTCOMES  —  mixed openness
+   - Figshare Brigham oocyte/embryo anonymized clinical data (train/test split exists)
+   - Larger ART time-lapse sets (often paper-associated; access varies)
+   Targets: blastocyst formation, pregnancy, dose individualization.
+   Very interesting; often messy access, clinical ethics sensitivity, and "we predict
+   IVF success" is a landmine for unsupported claims.
+   Verdict: stretch only.
+
+
+========================================================================
+TIER B — USEFUL SUPPORT DATA, NOT THE HEADLINE MODEL
+========================================================================
+
+7) MORE NHANES CYCLES
+   Good for: bigger hormone reference ranges, metabolic context, older RHQ items
+   (endometriosis self-report in some cycles), PCOS *proxy* features.
+   Bad for: cyst imaging, true PCOS gold labels, longitudinal flares, menopause
+   trajectories (cross-sectional).
+   Keep as Layer 01 enrichment, not the Layer 02 hero task.
+
+
+8) mcPHASES (already have)
+   Best non-period targets on THIS data (more interesting than phase alone):
+     - Next-day severe headache / cramp flare given wearables + sleep + phase
+     - Wearable → hormone-metabolite *state* (noisy; frame carefully)
+     - Glucose × cycle interactions (CGM is rare + cool)
+   Still small n=42. Good as multimodal module, not as disease diagnosis.
+
+
+========================================================================
+TIER F — SOUNDS AMAZING, NOT ACTUALLY OBTAINABLE THIS WEEKEND
+========================================================================
+
+- Apple Women's Health Study — not public; Harvard/NIEHS partners only
+- Clue research dumps — partnership-only, not open download
+- UK Biobank / All of Us — accounts + applications; too slow for hackathon
+- Random "more NHANES" hoping for cyst labels — won't appear
+
+
+========================================================================
+RECOMMENDED PIVOTS (PICK ONE HEADLINE)
+========================================================================
+
+If you want "more interesting than period apps," pick ONE:
+
+A. MENOPAUSE-STAGE / TRANSITION MODEL on SWAN (ICPSR)
+   Pitch: "Open, reproducible model of menopausal transition from longitudinal
+   hormones + symptoms — the gap consumer cycle apps don't cover."
+   Closest match to challenge.txt Layer 02 bullet 1 (menopause).
+
+B. ENDOMETRIOSIS FLARE / BURDEN MODEL on KI EndoLIST + Case Compiler UI
+   Pitch: "Same app architecture, harder disease: predict and brief daily
+   endometriosis symptom burden with provenance."
+   Best product continuity with what you already built.
+
+C. SEX-AWARE DRUG–ECG SAFETY MODEL on PhysioNet ECG trials
+   Pitch: "Reusable model for sex differences in drug cardiac safety — Layer 02
+   clinical-trial bullet, plus the real Cross-Sex Translator story."
+   Best "wow, that's not another period app" science flex; weakest Sarah demo fit.
+
+D. HYBRID (ambitious)
+   Keep Case Compiler + mcPHASES multimodal flare/state model as the app,
+   AND add SWAN menopause OR drug-ECG as the published Layer 02 checkpoint.
+   Strongest "infrastructure" submission; more work.
+
+
+WHAT I WOULD NOT BET THE TEAM ON
+--------------------------------
+- Ovarian cyst diagnosis from NHANES
+- Another Kaggle PCOS classifier as the sole Layer 02 story (unless time-starved)
+- Female→male conversion so AI can "diagnose"
+- Claiming we beat Flo at period prediction
+
+
+BOTTOM LINE
+-----------
+Yes — add datasets. The interesting open ones are not "more NHANES for cysts."
+They are roughly:
+
+  SWAN          → menopause / hormonal aging (public ICPSR)
+  KI EndoLIST   → endometriosis flare dynamics (PhysioNet restricted)
+  PhysioNet ECG drug trials → sex-specific safety / cross-sex response
+  Kaggle PCOS   → easy but crowded / claim-risky
+  US imaging    → cysts/PCOS appearance, different product
+
+Cycle phase isn't "wrong." It's just table stakes. Layer 02 gets exciting when
+the prediction target is something the market and the literature still lack an
+open, auditable model for.

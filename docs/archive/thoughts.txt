@@ -1,0 +1,139 @@
+THOUGHTS ON THE CHALLENGE
+=========================================================================
+(Working notes — strategy, not commitments. Meant to help pick a lane.)
+
+-------------------------------------------------------------------------
+1. WHAT THE JUDGES ARE ACTUALLY REWARDING
+-------------------------------------------------------------------------
+Read the "Strong vs Weak" table as the real rubric. Three things dominate:
+
+  (a) REUSABILITY. They say "reusable building block" and "reusable
+      scientific asset" repeatedly. The winning artifact is something another
+      researcher can `git clone` / `pip install` / download and use on Monday.
+      An app with no reusable dataset/benchmark/model is explicitly called a
+      WEAK submission.
+
+  (b) ONE PROBLEM, DONE WELL. "Choose ONE specific hormone-related problem."
+      Scope discipline is rewarded; a sprawling half-built foundation model is
+      punished. Narrow + rigorous beats broad + shallow.
+
+  (c) OPEN SCIENCE + HONESTY. Documented train/val/test splits, transparent
+      preprocessing, no unsupported medical claims. This is a research-hygiene
+      contest as much as an ML contest.
+
+Implication: the safest high-ceiling play is Track 01 (Data & Benchmark),
+optionally with a small Track 02 model as the "baseline" that ships with the
+benchmark. That directly maximizes reusability and is the least crowded lane
+(most hackathon teams reflexively build an app = Track 03).
+
+-------------------------------------------------------------------------
+2. HONEST READ OF THE TWO DATASETS WE HAVE
+-------------------------------------------------------------------------
+NHANES (already downloaded, cleaned to CSV in data/processed/):
+  + Large n (10k-15k per cycle), nationally representative, weights available.
+  + Rich sex-steroid panel: estradiol, estrone, SHBG, FSH, LH, progesterone,
+    AMH, androstenedione, 17-OHP + demographics, body measures, biochem.
+  + CROSS-SECTIONAL. One blood draw per person. Great for "given labs +
+    demographics, predict X" but CANNOT show hormones-over-time.
+  - Total testosterone is RDC-only for 2017+ (public only in 2013-2016 via
+    TST_H / TST_I). Worth remembering if T is a target.
+  - Menstrual-cycle phase is NOT directly measured; RIDEXPRG (pregnancy) and
+    reproductive questionnaire (RHQ) exist but no daily cycle tracking.
+
+mcPHASES (PhysioNet, restricted; download INCOMPLETE — see section 6):
+  + LONGITUDINAL + MULTIMODAL: Fitbit (HR, temp, sleep, HRV, resp, SpO2,
+    stress, activity), Dexcom CGM, daily Mira hormone metabolites (LH, E3G,
+    PdG), and self-reported symptoms. 23 tables.
+  + This is the star dataset for the challenge's "dynamic biology" theme —
+    it's exactly the continuous hormone-vs-physiology signal they lament is
+    missing.
+  - SMALL n: 42 participants (20 with a 2nd 3-month round). Young Canadian
+    adults, no hormonal contraceptives, no diabetes. Narrow demographic.
+  - Restricted license (PhysioNet Restricted Health Data DUA). CANNOT be
+    re-published openly. So our OPEN deliverable must be CODE + BENCHMARK
+    DEFINITION + MODELS, not the raw data itself. Important for the open-
+    science requirement: publish the pipeline, point to the gated source.
+
+The two datasets are complementary, not substitutes:
+  NHANES = breadth / population reference ranges / cross-sectional labs.
+  mcPHASES = depth / temporal dynamics / wearable-to-hormone mapping.
+
+-------------------------------------------------------------------------
+3. CANDIDATE PROJECTS (ranked by fit-to-rubric x feasibility-in-a-weekend)
+-------------------------------------------------------------------------
+
+*** TOP PICK — "WearHormone" benchmark: predict menstrual-cycle phase /
+    hormone state from wearable signals (Track 01 + small Track 02 baseline).
+  - Task: from Fitbit-derived daily features (resting HR, wrist temp, HRV,
+    sleep, respiration), predict the Mira-labeled phase (menstruation, late-
+    follicular, ovulation, luteal) and/or regress E3G/PdG/LH.
+  - Deliverable: a clean, documented benchmark on mcPHASES with FIXED,
+    published participant-level train/val/test splits (split by participant to
+    avoid leakage — critical, and something most teams get wrong), an
+    evaluation script, metrics (macro-F1 for phase, MAE for hormones), and 2-3
+    baseline models (logistic reg / gradient boosting / small temporal model).
+  - Why it wins: maximally reusable, directly targets the "no shared
+    benchmark" pain point, honest about the tiny-n limitation, and the
+    leakage-aware split IS the scientific contribution. Reproducible in a
+    weekend.
+  - Risk: n=42 means results are illustrative, not clinical. FRAME IT THAT WAY.
+    The value is the benchmark + methodology, not SOTA accuracy.
+
+  ALT — "HormoneNet reference ranges": open, reproducible NHANES pipeline that
+    produces age/sex/BMI-stratified reference distributions for the sex-steroid
+    panel + a baseline model predicting a hormone (e.g. SHBG or estradiol) from
+    demographics + routine biochem.
+  - Why: 100% openly publishable (NHANES is public domain), big n, no DUA
+    friction. Great "data infrastructure" artifact. Less flashy than wearables
+    but bulletproof on the open-science axis.
+  - Could be the SAFE half of a two-part submission.
+
+  STRETCH — Cross-dataset harmonization layer: a schema + loader that maps
+    NHANES hormone variables and mcPHASES hormone metabolites into one
+    common, documented data model with units normalized (NHANES gives SI
+    conversion factors; mcPHASES gives Mira metabolite values). This is
+    literally "the standardized multimodal dataset" bullet. High reuse value
+    but more plumbing than modeling — good if the team likes data engineering.
+
+-------------------------------------------------------------------------
+4. WHAT I'D AVOID
+-------------------------------------------------------------------------
+  - A polished symptom-tracker app with no benchmark/model behind it. Explicit
+    WEAK example.
+  - Any "diagnose PCOS / predict endometriosis" claim from this data. We do
+    not have labeled disease outcomes at the fidelity needed; that's an
+    "unsupported medical claim" trap.
+  - A giant multimodal foundation model. Weekend-infeasible and against their
+    own advice ("rather than attempting one large foundation model").
+  - Training on mcPHASES with random row-level splits — guaranteed leakage
+    across a person's own days; inflates metrics and kills credibility.
+
+-------------------------------------------------------------------------
+5. CONCRETE NEXT STEPS (once a lane is chosen)
+-------------------------------------------------------------------------
+  1. Finish the mcPHASES download + extract; inventory all 23 tables, row
+     counts, and the join keys (id, day_in_study).
+  2. Decide lane: I recommend TOP PICK (WearHormone benchmark) + the NHANES
+     reference-range pipeline as the openly-publishable safety net.
+  3. Build the repo skeleton: /data (gitignored raw), /scripts (loaders),
+     /benchmark (split definitions + eval), /models (baselines), /notebooks
+     (EDA), README + DATASHEET (datasheets-for-datasets style) + MODEL CARD.
+  4. Lock participant-level splits early and freeze them in a versioned file.
+  5. Write the evaluation script FIRST (define success), then fit baselines.
+  6. Draft the 3-min demo around: problem (Sarah) -> the gap (no benchmark) ->
+     our reusable artifact -> a baseline number -> "here's how you extend it."
+  7. Pick an OSI license: MIT/Apache-2.0 for code, CC-BY-4.0 for any
+     derived-but-publishable artifacts (NOT the raw mcPHASES data).
+
+-------------------------------------------------------------------------
+6. OPEN ISSUES / FLAGS
+-------------------------------------------------------------------------
+  - mcPHASES download is INCOMPLETE: data/mcphases/mcphases-1.0.0.zip is ~36 MB
+    but the full archive is ~350 MB. Needs a clean re-download before any real
+    work (scripts/download_mcphases.py handles login; just re-run it).
+  - Credentials are in .env (gitignored). Keep them out of any published repo.
+  - mcPHASES license forbids re-publishing raw data — plan the open deliverable
+    around code + benchmark spec + trained model weights, with instructions to
+    obtain the gated data.
+  - Confirm which hormone target matters most to the team before building; it
+    changes which NHANES cycle(s) we need (e.g. total testosterone -> 2013-16).

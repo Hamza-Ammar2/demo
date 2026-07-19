@@ -1,0 +1,126 @@
+{
+  "accuracy": 0.9917,
+  "balanced_accuracy": 0.9924,
+  "macro_f1": 0.9924,
+  "confusion_matrix": [
+    [
+      162,
+      0,
+      0,
+      2
+    ],
+    [
+      0,
+      131,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      139,
+      0
+    ],
+    [
+      3,
+      0,
+      0,
+      163
+    ]
+  ],
+  "labels": [
+    "early_perimenopause",
+    "late_perimenopause",
+    "postmenopausal",
+    "premenopausal"
+  ],
+  "report": {
+    "early_perimenopause": {
+      "precision": 0.9818181818181818,
+      "recall": 0.9878048780487805,
+      "f1-score": 0.9848024316109423,
+      "support": 164.0
+    },
+    "late_perimenopause": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 131.0
+    },
+    "postmenopausal": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 139.0
+    },
+    "premenopausal": {
+      "precision": 0.9878787878787879,
+      "recall": 0.9819277108433735,
+      "f1-score": 0.9848942598187311,
+      "support": 166.0
+    },
+    "accuracy": 0.9916666666666667,
+    "macro avg": {
+      "precision": 0.9924242424242424,
+      "recall": 0.9924331472230385,
+      "f1-score": 0.9924241728574184,
+      "support": 600.0
+    },
+    "weighted avg": {
+      "precision": 0.9916767676767677,
+      "recall": 0.9916666666666667,
+      "f1-score": 0.9916667431901732,
+      "support": 600.0
+    }
+  },
+  "n_train_rows": 1800,
+  "n_test_rows": 600,
+  "n_train_participants": 1800,
+  "n_test_participants": 600,
+  "feature_importances": [
+    {
+      "feature": "amenorrhea_months",
+      "importance": 0.60058
+    },
+    {
+      "feature": "fsh_miu_ml",
+      "importance": 0.27789
+    },
+    {
+      "feature": "sleep_disturbance",
+      "importance": 0.06504
+    },
+    {
+      "feature": "cycle_irregularity",
+      "importance": 0.05136
+    },
+    {
+      "feature": "hot_flash_freq",
+      "importance": 0.00168
+    },
+    {
+      "feature": "estradiol_pg_ml",
+      "importance": 0.00116
+    },
+    {
+      "feature": "age_years",
+      "importance": 0.00071
+    },
+    {
+      "feature": "bmi",
+      "importance": 0.00064
+    },
+    {
+      "feature": "shbg_nmol_l",
+      "importance": 0.00049
+    },
+    {
+      "feature": "night_sweat_freq",
+      "importance": 0.00044
+    }
+  ],
+  "data_source": "synthetic_swan_like",
+  "data_redistributable": true,
+  "split": "participant_held_out_25pct",
+  "disclaimer": "Estimates menopausal *stage category* from hormones + symptoms + age. Not a clinical diagnosis of menopause onset timing. If data_source is synthetic_swan_like, accuracy is illustrative only."
+}

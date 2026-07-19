@@ -1,0 +1,2243 @@
+{
+  "version": "v0.1",
+  "description": "CycleBench medical foundation: guideline-seeded associations strengthened by female-specialized dataset evidence. Not a diagnostic system.",
+  "entities": [
+    {
+      "entity_id": "sym.headache",
+      "kind": "symptom",
+      "label": "headache",
+      "synonyms": [
+        "headaches"
+      ],
+      "description": "Head pain of any pattern",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.migraine",
+      "kind": "symptom",
+      "label": "migraine",
+      "synonyms": [
+        "severe migraine",
+        "migraines"
+      ],
+      "description": "Migraine-pattern headache",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.cramps",
+      "kind": "symptom",
+      "label": "cramps",
+      "synonyms": [
+        "period pain",
+        "dysmenorrhea"
+      ],
+      "description": "Menstrual cramps",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.pelvic_pain",
+      "kind": "symptom",
+      "label": "pelvic pain",
+      "synonyms": [
+        "pelvic discomfort"
+      ],
+      "description": "Pelvic pain",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.fatigue",
+      "kind": "symptom",
+      "label": "fatigue",
+      "synonyms": [
+        "tiredness",
+        "exhaustion"
+      ],
+      "description": "Low energy / fatigue",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.brain_fog",
+      "kind": "symptom",
+      "label": "brain fog",
+      "synonyms": [
+        "foggy thinking"
+      ],
+      "description": "Cognitive fog / difficulty concentrating",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.mood",
+      "kind": "symptom",
+      "label": "mood changes",
+      "synonyms": [
+        "mood swings",
+        "irritability"
+      ],
+      "description": "Mood lability or low mood",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.bloating",
+      "kind": "symptom",
+      "label": "bloating",
+      "synonyms": [],
+      "description": "Abdominal bloating",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.sore_breasts",
+      "kind": "symptom",
+      "label": "breast tenderness",
+      "synonyms": [
+        "sore breasts"
+      ],
+      "description": "Cyclical breast tenderness",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.nausea",
+      "kind": "symptom",
+      "label": "nausea",
+      "synonyms": [],
+      "description": "Nausea",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.hot_flash",
+      "kind": "symptom",
+      "label": "hot flash",
+      "synonyms": [
+        "hot flashes",
+        "vasomotor"
+      ],
+      "description": "Sudden heat / flushing",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.night_sweat",
+      "kind": "symptom",
+      "label": "night sweats",
+      "synonyms": [],
+      "description": "Night-time sweating",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.acne",
+      "kind": "symptom",
+      "label": "acne",
+      "synonyms": [],
+      "description": "Acne / skin breakouts",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.hairsuit",
+      "kind": "symptom",
+      "label": "excess hair growth",
+      "synonyms": [
+        "hirsutism",
+        "hair growth"
+      ],
+      "description": "Androgen-related hair growth discussion cue",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.weight_change",
+      "kind": "symptom",
+      "label": "weight change",
+      "synonyms": [
+        "weight gain"
+      ],
+      "description": "Recent weight change",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.low_libido",
+      "kind": "symptom",
+      "label": "low libido",
+      "synonyms": [],
+      "description": "Reduced sexual desire",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.spotting",
+      "kind": "symptom",
+      "label": "spotting",
+      "synonyms": [
+        "breakthrough bleeding"
+      ],
+      "description": "Intermenstrual spotting",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "sym.heavy_bleed",
+      "kind": "symptom",
+      "label": "heavy bleeding",
+      "synonyms": [
+        "menorrhagia"
+      ],
+      "description": "Heavy menstrual bleeding",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "phase.menstrual",
+      "kind": "cycle_phase",
+      "label": "menstrual phase",
+      "synonyms": [],
+      "description": "Bleeding / early cycle window",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "phase.follicular",
+      "kind": "cycle_phase",
+      "label": "follicular phase",
+      "synonyms": [],
+      "description": "Post-menstrual follicular window",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "phase.fertility",
+      "kind": "cycle_phase",
+      "label": "fertility / periovulatory",
+      "synonyms": [],
+      "description": "Around ovulation",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "phase.luteal",
+      "kind": "cycle_phase",
+      "label": "luteal phase",
+      "synonyms": [],
+      "description": "Post-ovulatory luteal window",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "cycle.irregular",
+      "kind": "other",
+      "label": "irregular cycles",
+      "synonyms": [],
+      "description": "Oligomenorrhea / unpredictable cycles",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "cycle.regular",
+      "kind": "other",
+      "label": "regular cycles",
+      "synonyms": [],
+      "description": "Approximately monthly cycles",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "cycle.amenorrhea",
+      "kind": "other",
+      "label": "amenorrhea",
+      "synonyms": [],
+      "description": "Absence of menses (discussion cue)",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "cycle.short",
+      "kind": "other",
+      "label": "short cycles",
+      "synonyms": [],
+      "description": "Cycles shorter than typical",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "cycle.long",
+      "kind": "other",
+      "label": "long cycles",
+      "synonyms": [],
+      "description": "Cycles longer than typical",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "life.adolescence",
+      "kind": "life_stage",
+      "label": "adolescence",
+      "synonyms": [],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "life.reproductive",
+      "kind": "life_stage",
+      "label": "reproductive years",
+      "synonyms": [],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "life.early_peri",
+      "kind": "life_stage",
+      "label": "early perimenopause",
+      "synonyms": [],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "life.late_peri",
+      "kind": "life_stage",
+      "label": "late perimenopause",
+      "synonyms": [],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "life.postmeno",
+      "kind": "life_stage",
+      "label": "postmenopause",
+      "synonyms": [],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "life.pregnancy",
+      "kind": "life_stage",
+      "label": "pregnancy",
+      "synonyms": [],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "life.postpartum",
+      "kind": "life_stage",
+      "label": "postpartum",
+      "synonyms": [],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "horm.estradiol",
+      "kind": "hormone",
+      "label": "estradiol (E2)",
+      "synonyms": [],
+      "description": "Circulating estradiol",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "horm.progesterone",
+      "kind": "hormone",
+      "label": "progesterone",
+      "synonyms": [],
+      "description": "Circulating / metabolite progesterone",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "horm.fsh",
+      "kind": "hormone",
+      "label": "FSH",
+      "synonyms": [],
+      "description": "Follicle-stimulating hormone",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "horm.lh",
+      "kind": "hormone",
+      "label": "LH",
+      "synonyms": [],
+      "description": "Luteinizing hormone",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "horm.amh",
+      "kind": "hormone",
+      "label": "AMH",
+      "synonyms": [],
+      "description": "Anti-M\u00fcllerian hormone",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "horm.tsh",
+      "kind": "hormone",
+      "label": "TSH",
+      "synonyms": [],
+      "description": "Thyroid-stimulating hormone",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "horm.shbg",
+      "kind": "hormone",
+      "label": "SHBG",
+      "synonyms": [],
+      "description": "Sex hormone-binding globulin",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "horm.prolactin",
+      "kind": "hormone",
+      "label": "prolactin",
+      "synonyms": [],
+      "description": "Prolactin",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "horm.testosterone",
+      "kind": "hormone",
+      "label": "testosterone",
+      "synonyms": [],
+      "description": "Total / free testosterone context",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "anal.glucose",
+      "kind": "analyte",
+      "label": "glucose",
+      "synonyms": [],
+      "description": "Fasting / plasma glucose",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "anal.insulin",
+      "kind": "analyte",
+      "label": "insulin",
+      "synonyms": [],
+      "description": "Fasting insulin",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "anal.hba1c",
+      "kind": "analyte",
+      "label": "HbA1c",
+      "synonyms": [],
+      "description": "Glycated hemoglobin",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "anal.t4",
+      "kind": "analyte",
+      "label": "free T4",
+      "synonyms": [],
+      "description": "Thyroxine",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "anal.t3",
+      "kind": "analyte",
+      "label": "free T3",
+      "synonyms": [],
+      "description": "Triiodothyronine",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "int.combined_pill",
+      "kind": "intervention",
+      "label": "combined oral contraceptive",
+      "synonyms": [
+        "combined pill",
+        "COC",
+        "estrogen pill"
+      ],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "int.pop",
+      "kind": "intervention",
+      "label": "progestogen-only pill",
+      "synonyms": [
+        "POP",
+        "mini pill"
+      ],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "int.hormonal_iud",
+      "kind": "intervention",
+      "label": "hormonal IUD",
+      "synonyms": [
+        "Mirena-type IUD",
+        "LNG-IUD"
+      ],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "int.copper_iud",
+      "kind": "intervention",
+      "label": "copper IUD",
+      "synonyms": [
+        "Cu-IUD"
+      ],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "int.implant",
+      "kind": "intervention",
+      "label": "contraceptive implant",
+      "synonyms": [
+        "implant"
+      ],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "int.injection",
+      "kind": "intervention",
+      "label": "contraceptive injection",
+      "synonyms": [
+        "DMPA",
+        "Depo"
+      ],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "int.ring_patch",
+      "kind": "intervention",
+      "label": "ring or patch",
+      "synonyms": [
+        "vaginal ring",
+        "patch"
+      ],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "int.hrt",
+      "kind": "intervention",
+      "label": "menopausal hormone therapy",
+      "synonyms": [
+        "HRT",
+        "MHT"
+      ],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "int.none",
+      "kind": "intervention",
+      "label": "no contraception",
+      "synonyms": [
+        "none"
+      ],
+      "description": "",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "ctx.sleep",
+      "kind": "confounder",
+      "label": "sleep disturbance",
+      "synonyms": [],
+      "description": "Poor or fragmented sleep",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "ctx.stress",
+      "kind": "confounder",
+      "label": "stress",
+      "synonyms": [],
+      "description": "High psychological stress",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "ctx.bmi",
+      "kind": "confounder",
+      "label": "BMI / body weight context",
+      "synonyms": [],
+      "description": "Weight / adiposity context",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "ctx.exercise",
+      "kind": "confounder",
+      "label": "exercise change",
+      "synonyms": [],
+      "description": "New or intense exercise",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "ctx.diet",
+      "kind": "confounder",
+      "label": "diet change",
+      "synonyms": [],
+      "description": "Major dietary shift",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "ctx.med_change",
+      "kind": "confounder",
+      "label": "medication change",
+      "synonyms": [],
+      "description": "New / changed medication",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "ctx.contraception_change",
+      "kind": "confounder",
+      "label": "contraception change window",
+      "synonyms": [],
+      "description": "Start/stop/switch of contraception",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "ctx.iron",
+      "kind": "confounder",
+      "label": "iron status context",
+      "synonyms": [],
+      "description": "Possible iron deficiency discussion cue",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "cluster.pcos",
+      "kind": "cluster",
+      "label": "PCOS discussion cluster",
+      "synonyms": [],
+      "description": "Irregular cycles + androgenic / metabolic cues clinicians may explore. Not a diagnosis.",
+      "notes": "Irregular cycles + androgenic / metabolic cues clinicians may explore. Not a diagnosis.",
+      "not_a_diagnosis": true
+    },
+    {
+      "entity_id": "cluster.endo",
+      "kind": "cluster",
+      "label": "Endometriosis-symptom discussion cluster",
+      "synonyms": [],
+      "description": "Cyclical pelvic pain patterns clinicians may explore. Evidence-light in this graph; not a diagnosis.",
+      "notes": "Cyclical pelvic pain patterns clinicians may explore. Evidence-light in this graph; not a diagnosis.",
+      "not_a_diagnosis": true
+    },
+    {
+      "entity_id": "cluster.menopause",
+      "kind": "cluster",
+      "label": "Menopause-transition discussion cluster",
+      "synonyms": [],
+      "description": "Midlife cycle change + vasomotor cues. Stage category talk only \u2014 not a home diagnosis.",
+      "notes": "Midlife cycle change + vasomotor cues. Stage category talk only \u2014 not a home diagnosis.",
+      "not_a_diagnosis": true
+    },
+    {
+      "entity_id": "cluster.thyroid",
+      "kind": "cluster",
+      "label": "Thyroid discussion cluster",
+      "synonyms": [],
+      "description": "Fatigue/mood/cycle change with thyroid labs context. Not a diagnosis.",
+      "notes": "Fatigue/mood/cycle change with thyroid labs context. Not a diagnosis.",
+      "not_a_diagnosis": true
+    },
+    {
+      "entity_id": "cluster.anemia",
+      "kind": "cluster",
+      "label": "Anemia / heavy-bleed discussion cluster",
+      "synonyms": [],
+      "description": "Heavy bleeding + fatigue cue. Not a diagnosis.",
+      "notes": "Heavy bleeding + fatigue cue. Not a diagnosis.",
+      "not_a_diagnosis": true
+    },
+    {
+      "entity_id": "cluster.pmdd",
+      "kind": "cluster",
+      "label": "Premenstrual mood discussion cluster",
+      "synonyms": [],
+      "description": "Luteal-window mood changes clinicians may explore. Not a diagnosis.",
+      "notes": "Luteal-window mood changes clinicians may explore. Not a diagnosis.",
+      "not_a_diagnosis": true
+    },
+    {
+      "entity_id": "other.aura",
+      "kind": "other",
+      "label": "migraine aura",
+      "synonyms": [
+        "visual aura"
+      ],
+      "description": "Visual/sensory aura with headache",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "other.follicle_count",
+      "kind": "other",
+      "label": "ovarian follicle count",
+      "synonyms": [],
+      "description": "Ultrasound follicle count context",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "other.endometrium",
+      "kind": "other",
+      "label": "endometrial thickness",
+      "synonyms": [],
+      "description": "Ultrasound endometrium context",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "model.pcos_risk",
+      "kind": "other",
+      "label": "PCOS-risk model signal",
+      "synonyms": [],
+      "description": "Factory model output slot",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "model.meno_stage",
+      "kind": "other",
+      "label": "menopause-stage model signal",
+      "synonyms": [],
+      "description": "Factory/model output slot",
+      "notes": "",
+      "not_a_diagnosis": false
+    },
+    {
+      "entity_id": "model.hormonal_state",
+      "kind": "other",
+      "label": "hormonal-state model signal",
+      "synonyms": [],
+      "description": "mcPHASES-trained phase model slot",
+      "notes": "",
+      "not_a_diagnosis": false
+    }
+  ],
+  "associations": [
+    {
+      "association_id": "assoc.headache_menstrual",
+      "subject_id": "sym.headache",
+      "object_id": "phase.menstrual",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "reproductive-age",
+      "caveats": "Timing associations are not diagnoses; many non-cycle causes exist.",
+      "source": "Menstrual physiology / clinical gynecology & headache medicine (textbook-level timing associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:headache",
+        "symptom:migraine",
+        "timing:before_period",
+        "timing:during_period"
+      ],
+      "talking_point": "Headaches that cluster in the menstrual window are a commonly recognized timing pattern.",
+      "ask_doctor": "My headaches seem tied to my period \u2014 does that timing matter?",
+      "title": "Headaches near menses"
+    },
+    {
+      "association_id": "assoc.migraine_luteal",
+      "subject_id": "sym.migraine",
+      "object_id": "phase.luteal",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "reproductive-age",
+      "caveats": "Timing associations are not diagnoses; many non-cycle causes exist.",
+      "source": "Menstrual physiology / clinical gynecology & headache medicine (textbook-level timing associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:migraine",
+        "timing:before_period"
+      ],
+      "talking_point": "Some people notice migraine load rise in the late luteal / premenstrual window.",
+      "ask_doctor": "Do my migraine days line up with the second half of my cycle?",
+      "title": "Migraine in the luteal window"
+    },
+    {
+      "association_id": "assoc.cramps_menstrual",
+      "subject_id": "sym.cramps",
+      "object_id": "phase.menstrual",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "reproductive-age",
+      "caveats": "Timing associations are not diagnoses; many non-cycle causes exist.",
+      "source": "Menstrual physiology / clinical gynecology & headache medicine (textbook-level timing associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:cramps",
+        "timing:during_period"
+      ],
+      "talking_point": "Cramps commonly concentrate in the menstrual phase; severity and sudden change still matter clinically.",
+      "ask_doctor": "How heavy or disruptive are my cramps across cycles?",
+      "title": "Cramps and menses"
+    },
+    {
+      "association_id": "assoc.mood_luteal",
+      "subject_id": "sym.mood",
+      "object_id": "phase.luteal",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "reproductive-age",
+      "caveats": "Timing associations are not diagnoses; many non-cycle causes exist.",
+      "source": "Menstrual physiology / clinical gynecology & headache medicine (textbook-level timing associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:mood",
+        "timing:before_period"
+      ],
+      "talking_point": "Mood shifts in the luteal window are commonly discussed; tracking helps separate cycle-linked from constant patterns.",
+      "ask_doctor": "Are my mood changes mainly in the week before my period?",
+      "title": "Mood changes before the period"
+    },
+    {
+      "association_id": "assoc.bloating_luteal",
+      "subject_id": "sym.bloating",
+      "object_id": "phase.luteal",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "reproductive-age",
+      "caveats": "Timing associations are not diagnoses; many non-cycle causes exist.",
+      "source": "Menstrual physiology / clinical gynecology & headache medicine (textbook-level timing associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:bloating"
+      ],
+      "talking_point": "Bloating often co-travels with the late cycle; diet and GI causes still matter.",
+      "ask_doctor": "Is my bloating mostly cyclical?",
+      "title": "Bloating around the luteal window"
+    },
+    {
+      "association_id": "assoc.breasts_luteal",
+      "subject_id": "sym.sore_breasts",
+      "object_id": "phase.luteal",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "reproductive-age",
+      "caveats": "Timing associations are not diagnoses; many non-cycle causes exist.",
+      "source": "Menstrual physiology / clinical gynecology & headache medicine (textbook-level timing associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:sore_breasts"
+      ],
+      "talking_point": "Cyclical breast tenderness is frequently luteal-predominant.",
+      "ask_doctor": "Is breast tenderness a usual part of my cycle or new?",
+      "title": "Breast tenderness and the luteal phase"
+    },
+    {
+      "association_id": "assoc.fatigue_menstrual",
+      "subject_id": "sym.fatigue",
+      "object_id": "phase.menstrual",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "low",
+      "population_scope": "reproductive-age",
+      "caveats": "Timing associations are not diagnoses; many non-cycle causes exist.",
+      "source": "Menstrual physiology / clinical gynecology & headache medicine (textbook-level timing associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:fatigue"
+      ],
+      "talking_point": "Fatigue can rise around menses but often has multiple contributors (sleep, iron, mood).",
+      "ask_doctor": "Is my fatigue worse on period days, or all month?",
+      "title": "Fatigue around menses"
+    },
+    {
+      "association_id": "assoc.pelvic_menstrual",
+      "subject_id": "sym.pelvic_pain",
+      "object_id": "phase.menstrual",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "reproductive-age",
+      "caveats": "Timing associations are not diagnoses; many non-cycle causes exist.",
+      "source": "Menstrual physiology / clinical gynecology & headache medicine (textbook-level timing associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:pelvic_pain",
+        "timing:during_period",
+        "timing:before_period"
+      ],
+      "talking_point": "Pelvic pain that tracks menses is a pattern clinicians often explore further when severe or progressive.",
+      "ask_doctor": "Is my pelvic pain mainly with periods, and is it getting worse over time?",
+      "title": "Pelvic pain timed to menses"
+    },
+    {
+      "association_id": "assoc.estrogen_migraine",
+      "subject_id": "int.combined_pill",
+      "object_id": "sym.migraine",
+      "relation": "counseling_relevant_with",
+      "directionality": "subject->object",
+      "strength_prior": "high",
+      "population_scope": "reproductive-age using CHC",
+      "caveats": "Counseling relevance only \u2014 not a home diagnosis or instruction to stop medication.",
+      "source": "UKMEC / CDC MEC style guidance: combined hormonal contraception and migraine (esp. with aura) is a counseling point.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:headache",
+        "symptom:migraine",
+        "contraception:estrogen"
+      ],
+      "talking_point": "Headaches that started or changed around a combined (estrogen-containing) contraceptive are a pattern clinicians often review. This does not mean the method caused the headaches \u2014 it means the combination is worth discussing, especially if headaches come with aura (flashing lights, zigzag vision).",
+      "ask_doctor": "Do my headaches change with my contraceptive method, and should we review whether an estrogen-containing option is still a good fit?",
+      "title": "Hormonal contraception and headaches"
+    },
+    {
+      "association_id": "assoc.estrogen_aura",
+      "subject_id": "int.combined_pill",
+      "object_id": "other.aura",
+      "relation": "counseling_relevant_with",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "general",
+      "caveats": "User may not know what aura is; ask, don't assume.",
+      "source": "UKMEC / CDC MEC: migraine with aura is a key counseling modifier for combined hormonal contraception.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:migraine",
+        "contraception:estrogen",
+        "flag:aura"
+      ],
+      "talking_point": "If headaches include aura, clinicians usually want that detail when reviewing estrogen-containing contraception. Aura presence changes the counseling conversation.",
+      "ask_doctor": "Do my headaches include aura, and does that change contraceptive choices for me?",
+      "title": "Aura and combined contraception"
+    },
+    {
+      "association_id": "assoc.bleed_ring_patch",
+      "subject_id": "int.ring_patch",
+      "object_id": "sym.spotting",
+      "relation": "modulated_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Contraceptive counseling: bleeding-pattern changes are common after method start/switch.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:spotting",
+        "contraception:ring_patch"
+      ],
+      "talking_point": "Spotting or bleeding-pattern changes after starting or switching a ring/patch are commonly discussed in the adjustment window.",
+      "ask_doctor": "Is this bleeding pattern expected for my method, and when should we reassess?",
+      "title": "Bleeding pattern and ring/patch"
+    },
+    {
+      "association_id": "assoc.bleed_pop",
+      "subject_id": "int.pop",
+      "object_id": "sym.spotting",
+      "relation": "modulated_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Contraceptive counseling: bleeding-pattern changes are common after method start/switch.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:spotting",
+        "contraception:pop"
+      ],
+      "talking_point": "Spotting or bleeding-pattern changes after starting or switching a progestogen-only pill are commonly discussed in the adjustment window.",
+      "ask_doctor": "Is this bleeding pattern expected for my method, and when should we reassess?",
+      "title": "Bleeding pattern and progestogen-only pill"
+    },
+    {
+      "association_id": "assoc.bleed_hormonal_iud",
+      "subject_id": "int.hormonal_iud",
+      "object_id": "sym.spotting",
+      "relation": "modulated_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Contraceptive counseling: bleeding-pattern changes are common after method start/switch.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:spotting",
+        "contraception:hormonal_iud"
+      ],
+      "talking_point": "Spotting or bleeding-pattern changes after starting or switching a hormonal IUD are commonly discussed in the adjustment window.",
+      "ask_doctor": "Is this bleeding pattern expected for my method, and when should we reassess?",
+      "title": "Bleeding pattern and hormonal IUD"
+    },
+    {
+      "association_id": "assoc.contraception_change_window",
+      "subject_id": "ctx.contraception_change",
+      "object_id": "sym.headache",
+      "relation": "modulated_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "Temporal coincidence \u2260 causation.",
+      "source": "General contraceptive counseling: adjustment windows after start/stop/switch.",
+      "status": "seed",
+      "match_tags": [
+        "contraception:changed",
+        "contraception:stopped",
+        "has_symptoms"
+      ],
+      "talking_point": "When contraception is started, stopped, or switched, the body often needs weeks to months to settle. New or changing symptoms in that window are worth noting on a timeline \u2014 not as proof of cause, but as useful context.",
+      "ask_doctor": "These symptoms showed up around my contraception change \u2014 is that a plausible association, or should we look elsewhere?",
+      "title": "Symptoms after a contraception change"
+    },
+    {
+      "association_id": "assoc.sleep_headache",
+      "subject_id": "ctx.sleep",
+      "object_id": "sym.headache",
+      "relation": "confounded_by",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Headache and sleep medicine: bidirectional association between sleep disruption and headache.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:headache",
+        "symptom:migraine",
+        "sleep:poor"
+      ],
+      "talking_point": "Poor sleep and headaches often travel together. Sleep disturbance can worsen headache load, and headaches can disrupt sleep \u2014 so clinicians usually ask about both rather than treating them as separate mysteries.",
+      "ask_doctor": "I've had rough sleep alongside the headaches \u2014 should we address sleep as part of this picture?",
+      "title": "Sleep and headache overlap"
+    },
+    {
+      "association_id": "assoc.sleep_mood",
+      "subject_id": "ctx.sleep",
+      "object_id": "sym.mood",
+      "relation": "confounded_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Sleep and mood are tightly linked in clinical assessment.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:mood",
+        "sleep:poor"
+      ],
+      "talking_point": "Mood changes alongside poor sleep are a common co-travel pattern clinicians unpack together.",
+      "ask_doctor": "Could sleep be contributing to how I've been feeling emotionally?",
+      "title": "Sleep and mood"
+    },
+    {
+      "association_id": "assoc.sleep_fatigue",
+      "subject_id": "ctx.sleep",
+      "object_id": "sym.fatigue",
+      "relation": "confounded_by",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Clinical basics: sleep debt is a primary fatigue contributor.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:fatigue",
+        "sleep:poor"
+      ],
+      "talking_point": "Fatigue with poor sleep often improves when sleep is addressed \u2014 but persistent fatigue still deserves a broader look.",
+      "ask_doctor": "How much of my fatigue lines up with nights of bad sleep?",
+      "title": "Sleep and fatigue"
+    },
+    {
+      "association_id": "assoc.stress_mood",
+      "subject_id": "ctx.stress",
+      "object_id": "sym.mood",
+      "relation": "confounded_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Behavioral medicine: stress and mood covary strongly.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:mood",
+        "context:stress"
+      ],
+      "talking_point": "High stress and mood changes commonly overlap; both deserve space in the story you bring to a clinician.",
+      "ask_doctor": "How much stress has been in the background of these mood changes?",
+      "title": "Stress and mood"
+    },
+    {
+      "association_id": "assoc.hotflash_peri",
+      "subject_id": "sym.hot_flash",
+      "object_id": "cluster.menopause",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "midlife",
+      "caveats": "Vasomotor symptoms have non-menopausal causes too.",
+      "source": "Menopause practice guidelines: vasomotor symptoms are cardinal midlife counseling topics.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:hot_flash",
+        "age:midlife"
+      ],
+      "talking_point": "In the 40s\u201350s, hot flashes are commonly discussed as part of the menopause transition. Timing and severity help a clinician place you on that spectrum \u2014 without a home diagnosis.",
+      "ask_doctor": "Given my age and hot flashes, what would you track next?",
+      "title": "Hot flashes in midlife context"
+    },
+    {
+      "association_id": "assoc.nightsweat_peri",
+      "subject_id": "sym.night_sweat",
+      "object_id": "cluster.menopause",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "midlife",
+      "caveats": "",
+      "source": "Menopause practice guidelines: night sweats as vasomotor counseling topic.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:night_sweat",
+        "age:midlife"
+      ],
+      "talking_point": "Night sweats in midlife are often reviewed alongside cycle changes as a menopause-transition cue.",
+      "ask_doctor": "Are my night sweats likely part of a midlife transition pattern?",
+      "title": "Night sweats in midlife context"
+    },
+    {
+      "association_id": "assoc.irregular_peri",
+      "subject_id": "cycle.irregular",
+      "object_id": "cluster.menopause",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "midlife",
+      "caveats": "",
+      "source": "STRAW+10 / menopause staging frameworks: cycle irregularity is a transition marker.",
+      "status": "seed",
+      "match_tags": [
+        "cycle:irregular",
+        "age:midlife"
+      ],
+      "talking_point": "Changing cycle regularity in the 40s\u201350s is a classic counseling marker of the menopause transition.",
+      "ask_doctor": "Do my cycle changes fit a menopause-transition pattern for my age?",
+      "title": "Cycle irregularity in midlife"
+    },
+    {
+      "association_id": "assoc.amenorrhea_eval",
+      "subject_id": "cycle.amenorrhea",
+      "object_id": "life.reproductive",
+      "relation": "counseling_relevant_with",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Gynecology basics: secondary amenorrhea (\u22483+ months) warrants clinical evaluation.",
+      "status": "seed",
+      "match_tags": [
+        "cycle:amenorrhea",
+        "last_period:long"
+      ],
+      "talking_point": "Going three or more months without a period (when pregnancy is not the explanation) is something clinicians usually want to know about. There are many possible reasons; the useful move is a proper history and, if needed, labs \u2014 not guessing at home.",
+      "ask_doctor": "I haven't had a period in a while \u2014 what should we check, and how urgently?",
+      "title": "Long gap since last period"
+    },
+    {
+      "association_id": "assoc.fsh_meno",
+      "subject_id": "horm.fsh",
+      "object_id": "cluster.menopause",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "midlife",
+      "caveats": "FSH fluctuates; interpretation is clinical.",
+      "source": "Reproductive endocrinology: FSH rises across the menopause transition (context-dependent).",
+      "status": "evidenced",
+      "match_tags": [
+        "labs:fsh",
+        "age:midlife"
+      ],
+      "talking_point": "FSH can help contextualize midlife stage in clinic; a single value is not a home diagnosis of menopause.",
+      "ask_doctor": "Would FSH or other labs add useful context for my stage?",
+      "title": "FSH as a midlife marker"
+    },
+    {
+      "association_id": "assoc.e2_meno",
+      "subject_id": "horm.estradiol",
+      "object_id": "cluster.menopause",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "midlife",
+      "caveats": "",
+      "source": "Reproductive endocrinology: estradiol declines across the transition (variable).",
+      "status": "evidenced",
+      "match_tags": [
+        "labs:estradiol",
+        "age:midlife"
+      ],
+      "talking_point": "Estradiol levels can inform midlife assessment but vary widely cycle-to-cycle before menopause.",
+      "ask_doctor": "Do my estradiol results mean anything for symptoms I'm having?",
+      "title": "Estradiol in midlife context"
+    },
+    {
+      "association_id": "assoc.model_meno",
+      "subject_id": "model.meno_stage",
+      "object_id": "cluster.menopause",
+      "relation": "predicted_by_model",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "May be trained on synthetic SWAN-like data until real SWAN is loaded.",
+      "source": "CycleBench menopause-stage model (research estimate).",
+      "status": "model_linked",
+      "match_tags": [
+        "model:menopause"
+      ],
+      "talking_point": "A research model can estimate a stage category from age/symptoms/labs \u2014 association only, not a clinical diagnosis.",
+      "ask_doctor": "How should we interpret this stage estimate alongside my history?",
+      "title": "Menopause-stage model signal"
+    },
+    {
+      "association_id": "assoc.irregular_pcos",
+      "subject_id": "cycle.irregular",
+      "object_id": "cluster.pcos",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "general",
+      "caveats": "Irregular cycles \u2260 PCOS.",
+      "source": "Reproductive endocrinology: oligomenorrhea is a core PCOS counseling cue (many causes).",
+      "status": "seed",
+      "match_tags": [
+        "cycle:irregular",
+        "cluster:pcosish"
+      ],
+      "talking_point": "Irregular cycles plus symptoms like weight change, excess hair growth, acne, or pelvic discomfort are a cluster clinicians may explore further (including hormonal workup). Many things can cause irregular cycles \u2014 this is a reason for a conversation, not a label.",
+      "ask_doctor": "My cycles are irregular and I've also noticed other changes \u2014 what evaluations would you consider?",
+      "title": "Irregular cycles and related symptoms"
+    },
+    {
+      "association_id": "assoc.amh_pcos",
+      "subject_id": "horm.amh",
+      "object_id": "cluster.pcos",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "Cluster markers \u2260 diagnosis.",
+      "source": "PCOS clinical frameworks (Rotterdam-style counseling cues) \u2014 discussion only.",
+      "status": "seed",
+      "match_tags": [
+        "labs:amh"
+      ],
+      "talking_point": "AMH is sometimes discussed in PCOS workups; elevated values are contextual, not diagnostic alone.",
+      "ask_doctor": "Does this fit a hormonal pattern worth testing?",
+      "title": "AMH in PCOS-cluster context"
+    },
+    {
+      "association_id": "assoc.lh_pcos",
+      "subject_id": "horm.lh",
+      "object_id": "cluster.pcos",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "Cluster markers \u2260 diagnosis.",
+      "source": "PCOS clinical frameworks (Rotterdam-style counseling cues) \u2014 discussion only.",
+      "status": "seed",
+      "match_tags": [
+        "labs:lh"
+      ],
+      "talking_point": "LH (and LH/FSH context) may appear in hormonal panels when irregular cycles are evaluated.",
+      "ask_doctor": "Does this fit a hormonal pattern worth testing?",
+      "title": "LH in PCOS-cluster context"
+    },
+    {
+      "association_id": "assoc.hairsuit_pcos",
+      "subject_id": "sym.hairsuit",
+      "object_id": "cluster.pcos",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "Cluster markers \u2260 diagnosis.",
+      "source": "PCOS clinical frameworks (Rotterdam-style counseling cues) \u2014 discussion only.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:hairsuit",
+        "cluster:pcosish"
+      ],
+      "talking_point": "Excess hair growth with irregular cycles is a hyperandrogenic cue clinicians may explore \u2014 many causes exist.",
+      "ask_doctor": "Does this fit a hormonal pattern worth testing?",
+      "title": "Excess hair growth cue"
+    },
+    {
+      "association_id": "assoc.acne_pcos",
+      "subject_id": "sym.acne",
+      "object_id": "cluster.pcos",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "Cluster markers \u2260 diagnosis.",
+      "source": "PCOS clinical frameworks (Rotterdam-style counseling cues) \u2014 discussion only.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:acne",
+        "cluster:pcosish"
+      ],
+      "talking_point": "Acne plus irregular cycles can be part of a broader hormonal conversation.",
+      "ask_doctor": "Does this fit a hormonal pattern worth testing?",
+      "title": "Acne with irregular cycles"
+    },
+    {
+      "association_id": "assoc.weight_pcos",
+      "subject_id": "sym.weight_change",
+      "object_id": "cluster.pcos",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "Cluster markers \u2260 diagnosis.",
+      "source": "PCOS clinical frameworks (Rotterdam-style counseling cues) \u2014 discussion only.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:weight_change",
+        "cluster:pcosish",
+        "context:weight"
+      ],
+      "talking_point": "Weight change alongside irregular cycles is useful context, not a diagnosis.",
+      "ask_doctor": "Does this fit a hormonal pattern worth testing?",
+      "title": "Weight change with irregular cycles"
+    },
+    {
+      "association_id": "assoc.follicle_pcos",
+      "subject_id": "other.follicle_count",
+      "object_id": "cluster.pcos",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "Cluster markers \u2260 diagnosis.",
+      "source": "PCOS clinical frameworks (Rotterdam-style counseling cues) \u2014 discussion only.",
+      "status": "seed",
+      "match_tags": [
+        "labs:follicles"
+      ],
+      "talking_point": "Ultrasound follicle counts are used in clinical PCOS criteria frameworks \u2014 imaging belongs in clinic, not apps.",
+      "ask_doctor": "Does this fit a hormonal pattern worth testing?",
+      "title": "Follicle count context"
+    },
+    {
+      "association_id": "assoc.model_pcos",
+      "subject_id": "model.pcos_risk",
+      "object_id": "cluster.pcos",
+      "relation": "predicted_by_model",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "clinic-PCOS-cohort (Kerala)",
+      "caveats": "Single-region, cross-sectional, not externally validated as a device.",
+      "source": "CycleBench PCOS-risk model trained on Kaggle Kerala clinic cohort (n=541).",
+      "status": "model_linked",
+      "match_tags": [
+        "model:pcos",
+        "cluster:pcosish"
+      ],
+      "talking_point": "A research model can estimate how similar a feature pattern is to a labeled PCOS clinic cohort. That is a statistical association \u2014 not a diagnosis.",
+      "ask_doctor": "How should we use this screening-style signal in my clinical workup?",
+      "title": "PCOS-risk model signal"
+    },
+    {
+      "association_id": "assoc.pelvic_endo",
+      "subject_id": "sym.pelvic_pain",
+      "object_id": "cluster.endo",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "low",
+      "population_scope": "general",
+      "caveats": "Evidence-light edge in this foundation; do not over-call.",
+      "source": "Gynecology: severe cyclical pelvic pain is a reason to evaluate; many etiologies.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:pelvic_pain",
+        "timing:during_period",
+        "timing:before_period"
+      ],
+      "talking_point": "Severe pelvic pain that tracks the cycle is something clinicians take seriously. Endometriosis is one of several possibilities \u2014 this graph marks it as a low-prior discussion cluster, not a conclusion.",
+      "ask_doctor": "My pelvic pain is severe and cyclical \u2014 what should we evaluate?",
+      "title": "Cyclical pelvic pain \u2014 discussion cue"
+    },
+    {
+      "association_id": "assoc.tsh_fatigue",
+      "subject_id": "horm.tsh",
+      "object_id": "sym.fatigue",
+      "relation": "counseling_relevant_with",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Endocrinology basics: thyroid labs are often considered in unexplained fatigue.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:fatigue",
+        "labs:tsh"
+      ],
+      "talking_point": "Persistent fatigue sometimes prompts thyroid testing; abnormal TSH needs clinical interpretation.",
+      "ask_doctor": "Would thyroid labs be reasonable given my fatigue?",
+      "title": "Thyroid labs and fatigue"
+    },
+    {
+      "association_id": "assoc.tsh_cluster",
+      "subject_id": "horm.tsh",
+      "object_id": "cluster.thyroid",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Thyroid evaluation frameworks.",
+      "status": "seed",
+      "match_tags": [
+        "labs:tsh"
+      ],
+      "talking_point": "TSH is a common entry lab when thyroid contribution to symptoms is considered.",
+      "ask_doctor": "Do my thyroid labs explain any of these symptoms?",
+      "title": "TSH in thyroid discussion cluster"
+    },
+    {
+      "association_id": "assoc.glucose_metabolic",
+      "subject_id": "anal.glucose",
+      "object_id": "cluster.pcos",
+      "relation": "counseling_relevant_with",
+      "directionality": "bidirectional",
+      "strength_prior": "low",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Metabolic\u2013reproductive overlap counseling (insulin resistance context).",
+      "status": "seed",
+      "match_tags": [
+        "labs:glucose",
+        "cluster:pcosish"
+      ],
+      "talking_point": "Glucose/metabolic labs sometimes sit alongside reproductive evaluations; they do not label a syndrome alone.",
+      "ask_doctor": "Should we look at metabolic labs as part of this picture?",
+      "title": "Glucose context with reproductive symptoms"
+    },
+    {
+      "association_id": "assoc.heavy_fatigue",
+      "subject_id": "sym.heavy_bleed",
+      "object_id": "cluster.anemia",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Gynecology / hematology: heavy menses + fatigue prompts iron evaluation discussion.",
+      "status": "seed",
+      "match_tags": [
+        "symptom:heavy_bleed",
+        "symptom:fatigue"
+      ],
+      "talking_point": "Heavy periods with fatigue are a classic reason clinicians check iron status \u2014 many other causes of fatigue exist.",
+      "ask_doctor": "Could heavy bleeding be contributing to my fatigue, and should we check iron?",
+      "title": "Heavy bleeding and fatigue"
+    },
+    {
+      "association_id": "assoc.mood_pmdd",
+      "subject_id": "sym.mood",
+      "object_id": "cluster.pmdd",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "Not a PMDD diagnosis.",
+      "source": "Premenstrual disorders clinical frameworks (discussion only).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:mood",
+        "timing:before_period"
+      ],
+      "talking_point": "Mood symptoms that reliably appear in the luteal window and ease after menses start are a pattern clinicians may explore.",
+      "ask_doctor": "Do my mood symptoms clear after my period starts?",
+      "title": "Premenstrual mood pattern"
+    },
+    {
+      "association_id": "assoc.pop_headaches",
+      "subject_id": "sym.headache",
+      "object_id": "phase.menstrual",
+      "relation": "population_enriched_in",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "mcPHASES young-adult menstruators",
+      "caveats": "Small cohort; not personally diagnostic.",
+      "source": "mcPHASES aggregate symptom\u00d7phase rates (PhysioNet; aggregate only).",
+      "status": "evidenced",
+      "match_tags": [
+        "mcphases:headaches",
+        "symptom:headache"
+      ],
+      "talking_point": "In longitudinal cohorts, reported headaches may concentrate in particular cycle phases.",
+      "ask_doctor": "Does my pattern match what shows up in cycle-phase research cohorts?",
+      "title": "Cohort enrichment: headaches"
+    },
+    {
+      "association_id": "assoc.pop_cramps",
+      "subject_id": "sym.cramps",
+      "object_id": "phase.menstrual",
+      "relation": "population_enriched_in",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "mcPHASES young-adult menstruators",
+      "caveats": "Small cohort; not personally diagnostic.",
+      "source": "mcPHASES aggregate symptom\u00d7phase rates (PhysioNet; aggregate only).",
+      "status": "evidenced",
+      "match_tags": [
+        "mcphases:cramps",
+        "symptom:cramps"
+      ],
+      "talking_point": "In longitudinal cohorts, reported cramps may concentrate in particular cycle phases.",
+      "ask_doctor": "Does my pattern match what shows up in cycle-phase research cohorts?",
+      "title": "Cohort enrichment: cramps"
+    },
+    {
+      "association_id": "assoc.pop_fatigue",
+      "subject_id": "sym.fatigue",
+      "object_id": "phase.menstrual",
+      "relation": "population_enriched_in",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "mcPHASES young-adult menstruators",
+      "caveats": "Small cohort; not personally diagnostic.",
+      "source": "mcPHASES aggregate symptom\u00d7phase rates (PhysioNet; aggregate only).",
+      "status": "evidenced",
+      "match_tags": [
+        "mcphases:fatigue",
+        "symptom:fatigue"
+      ],
+      "talking_point": "In longitudinal cohorts, reported fatigue may concentrate in particular cycle phases.",
+      "ask_doctor": "Does my pattern match what shows up in cycle-phase research cohorts?",
+      "title": "Cohort enrichment: fatigue"
+    },
+    {
+      "association_id": "assoc.pop_moodswing",
+      "subject_id": "sym.mood",
+      "object_id": "phase.menstrual",
+      "relation": "population_enriched_in",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "mcPHASES young-adult menstruators",
+      "caveats": "Small cohort; not personally diagnostic.",
+      "source": "mcPHASES aggregate symptom\u00d7phase rates (PhysioNet; aggregate only).",
+      "status": "evidenced",
+      "match_tags": [
+        "mcphases:moodswing",
+        "symptom:mood"
+      ],
+      "talking_point": "In longitudinal cohorts, reported moodswing may concentrate in particular cycle phases.",
+      "ask_doctor": "Does my pattern match what shows up in cycle-phase research cohorts?",
+      "title": "Cohort enrichment: moodswing"
+    },
+    {
+      "association_id": "assoc.pop_bloating",
+      "subject_id": "sym.bloating",
+      "object_id": "phase.menstrual",
+      "relation": "population_enriched_in",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "mcPHASES young-adult menstruators",
+      "caveats": "Small cohort; not personally diagnostic.",
+      "source": "mcPHASES aggregate symptom\u00d7phase rates (PhysioNet; aggregate only).",
+      "status": "evidenced",
+      "match_tags": [
+        "mcphases:bloating",
+        "symptom:bloating"
+      ],
+      "talking_point": "In longitudinal cohorts, reported bloating may concentrate in particular cycle phases.",
+      "ask_doctor": "Does my pattern match what shows up in cycle-phase research cohorts?",
+      "title": "Cohort enrichment: bloating"
+    },
+    {
+      "association_id": "assoc.pop_sorebreasts",
+      "subject_id": "sym.sore_breasts",
+      "object_id": "phase.menstrual",
+      "relation": "population_enriched_in",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "mcPHASES young-adult menstruators",
+      "caveats": "Small cohort; not personally diagnostic.",
+      "source": "mcPHASES aggregate symptom\u00d7phase rates (PhysioNet; aggregate only).",
+      "status": "evidenced",
+      "match_tags": [
+        "mcphases:sorebreasts",
+        "symptom:sore_breasts"
+      ],
+      "talking_point": "In longitudinal cohorts, reported sorebreasts may concentrate in particular cycle phases.",
+      "ask_doctor": "Does my pattern match what shows up in cycle-phase research cohorts?",
+      "title": "Cohort enrichment: sorebreasts"
+    },
+    {
+      "association_id": "assoc.midlife_composite",
+      "subject_id": "life.early_peri",
+      "object_id": "cluster.menopause",
+      "relation": "counseling_relevant_with",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "midlife",
+      "caveats": "",
+      "source": "Menopause practice guidelines: vasomotor symptoms + cycle change are cardinal midlife counseling topics.",
+      "status": "seed",
+      "match_tags": [
+        "age:midlife",
+        "vasomotor_or_cycle_change"
+      ],
+      "talking_point": "In the 40s\u201350s, changing cycle regularity, hot flashes, and night sweats are commonly discussed as part of the menopause transition. Timing and severity help a clinician place you on that spectrum \u2014 without a home diagnosis.",
+      "ask_doctor": "Given my age and these changes, does this sound like a menopause-transition pattern, and what would you track next?",
+      "title": "Midlife cycle and vasomotor changes"
+    },
+    {
+      "association_id": "assoc.nausea_menstrual",
+      "subject_id": "sym.nausea",
+      "object_id": "phase.menstrual",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:nausea",
+        "timing:during_period"
+      ],
+      "talking_point": "Nausea can accompany menstrual days for some people; severe or persistent nausea still deserves a broad look.",
+      "ask_doctor": "Is my nausea mainly on period days?",
+      "title": "Nausea around menses"
+    },
+    {
+      "association_id": "assoc.brainfog_luteal",
+      "subject_id": "sym.brain_fog",
+      "object_id": "phase.luteal",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "low",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:brain_fog"
+      ],
+      "talking_point": "Some people notice fogginess in the late cycle; sleep and stress often co-travel.",
+      "ask_doctor": "Does brain fog track a particular part of my cycle?",
+      "title": "Brain fog and cycle timing"
+    },
+    {
+      "association_id": "assoc.libido_luteal",
+      "subject_id": "sym.low_libido",
+      "object_id": "phase.luteal",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "low",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:low_libido"
+      ],
+      "talking_point": "Desire can vary across the cycle; sudden persistent loss is still worth clinical mention.",
+      "ask_doctor": "Has my libido changed recently or only in one cycle window?",
+      "title": "Libido and cycle window"
+    },
+    {
+      "association_id": "assoc.pop_bleed",
+      "subject_id": "int.pop",
+      "object_id": "sym.spotting",
+      "relation": "modulated_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:spotting",
+        "contraception:pop"
+      ],
+      "talking_point": "Progestogen-only pills commonly change bleeding patterns, especially early on.",
+      "ask_doctor": "Is this bleeding pattern expected on my progestogen-only pill?",
+      "title": "POP and bleeding pattern"
+    },
+    {
+      "association_id": "assoc.implant_bleed",
+      "subject_id": "int.implant",
+      "object_id": "sym.spotting",
+      "relation": "modulated_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:spotting",
+        "contraception:implant"
+      ],
+      "talking_point": "Implants often change bleeding \u2014 from amenorrhea to irregular spotting.",
+      "ask_doctor": "Is my implant-related bleeding within the expected range?",
+      "title": "Implant and bleeding pattern"
+    },
+    {
+      "association_id": "assoc.copper_heavy",
+      "subject_id": "int.copper_iud",
+      "object_id": "sym.heavy_bleed",
+      "relation": "modulated_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:heavy_bleed",
+        "contraception:copper_iud"
+      ],
+      "talking_point": "Copper IUDs are classically associated with heavier menstrual bleeding for some users.",
+      "ask_doctor": "Could my copper IUD be contributing to heavier periods?",
+      "title": "Copper IUD and heavier flow"
+    },
+    {
+      "association_id": "assoc.hrt_vasomotor",
+      "subject_id": "int.hrt",
+      "object_id": "sym.hot_flash",
+      "relation": "modulated_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:hot_flash",
+        "age:midlife"
+      ],
+      "talking_point": "Menopausal hormone therapy is discussed clinically for vasomotor symptoms \u2014 decisions belong with a clinician.",
+      "ask_doctor": "Is menopausal hormone therapy something we should discuss for these symptoms?",
+      "title": "MHT and vasomotor symptoms"
+    },
+    {
+      "association_id": "assoc.stress_headache",
+      "subject_id": "ctx.stress",
+      "object_id": "sym.headache",
+      "relation": "confounded_by",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:headache",
+        "context:stress"
+      ],
+      "talking_point": "Stress and headache commonly intensify together; both belong in the history.",
+      "ask_doctor": "How much stress has been sitting alongside these headaches?",
+      "title": "Stress and headache"
+    },
+    {
+      "association_id": "assoc.exercise_cycle",
+      "subject_id": "ctx.exercise",
+      "object_id": "cycle.irregular",
+      "relation": "modulated_by",
+      "directionality": "bidirectional",
+      "strength_prior": "low",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "cycle:irregular",
+        "context:exercise"
+      ],
+      "talking_point": "Sudden intense exercise or energy deficit can associate with cycle changes in some people.",
+      "ask_doctor": "Did my cycles change after a big shift in training or fueling?",
+      "title": "Exercise change and cycles"
+    },
+    {
+      "association_id": "assoc.medchange_symptoms",
+      "subject_id": "ctx.med_change",
+      "object_id": "sym.headache",
+      "relation": "modulated_by",
+      "directionality": "bidirectional",
+      "strength_prior": "low",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "has_symptoms",
+        "context:med"
+      ],
+      "talking_point": "New medications can temporally overlap new symptoms \u2014 worth a timeline, not an assumption of cause.",
+      "ask_doctor": "Did symptoms start around a medication change?",
+      "title": "Medication change window"
+    },
+    {
+      "association_id": "assoc.prolactin_amenorrhea",
+      "subject_id": "horm.prolactin",
+      "object_id": "cycle.amenorrhea",
+      "relation": "counseling_relevant_with",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "cycle:amenorrhea",
+        "labs:prolactin"
+      ],
+      "talking_point": "Prolactin is sometimes checked when periods stop; interpretation is clinical.",
+      "ask_doctor": "Should prolactin be part of evaluating my missing periods?",
+      "title": "Prolactin in amenorrhea workups"
+    },
+    {
+      "association_id": "assoc.shbg_androgen",
+      "subject_id": "horm.shbg",
+      "object_id": "cluster.pcos",
+      "relation": "marker_of",
+      "directionality": "bidirectional",
+      "strength_prior": "low",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "labs:shbg",
+        "cluster:pcosish"
+      ],
+      "talking_point": "SHBG can appear in hormonal panels when androgen excess is being explored.",
+      "ask_doctor": "Do my androgen-related labs include SHBG, and what do they mean together?",
+      "title": "SHBG in androgen/PCOS-cluster labs"
+    },
+    {
+      "association_id": "assoc.insulin_pcos",
+      "subject_id": "anal.insulin",
+      "object_id": "cluster.pcos",
+      "relation": "counseling_relevant_with",
+      "directionality": "bidirectional",
+      "strength_prior": "low",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "labs:insulin",
+        "cluster:pcosish"
+      ],
+      "talking_point": "Insulin/metabolic labs sometimes accompany reproductive evaluations.",
+      "ask_doctor": "Should insulin or metabolic labs be part of this workup?",
+      "title": "Insulin context with PCOS-cluster cues"
+    },
+    {
+      "association_id": "assoc.hba1c_metabolic",
+      "subject_id": "anal.hba1c",
+      "object_id": "ctx.bmi",
+      "relation": "counseling_relevant_with",
+      "directionality": "bidirectional",
+      "strength_prior": "low",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "labs:hba1c"
+      ],
+      "talking_point": "HbA1c provides longer-window glucose context; not a reproductive diagnosis.",
+      "ask_doctor": "Would an HbA1c help round out the metabolic side of this picture?",
+      "title": "HbA1c as metabolic context"
+    },
+    {
+      "association_id": "assoc.postpartum_mood",
+      "subject_id": "life.postpartum",
+      "object_id": "sym.mood",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "high",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "symptom:mood",
+        "life:postpartum"
+      ],
+      "talking_point": "The postpartum period is a high-attention window for mood changes \u2014 seek clinical care promptly for concerning symptoms.",
+      "ask_doctor": "Are these mood changes in a postpartum window, and how urgently should we review them?",
+      "title": "Postpartum mood window"
+    },
+    {
+      "association_id": "assoc.adolescence_irregular",
+      "subject_id": "life.adolescence",
+      "object_id": "cycle.irregular",
+      "relation": "temporally_associated_with",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "",
+      "source": "Expanded CycleBench foundation seed (guideline/textbook-level associations).",
+      "status": "seed",
+      "match_tags": [
+        "cycle:irregular",
+        "age:teen"
+      ],
+      "talking_point": "Cycles can be irregular for years after menarche; persistent severe symptoms still deserve care.",
+      "ask_doctor": "Is this irregularity expected for my age since periods started?",
+      "title": "Adolescent cycle irregularity"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev.mcphases.headaches",
+      "association_id": "assoc.pop_headaches",
+      "evidence_type": "cohort_rate",
+      "dataset": "mcphases",
+      "metrics": {
+        "n_participants": 42,
+        "n_episodes": 342,
+        "episode_rate_by_phase": {
+          "Fertility": 0.075,
+          "Follicular": 0.126,
+          "Luteal": 0.0859,
+          "Menstrual": 0.1336
+        },
+        "dominant_phase": "Menstrual",
+        "chi2": 18.89,
+        "p_value": 0.00029,
+        "significant": true
+      },
+      "summary_sentence": "In the mcPHASES cohort (n=42), reported headaches clustered most in the menstrual phase (\u03c7\u00b2=18.89, p=0.00029).",
+      "provenance": "results/reference_stats.json from local mcPHASES aggregates",
+      "license_note": "PhysioNet restricted \u2014 aggregate statistics only; no participant rows."
+    },
+    {
+      "evidence_id": "ev.mcphases.cramps",
+      "association_id": "assoc.pop_cramps",
+      "evidence_type": "cohort_rate",
+      "dataset": "mcphases",
+      "metrics": {
+        "n_participants": 42,
+        "n_episodes": 199,
+        "episode_rate_by_phase": {
+          "Fertility": 0.0301,
+          "Follicular": 0.0143,
+          "Luteal": 0.0439,
+          "Menstrual": 0.1821
+        },
+        "dominant_phase": "Menstrual",
+        "chi2": 203.9,
+        "p_value": 0.0,
+        "significant": true
+      },
+      "summary_sentence": "In the mcPHASES cohort (n=42), reported cramps clustered most in the menstrual phase (\u03c7\u00b2=203.9, p=0.0).",
+      "provenance": "results/reference_stats.json from local mcPHASES aggregates",
+      "license_note": "PhysioNet restricted \u2014 aggregate statistics only; no participant rows."
+    },
+    {
+      "evidence_id": "ev.mcphases.fatigue",
+      "association_id": "assoc.pop_fatigue",
+      "evidence_type": "cohort_rate",
+      "dataset": "mcphases",
+      "metrics": {
+        "n_participants": 42,
+        "n_episodes": 926,
+        "episode_rate_by_phase": {
+          "Fertility": 0.2657,
+          "Follicular": 0.2771,
+          "Luteal": 0.2621,
+          "Menstrual": 0.3218
+        },
+        "dominant_phase": "Menstrual",
+        "chi2": 5.82,
+        "p_value": 0.12057,
+        "significant": false
+      },
+      "summary_sentence": "In the mcPHASES cohort (n=42), reported fatigue did not show a clear phase cluster (p=0.12057).",
+      "provenance": "results/reference_stats.json from local mcPHASES aggregates",
+      "license_note": "PhysioNet restricted \u2014 aggregate statistics only; no participant rows."
+    },
+    {
+      "evidence_id": "ev.mcphases.moodswing",
+      "association_id": "assoc.pop_moodswing",
+      "evidence_type": "cohort_rate",
+      "dataset": "mcphases",
+      "metrics": {
+        "n_participants": 42,
+        "n_episodes": 352,
+        "episode_rate_by_phase": {
+          "Fertility": 0.097,
+          "Follicular": 0.0882,
+          "Luteal": 0.1085,
+          "Menstrual": 0.1359
+        },
+        "dominant_phase": "Menstrual",
+        "chi2": 8.45,
+        "p_value": 0.03749,
+        "significant": true
+      },
+      "summary_sentence": "In the mcPHASES cohort (n=42), reported moodswing clustered most in the menstrual phase (\u03c7\u00b2=8.45, p=0.03749).",
+      "provenance": "results/reference_stats.json from local mcPHASES aggregates",
+      "license_note": "PhysioNet restricted \u2014 aggregate statistics only; no participant rows."
+    },
+    {
+      "evidence_id": "ev.mcphases.bloating",
+      "association_id": "assoc.pop_bloating",
+      "evidence_type": "cohort_rate",
+      "dataset": "mcphases",
+      "metrics": {
+        "n_participants": 42,
+        "n_episodes": 427,
+        "episode_rate_by_phase": {
+          "Fertility": 0.1189,
+          "Follicular": 0.0904,
+          "Luteal": 0.1244,
+          "Menstrual": 0.1962
+        },
+        "dominant_phase": "Menstrual",
+        "chi2": 32.97,
+        "p_value": 0.0,
+        "significant": true
+      },
+      "summary_sentence": "In the mcPHASES cohort (n=42), reported bloating clustered most in the menstrual phase (\u03c7\u00b2=32.97, p=0.0).",
+      "provenance": "results/reference_stats.json from local mcPHASES aggregates",
+      "license_note": "PhysioNet restricted \u2014 aggregate statistics only; no participant rows."
+    },
+    {
+      "evidence_id": "ev.mcphases.sorebreasts",
+      "association_id": "assoc.pop_sorebreasts",
+      "evidence_type": "cohort_rate",
+      "dataset": "mcphases",
+      "metrics": {
+        "n_participants": 42,
+        "n_episodes": 86,
+        "episode_rate_by_phase": {
+          "Fertility": 0.0109,
+          "Follicular": 0.0,
+          "Luteal": 0.0412,
+          "Menstrual": 0.0502
+        },
+        "dominant_phase": "Menstrual",
+        "chi2": 52.82,
+        "p_value": 0.0,
+        "significant": true
+      },
+      "summary_sentence": "In the mcPHASES cohort (n=42), reported sorebreasts clustered most in the menstrual phase (\u03c7\u00b2=52.82, p=0.0).",
+      "provenance": "results/reference_stats.json from local mcPHASES aggregates",
+      "license_note": "PhysioNet restricted \u2014 aggregate statistics only; no participant rows."
+    },
+    {
+      "evidence_id": "ev.nhanes.range.fsh",
+      "association_id": "assoc.fsh_meno",
+      "evidence_type": "reference_range",
+      "dataset": "nhanes",
+      "metrics": {
+        "analyte": "fsh",
+        "unit": "mIU/mL",
+        "sex": "female",
+        "age_band": "38-47",
+        "n": 581,
+        "median": 6.82,
+        "p2_5": 1.395,
+        "p97_5": 89.495
+      },
+      "summary_sentence": "NHANES female reference (age band 38-47, n=581): fsh median 6.82 mIU/mL (2.5th\u201397.5th percentile 1.395\u201389.495). Cross-sectional population ranges \u2014 not personal targets.",
+      "provenance": "data/nhanes_harmonized/reference_ranges.csv",
+      "license_note": "NHANES public domain; harmonized export CC-BY-4.0."
+    },
+    {
+      "evidence_id": "ev.nhanes.range.estradiol",
+      "association_id": "assoc.e2_meno",
+      "evidence_type": "reference_range",
+      "dataset": "nhanes",
+      "metrics": {
+        "analyte": "estradiol",
+        "unit": "pg/mL",
+        "sex": "female",
+        "age_band": "38-47",
+        "n": 567,
+        "median": 79.3,
+        "p2_5": 2.801,
+        "p97_5": 409.0
+      },
+      "summary_sentence": "NHANES female reference (age band 38-47, n=567): estradiol median 79.3 pg/mL (2.5th\u201397.5th percentile 2.801\u2013409.0). Cross-sectional population ranges \u2014 not personal targets.",
+      "provenance": "data/nhanes_harmonized/reference_ranges.csv",
+      "license_note": "NHANES public domain; harmonized export CC-BY-4.0."
+    },
+    {
+      "evidence_id": "ev.model.pcos_risk.capability",
+      "association_id": "assoc.model_pcos",
+      "evidence_type": "model_signal",
+      "dataset": "pcos_kaggle",
+      "metrics": {
+        "balanced_accuracy": 0.8646,
+        "top_features": [
+          {
+            "feature": "Follicle No. (R)",
+            "importance": 0.4524
+          },
+          {
+            "feature": "Follicle No. (L)",
+            "importance": 0.10362
+          },
+          {
+            "feature": "hair growth(Y/N)",
+            "importance": 0.07095
+          },
+          {
+            "feature": "Skin darkening (Y/N)",
+            "importance": 0.05526
+          },
+          {
+            "feature": "Weight gain(Y/N)",
+            "importance": 0.05516
+          }
+        ]
+      },
+      "summary_sentence": "A CycleBench PCOS-risk model is available (trained on 541 Kerala clinic patients). Held-out balanced accuracy \u2248 0.8646. Research screening signal only \u2014 not a diagnosis.",
+      "provenance": "models/pcos_risk_v0.1.joblib + results/model_pcos_risk.json",
+      "license_note": "Model checkpoint derived from Kaggle PCOS dataset (not redistributed)."
+    },
+    {
+      "evidence_id": "ev.model.meno_stage.capability",
+      "association_id": "assoc.model_meno",
+      "evidence_type": "model_signal",
+      "dataset": "swan",
+      "metrics": {
+        "balanced_accuracy": 0.9924,
+        "data_source": "synthetic_swan_like"
+      },
+      "summary_sentence": "A CycleBench menopause-stage model is available for midlife category estimates. Training data source: synthetic_swan_like. Stage category estimate only \u2014 not a diagnosis.",
+      "provenance": "models/menopause_stage_v0.1.joblib",
+      "license_note": "If synthetic_swan_like, metrics are illustrative until real SWAN is loaded."
+    },
+    {
+      "evidence_id": "ev.medquad.migraine.0",
+      "association_id": "assoc.estrogen_migraine",
+      "evidence_type": "qa_citation",
+      "dataset": "medquad",
+      "metrics": {
+        "focus": "Basilar migraine",
+        "source": "2_GARD_QA"
+      },
+      "summary_sentence": "Related NIH-sourced Q&A topic on file: \u201cIs Basilar migraine inherited ?\u201d (citation for phrasing context only).",
+      "provenance": "data/qa/womens_health_qa.jsonl (MedQuAD subset)",
+      "license_note": "MedQuAD from NIH website-derived QA; citation only."
+    },
+    {
+      "evidence_id": "ev.medquad.menopause.0",
+      "association_id": "assoc.midlife_composite",
+      "evidence_type": "qa_citation",
+      "dataset": "medquad",
+      "metrics": {
+        "focus": "Polyneuropathy mental retardation acromicria premature menopause",
+        "source": "2_GARD_QA"
+      },
+      "summary_sentence": "Related NIH-sourced Q&A topic on file: \u201cWhat are the symptoms of Polyneuropathy mental retardation acromicria premature menopause ?\u201d (citation for phrasing context only).",
+      "provenance": "data/qa/womens_health_qa.jsonl (MedQuAD subset)",
+      "license_note": "MedQuAD from NIH website-derived QA; citation only."
+    },
+    {
+      "evidence_id": "ev.medquad.polycystic.0",
+      "association_id": "assoc.irregular_pcos",
+      "evidence_type": "qa_citation",
+      "dataset": "medquad",
+      "metrics": {
+        "focus": "polycystic kidney disease",
+        "source": "3_GHR_QA"
+      },
+      "summary_sentence": "Related NIH-sourced Q&A topic on file: \u201cWhat is (are) polycystic kidney disease ?\u201d (citation for phrasing context only).",
+      "provenance": "data/qa/womens_health_qa.jsonl (MedQuAD subset)",
+      "license_note": "MedQuAD from NIH website-derived QA; citation only."
+    },
+    {
+      "evidence_id": "ev.medquad.thyroid.0",
+      "association_id": "assoc.tsh_fatigue",
+      "evidence_type": "qa_citation",
+      "dataset": "medquad",
+      "metrics": {
+        "focus": "hyperparathyroidism-jaw tumor syndrome",
+        "source": "3_GHR_QA"
+      },
+      "summary_sentence": "Related NIH-sourced Q&A topic on file: \u201cWhat is (are) hyperparathyroidism-jaw tumor syndrome ?\u201d (citation for phrasing context only).",
+      "provenance": "data/qa/womens_health_qa.jsonl (MedQuAD subset)",
+      "license_note": "MedQuAD from NIH website-derived QA; citation only."
+    },
+    {
+      "evidence_id": "ev.guideline.assoc.estrogen_migraine",
+      "association_id": "assoc.estrogen_migraine",
+      "evidence_type": "guideline_seed",
+      "dataset": "guideline",
+      "metrics": {},
+      "summary_sentence": "Guideline/textbook seed: UKMEC / CDC MEC style guidance: combined hormonal contraception and migraine (esp. with aura) is a counseling point.",
+      "provenance": "UKMEC / CDC MEC style guidance: combined hormonal contraception and migraine (esp. with aura) is a counseling point.",
+      "license_note": "Curated seed citation \u2014 not a full guideline reprint."
+    },
+    {
+      "evidence_id": "ev.guideline.assoc.amenorrhea_eval",
+      "association_id": "assoc.amenorrhea_eval",
+      "evidence_type": "guideline_seed",
+      "dataset": "guideline",
+      "metrics": {},
+      "summary_sentence": "Guideline/textbook seed: Gynecology basics: secondary amenorrhea (\u22483+ months) warrants clinical evaluation.",
+      "provenance": "Gynecology basics: secondary amenorrhea (\u22483+ months) warrants clinical evaluation.",
+      "license_note": "Curated seed citation \u2014 not a full guideline reprint."
+    },
+    {
+      "evidence_id": "ev.guideline.assoc.midlife_composite",
+      "association_id": "assoc.midlife_composite",
+      "evidence_type": "guideline_seed",
+      "dataset": "guideline",
+      "metrics": {},
+      "summary_sentence": "Guideline/textbook seed: Menopause practice guidelines: vasomotor symptoms + cycle change are cardinal midlife counseling topics.",
+      "provenance": "Menopause practice guidelines: vasomotor symptoms + cycle change are cardinal midlife counseling topics.",
+      "license_note": "Curated seed citation \u2014 not a full guideline reprint."
+    }
+  ]
+}

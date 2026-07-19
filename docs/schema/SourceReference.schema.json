@@ -1,0 +1,89 @@
+{
+  "$defs": {
+    "Certainty": {
+      "enum": [
+        "high",
+        "medium",
+        "low",
+        "unknown"
+      ],
+      "title": "Certainty",
+      "type": "string"
+    },
+    "ProvenanceStatus": {
+      "enum": [
+        "complete",
+        "partial",
+        "unverified"
+      ],
+      "title": "ProvenanceStatus",
+      "type": "string"
+    },
+    "SourceType": {
+      "enum": [
+        "voice",
+        "text",
+        "diary",
+        "wearable",
+        "laboratory",
+        "synthetic_fixture"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "default": "0.1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_type": {
+      "$ref": "#/$defs/SourceType"
+    },
+    "excerpt": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Original text excerpt or a record pointer (not raw PII).",
+      "title": "Excerpt"
+    },
+    "observed_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Observed At"
+    },
+    "confidence": {
+      "$ref": "#/$defs/Certainty",
+      "default": "unknown"
+    },
+    "provenance_status": {
+      "$ref": "#/$defs/ProvenanceStatus",
+      "default": "unverified"
+    }
+  },
+  "required": [
+    "source_id",
+    "source_type"
+  ],
+  "title": "SourceReference",
+  "type": "object"
+}

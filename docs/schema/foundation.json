@@ -1,0 +1,640 @@
+{
+  "Entity": {
+    "$defs": {
+      "EntityKind": {
+        "enum": [
+          "symptom",
+          "hormone",
+          "analyte",
+          "cycle_phase",
+          "life_stage",
+          "intervention",
+          "confounder",
+          "cluster",
+          "other"
+        ],
+        "title": "EntityKind",
+        "type": "string"
+      }
+    },
+    "properties": {
+      "entity_id": {
+        "title": "Entity Id",
+        "type": "string"
+      },
+      "kind": {
+        "$ref": "#/$defs/EntityKind"
+      },
+      "label": {
+        "title": "Label",
+        "type": "string"
+      },
+      "synonyms": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Synonyms",
+        "type": "array"
+      },
+      "description": {
+        "default": "",
+        "title": "Description",
+        "type": "string"
+      },
+      "notes": {
+        "default": "",
+        "title": "Notes",
+        "type": "string"
+      },
+      "not_a_diagnosis": {
+        "default": false,
+        "title": "Not A Diagnosis",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "entity_id",
+      "kind",
+      "label"
+    ],
+    "title": "Entity",
+    "type": "object"
+  },
+  "Association": {
+    "$defs": {
+      "AssociationStatus": {
+        "enum": [
+          "seed",
+          "evidenced",
+          "model_linked"
+        ],
+        "title": "AssociationStatus",
+        "type": "string"
+      },
+      "Relation": {
+        "enum": [
+          "temporally_associated_with",
+          "modulated_by",
+          "counseling_relevant_with",
+          "marker_of",
+          "confounded_by",
+          "population_enriched_in",
+          "predicted_by_model"
+        ],
+        "title": "Relation",
+        "type": "string"
+      },
+      "StrengthPrior": {
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "title": "StrengthPrior",
+        "type": "string"
+      }
+    },
+    "properties": {
+      "association_id": {
+        "title": "Association Id",
+        "type": "string"
+      },
+      "subject_id": {
+        "title": "Subject Id",
+        "type": "string"
+      },
+      "object_id": {
+        "title": "Object Id",
+        "type": "string"
+      },
+      "relation": {
+        "$ref": "#/$defs/Relation"
+      },
+      "directionality": {
+        "default": "bidirectional",
+        "title": "Directionality",
+        "type": "string"
+      },
+      "strength_prior": {
+        "$ref": "#/$defs/StrengthPrior",
+        "default": "medium"
+      },
+      "population_scope": {
+        "default": "general",
+        "title": "Population Scope",
+        "type": "string"
+      },
+      "caveats": {
+        "default": "",
+        "title": "Caveats",
+        "type": "string"
+      },
+      "source": {
+        "title": "Source",
+        "type": "string"
+      },
+      "status": {
+        "$ref": "#/$defs/AssociationStatus",
+        "default": "seed"
+      },
+      "match_tags": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Match Tags",
+        "type": "array"
+      },
+      "talking_point": {
+        "default": "",
+        "title": "Talking Point",
+        "type": "string"
+      },
+      "ask_doctor": {
+        "default": "",
+        "title": "Ask Doctor",
+        "type": "string"
+      },
+      "title": {
+        "default": "",
+        "title": "Title",
+        "type": "string"
+      }
+    },
+    "required": [
+      "association_id",
+      "subject_id",
+      "object_id",
+      "relation",
+      "source"
+    ],
+    "title": "Association",
+    "type": "object"
+  },
+  "Evidence": {
+    "$defs": {
+      "DatasetTag": {
+        "enum": [
+          "mcphases",
+          "nhanes",
+          "pcos_kaggle",
+          "swan",
+          "medquad",
+          "guideline",
+          "other"
+        ],
+        "title": "DatasetTag",
+        "type": "string"
+      },
+      "EvidenceType": {
+        "enum": [
+          "cohort_rate",
+          "reference_range",
+          "model_signal",
+          "guideline_seed",
+          "qa_citation"
+        ],
+        "title": "EvidenceType",
+        "type": "string"
+      }
+    },
+    "properties": {
+      "evidence_id": {
+        "title": "Evidence Id",
+        "type": "string"
+      },
+      "association_id": {
+        "title": "Association Id",
+        "type": "string"
+      },
+      "evidence_type": {
+        "$ref": "#/$defs/EvidenceType"
+      },
+      "dataset": {
+        "$ref": "#/$defs/DatasetTag"
+      },
+      "metrics": {
+        "additionalProperties": true,
+        "title": "Metrics",
+        "type": "object"
+      },
+      "summary_sentence": {
+        "title": "Summary Sentence",
+        "type": "string"
+      },
+      "provenance": {
+        "default": "",
+        "title": "Provenance",
+        "type": "string"
+      },
+      "license_note": {
+        "default": "",
+        "title": "License Note",
+        "type": "string"
+      }
+    },
+    "required": [
+      "evidence_id",
+      "association_id",
+      "evidence_type",
+      "dataset",
+      "summary_sentence"
+    ],
+    "title": "Evidence",
+    "type": "object"
+  },
+  "FoundationBundle": {
+    "$defs": {
+      "Association": {
+        "properties": {
+          "association_id": {
+            "title": "Association Id",
+            "type": "string"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          },
+          "object_id": {
+            "title": "Object Id",
+            "type": "string"
+          },
+          "relation": {
+            "$ref": "#/$defs/Relation"
+          },
+          "directionality": {
+            "default": "bidirectional",
+            "title": "Directionality",
+            "type": "string"
+          },
+          "strength_prior": {
+            "$ref": "#/$defs/StrengthPrior",
+            "default": "medium"
+          },
+          "population_scope": {
+            "default": "general",
+            "title": "Population Scope",
+            "type": "string"
+          },
+          "caveats": {
+            "default": "",
+            "title": "Caveats",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/$defs/AssociationStatus",
+            "default": "seed"
+          },
+          "match_tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Match Tags",
+            "type": "array"
+          },
+          "talking_point": {
+            "default": "",
+            "title": "Talking Point",
+            "type": "string"
+          },
+          "ask_doctor": {
+            "default": "",
+            "title": "Ask Doctor",
+            "type": "string"
+          },
+          "title": {
+            "default": "",
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "association_id",
+          "subject_id",
+          "object_id",
+          "relation",
+          "source"
+        ],
+        "title": "Association",
+        "type": "object"
+      },
+      "AssociationStatus": {
+        "enum": [
+          "seed",
+          "evidenced",
+          "model_linked"
+        ],
+        "title": "AssociationStatus",
+        "type": "string"
+      },
+      "DatasetTag": {
+        "enum": [
+          "mcphases",
+          "nhanes",
+          "pcos_kaggle",
+          "swan",
+          "medquad",
+          "guideline",
+          "other"
+        ],
+        "title": "DatasetTag",
+        "type": "string"
+      },
+      "Entity": {
+        "properties": {
+          "entity_id": {
+            "title": "Entity Id",
+            "type": "string"
+          },
+          "kind": {
+            "$ref": "#/$defs/EntityKind"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "synonyms": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Synonyms",
+            "type": "array"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "title": "Notes",
+            "type": "string"
+          },
+          "not_a_diagnosis": {
+            "default": false,
+            "title": "Not A Diagnosis",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "entity_id",
+          "kind",
+          "label"
+        ],
+        "title": "Entity",
+        "type": "object"
+      },
+      "EntityKind": {
+        "enum": [
+          "symptom",
+          "hormone",
+          "analyte",
+          "cycle_phase",
+          "life_stage",
+          "intervention",
+          "confounder",
+          "cluster",
+          "other"
+        ],
+        "title": "EntityKind",
+        "type": "string"
+      },
+      "Evidence": {
+        "properties": {
+          "evidence_id": {
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "association_id": {
+            "title": "Association Id",
+            "type": "string"
+          },
+          "evidence_type": {
+            "$ref": "#/$defs/EvidenceType"
+          },
+          "dataset": {
+            "$ref": "#/$defs/DatasetTag"
+          },
+          "metrics": {
+            "additionalProperties": true,
+            "title": "Metrics",
+            "type": "object"
+          },
+          "summary_sentence": {
+            "title": "Summary Sentence",
+            "type": "string"
+          },
+          "provenance": {
+            "default": "",
+            "title": "Provenance",
+            "type": "string"
+          },
+          "license_note": {
+            "default": "",
+            "title": "License Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "association_id",
+          "evidence_type",
+          "dataset",
+          "summary_sentence"
+        ],
+        "title": "Evidence",
+        "type": "object"
+      },
+      "EvidenceType": {
+        "enum": [
+          "cohort_rate",
+          "reference_range",
+          "model_signal",
+          "guideline_seed",
+          "qa_citation"
+        ],
+        "title": "EvidenceType",
+        "type": "string"
+      },
+      "Relation": {
+        "enum": [
+          "temporally_associated_with",
+          "modulated_by",
+          "counseling_relevant_with",
+          "marker_of",
+          "confounded_by",
+          "population_enriched_in",
+          "predicted_by_model"
+        ],
+        "title": "Relation",
+        "type": "string"
+      },
+      "StrengthPrior": {
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "title": "StrengthPrior",
+        "type": "string"
+      }
+    },
+    "properties": {
+      "version": {
+        "default": "v0.1",
+        "title": "Version",
+        "type": "string"
+      },
+      "description": {
+        "default": "CycleBench medical foundation: guideline-seeded associations strengthened by female-specialized dataset evidence. Not a diagnostic system.",
+        "title": "Description",
+        "type": "string"
+      },
+      "entities": {
+        "items": {
+          "$ref": "#/$defs/Entity"
+        },
+        "title": "Entities",
+        "type": "array"
+      },
+      "associations": {
+        "items": {
+          "$ref": "#/$defs/Association"
+        },
+        "title": "Associations",
+        "type": "array"
+      },
+      "evidence": {
+        "items": {
+          "$ref": "#/$defs/Evidence"
+        },
+        "title": "Evidence",
+        "type": "array"
+      }
+    },
+    "title": "FoundationBundle",
+    "type": "object"
+  },
+  "FoundationRead": {
+    "$defs": {
+      "FoundationCard": {
+        "description": "One assembled UI card: foundation + evidence + optional personal pattern.",
+        "properties": {
+          "association_id": {
+            "title": "Association Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "foundation_fact": {
+            "title": "Foundation Fact",
+            "type": "string"
+          },
+          "evidence_summaries": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Evidence Summaries",
+            "type": "array"
+          },
+          "personal_pattern": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Personal Pattern"
+          },
+          "ask_doctor": {
+            "default": "",
+            "title": "Ask Doctor",
+            "type": "string"
+          },
+          "source": {
+            "default": "",
+            "title": "Source",
+            "type": "string"
+          },
+          "datasets": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Datasets",
+            "type": "array"
+          },
+          "strength_prior": {
+            "default": "medium",
+            "title": "Strength Prior",
+            "type": "string"
+          },
+          "relation": {
+            "default": "",
+            "title": "Relation",
+            "type": "string"
+          }
+        },
+        "required": [
+          "association_id",
+          "title",
+          "foundation_fact"
+        ],
+        "title": "FoundationCard",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "matched_entity_ids": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Matched Entity Ids",
+        "type": "array"
+      },
+      "cards": {
+        "items": {
+          "$ref": "#/$defs/FoundationCard"
+        },
+        "title": "Cards",
+        "type": "array"
+      },
+      "doctor_questions": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Doctor Questions",
+        "type": "array"
+      },
+      "model_signals": {
+        "items": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "title": "Model Signals",
+        "type": "array"
+      },
+      "missing_prompts": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Missing Prompts",
+        "type": "array"
+      },
+      "foundation_version": {
+        "default": "v0.1",
+        "title": "Foundation Version",
+        "type": "string"
+      }
+    },
+    "title": "FoundationRead",
+    "type": "object"
+  }
+}

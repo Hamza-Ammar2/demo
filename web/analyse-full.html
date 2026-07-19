@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The deep dive — Aestra</title>
+  <link rel="stylesheet" href="/static/styles.css?v=flo24" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand"><a href="/">Aes<em>tra</em></a></div>
+      <a class="nav-back" href="/">← Home</a>
+    </header>
+
+    <main class="page">
+      <h1>The deep dive</h1>
+      <p class="sub">A longer intake (or one tap to run the Sarah demo). You’ll get the full doctor brief, model signals, and a few graphs.</p>
+
+      <div class="panel">
+        <div class="label">How do you want to start?</div>
+        <div class="chat-actions">
+          <button type="button" id="btn-sarah">Run Sarah demo (full brief)</button>
+          <button type="button" class="ghost" id="btn-chat">Answer questions instead</button>
+        </div>
+        <div id="chat-wrap" hidden style="margin-top:18px">
+          <div class="chat" id="chat"></div>
+          <div class="chat-actions" id="actions"></div>
+        </div>
+      </div>
+
+      <div id="results" hidden>
+        <div class="pred-row" id="preds"></div>
+        <div class="cols-2">
+          <div class="panel">
+            <div class="label">Hormonal-state probabilities</div>
+            <div class="bars" id="phase-bars"></div>
+          </div>
+          <div class="panel">
+            <div class="label">Symptom intensity across recent weeks</div>
+            <div class="timeline-mini" id="spark"></div>
+            <p class="muted" style="font-size:0.82rem;margin-top:8px">Taller bars = more reported symptom load that week (demo).</p>
+          </div>
+        </div>
+        <div id="brief"></div>
+      </div>
+      <p class="disclaimer">Model chips are estimates / demo signals for conversation — not medical advice or diagnosis.</p>
+    </main>
+  </div>
+  <script src="/static/shared.js"></script>
+  <script src="/static/analyse-full.js"></script>
+</body>
+</html>

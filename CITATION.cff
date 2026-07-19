@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use Aestra / CycleBench, please cite it as below."
+title: "Aestra / CycleBench: open schema, deterministic engine, leakage audit, foundation, and specialist models for women's hormonal-health infrastructure"
+version: 0.1.0
+date-released: 2026-07-18
+license: MIT
+type: software
+authors:
+  - name: "Aestra / CycleBench contributors"
+keywords:
+  - women's health
+  - menstrual cycle
+  - hormonal health
+  - benchmark
+  - data leakage
+  - open science
+  - medical foundation
+  - PCOS
+  - menopause
+references:
+  - type: data
+    title: "mcPHASES: Menstrual Cycle Physiological, Hormonal, and Self-reported Events and Symptoms"
+    notes: "PhysioNet, restricted access. Used for aggregate validation / hormonal-state training only; not redistributed."
+    url: "https://physionet.org/content/mcphases/1.0.0/"
+  - type: data
+    title: "National Health and Nutrition Examination Survey (NHANES) 2017-March 2020"
+    notes: "CDC/NCHS, US public domain. Harmonized female-hormone export redistributed under CC-BY-4.0."
+    url: "https://wwwn.cdc.gov/nchs/nhanes/"
+  - type: data
+    title: "PCOS Dataset (Kaggle)"
+    notes: "Clinic cohort used for PCOS-risk model training. Raw CSV not redistributed; see results/model_pcos_risk.json."
+    url: "https://www.kaggle.com/datasets/shreyasvedpathak/pcos-dataset"
