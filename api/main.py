@@ -1,7 +1,10 @@
 """Aestra API (FastAPI).
 
-Ephemeral, in-memory storage only — no real health data is persisted. Serves the
-static frontend at '/' and the deterministic CycleBench engine over HTTP.
+Case compile results use an in-memory store (cleared on restart). Optional
+*consented* writebacks may append de-identified sessions to
+``data/contributions/sessions.jsonl`` and (if configured) upload anonymized
+phase logs to a Hugging Face dataset — both default off. Serves the static
+frontend at '/' and the deterministic CycleBench engine over HTTP.
 """
 
 from __future__ import annotations
@@ -222,6 +225,48 @@ def model_metrics() -> dict:
     return out
 
 
+@app.post("/models/train-local")
+def model_train_local() -> dict:
+    """Fine-tune the local personalized phase model from logged days."""
+    from cyclebench.model.pfl import train_local_pfl
+    res = train_local_pfl()
+    if not res.get("ok"):
+        raise HTTPException(400, res.get("error"))
+    return res
+
+
+@app.post("/models/federated-sync")
+def model_federated_sync() -> dict:
+    """One FedPer encoder sync (HF peers when configured; else local export/mcPHASES)."""
+    from cyclebench.model.pfl import federated_sync_pfl
+    res = federated_sync_pfl()
+    if not res.get("ok"):
+        raise HTTPException(400, res.get("error"))
+    return res
+
+
+class ConsentRequest(BaseModel):
+    consent: bool
+
+
+@app.post("/models/consent")
+def model_consent(req: ConsentRequest) -> dict:
+    """Opt in/out of uploading anonymized local phase logs to the HF research dataset."""
+    from cyclebench.model.pfl import set_user_consent
+    set_user_consent(req.consent)
+    return {"ok": True, "consent": req.consent}
+
+
+@app.post("/models/huggingface-sync")
+def model_huggingface_sync() -> dict:
+    """Manual push of local logs to Hugging Face (requires prior consent + HF_* env)."""
+    from cyclebench.model.pfl import sync_local_to_huggingface
+    res = sync_local_to_huggingface()
+    if not res.get("ok"):
+        raise HTTPException(403, res.get("error"))
+    return res
+
+
 class ExtractRequest(BaseModel):
     text: str
     use_llm: bool = True
@@ -368,6 +413,11 @@ def analyse_feeling_off(req: FeelingOffRequest) -> dict:
     payload["menopause_model"] = meno
     pcos = next((m for m in foundation.model_signals if m.get("task") == "pcos_risk"), None)
     payload["pcos_model"] = pcos
+    phase = next(
+        (m for m in foundation.model_signals if m.get("task") == "hormonal_state_phase"),
+        None,
+    )
+    payload["phase_model"] = phase
 
     existing = list(payload["brief"].get("unresolved_questions") or [])
     for q in foundation.doctor_questions:
@@ -376,6 +426,8 @@ def analyse_feeling_off(req: FeelingOffRequest) -> dict:
     for m in foundation.missing_prompts:
         if m not in existing:
             existing.append(m)
+    if phase and phase.get("ask_doctor") and phase["ask_doctor"] not in existing:
+        existing.insert(0, phase["ask_doctor"])
     # Unique, stable order — never show the same ask-doctor line thrice.
     seen: set[str] = set()
     unique: list[str] = []
@@ -387,15 +439,34 @@ def analyse_feeling_off(req: FeelingOffRequest) -> dict:
         unique.append(q)
     payload["brief"]["unresolved_questions"] = unique[:6]
 
-    # (4) optional LLM phrasing of the opening
+    # (4) optional LLM phrasing of the opening + Model-pFL → doctor follow-up
+    llm_used["followup"] = False
     if req.use_llm:
-        from cyclebench.llm import rephrase_opening
+        from cyclebench.llm import compose_doctor_followup, rephrase_opening
         new_open, used = rephrase_opening(result.brief.opening_statement)
         if used:
             assert_safe(new_open, where="llm_opening")
             payload["brief"]["opening_statement"] = new_open
             payload["llm_opening"] = new_open
         llm_used["rephrase"] = used
+
+        followup, f_used = compose_doctor_followup(
+            free_text=req.free_text,
+            intake=intake,
+            phase_pred=phase,
+            doctor_questions=unique,
+        )
+        if followup:
+            assert_safe(followup, where="llm_followup")
+            payload["doctor_followup"] = followup
+            llm_used["followup"] = f_used
+            # Prefer follow-up as the patient-facing opening when available
+            if not used:
+                payload["brief"]["opening_statement"] = followup
+            else:
+                payload["brief"]["opening_statement"] = (
+                    f"{payload['brief']['opening_statement']}\n\n{followup}"
+                )
 
     # (5) grow the corpus (consented)
     payload["contributed_session_id"] = _writeback_session(case, intake, req.consent)

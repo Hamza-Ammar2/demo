@@ -4,11 +4,14 @@ Trained checkpoints for CycleBench Layer 02 / model factory.
 
 | File | Task | Read metrics |
 |------|------|----------------|
-| `hormonal_state_v0.1.joblib` | Cycle phase (multi-class) | `results/model_hormonal_state.json` |
+| `hormonal_state_v0.1.joblib` | Cycle phase (sklearn fallback) | `results/model_hormonal_state.json` |
 | `menopause_stage_v0.1.joblib` | Menopause stage category | `results/model_menopause_stage.json` |
 | `pcos_risk_v0.1.joblib` | PCOS risk | `results/model_pcos_risk.json` |
+| `global_pfl_model.pt` | Personalized FedPer GRU phase | see `docs/PFL.md` / `docs/JUDGE_CARD.md` |
+| `global_scaler.pt` | Feature mean/std for pFL | paired with `global_pfl_model.pt` |
 
-Each checkpoint has a sibling `*.meta.json`.
+Sklearn checkpoints have sibling `*.meta.json`. Local personalization weights
+(`local_patient_model.pt`) are gitignored.
 
 ## Honesty rules before you cite numbers
 

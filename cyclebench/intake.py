@@ -221,3 +221,64 @@ def menopause_relevant(intake: dict) -> bool:
     if isinstance(lp, (int, float)) and lp >= 90:
         return True
     return False
+
+
+# --- pFL / hormonal-phase feature mapping (intake → mcPHASES-style 21 channels) ---
+
+_SEV_ORD = {"mild": 2.0, "moderate": 3.0, "severe": 5.0}
+_SYM_TO_ORD = {
+    "headache": "headaches_ord",
+    "migraine": "headaches_ord",
+    "cramps": "cramps_ord",
+    "sore_breasts": "sorebreasts_ord",
+    "fatigue": "fatigue_ord",
+    "mood": "moodswing_ord",
+    "bloating": "bloating_ord",
+    "nausea": "indigestion_ord",
+    "pelvic_pain": "cramps_ord",
+}
+_PFL_DEFAULTS = {
+    "headaches_ord": 0.0, "cramps_ord": 0.0, "sorebreasts_ord": 0.0, "fatigue_ord": 0.0,
+    "sleepissue_ord": 0.0, "moodswing_ord": 0.0, "stress_ord": 0.0, "foodcravings_ord": 0.0,
+    "indigestion_ord": 0.0, "bloating_ord": 0.0, "appetite_ord": 0.0,
+    "sleep_minutes": 420.0, "sleep_awake": 20.0, "sleep_efficiency": 0.9,
+    "resting_hr": 65.0, "steps_sum": 6000.0, "stress_score_mean": 35.0,
+    "wrist_temp_delta": 0.0, "glucose_mean": 90.0, "hrv_rmssd": 45.0, "is_weekend": 0.0,
+}
+
+
+def intake_to_pfl_features(intake: dict) -> dict[str, float]:
+    """Map self-report intake onto the personalized phase GRU feature space.
+
+    Wearable channels use neutral defaults when unknown (chip/API can overwrite).
+    Symptom ordinals use coarse severity proxies — association estimate only.
+    """
+    feats = dict(_PFL_DEFAULTS)
+    for s in intake.get("symptoms") or []:
+        col = _SYM_TO_ORD.get(s.get("type") or "")
+        if not col:
+            continue
+        sev = _SEV_ORD.get(s.get("severity") or "moderate", 3.0)
+        feats[col] = max(feats[col], sev)
+
+    sleep = intake.get("sleep_quality")
+    if sleep == "rough":
+        feats["sleepissue_ord"] = max(feats["sleepissue_ord"], 3.0)
+        feats["sleep_minutes"] = 360.0
+        feats["sleep_efficiency"] = 0.8
+    elif sleep == "bad":
+        feats["sleepissue_ord"] = max(feats["sleepissue_ord"], 5.0)
+        feats["sleep_minutes"] = 300.0
+        feats["sleep_efficiency"] = 0.7
+
+    other = intake.get("other_changes") or []
+    if "stress" in other:
+        feats["stress_ord"] = max(feats["stress_ord"], 4.0)
+        feats["stress_score_mean"] = 55.0
+
+    return feats
+
+
+def phase_relevant(intake: dict) -> bool:
+    """Run the phase pFL model when the person reported cycle-relevant symptoms."""
+    return bool(intake.get("symptoms"))

@@ -7,6 +7,16 @@ __pycache__/
 .pytest_cache/
 node_modules/
 web/.next/
+.mplconfig/
+
+# Local pFL personalization artifacts (never commit user logs / local weights)
+results/local_patient_data.csv
+results/client_id.txt
+results/user_consent.txt
+models/local_patient_model.pt
+models/global_pfl_model.meta.npz
+# Derived mcPHASES client CSVs (PhysioNet DUA — generate locally; do not redistribute)
+results/hf_export/data/
 
 # --- DATA LICENSING GUARDRAIL ---
 # mcPHASES is RESTRICTED (PhysioNet DUA): never commit raw or per-participant data.

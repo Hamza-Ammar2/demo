@@ -37,6 +37,15 @@ Optional (need local data / credentials — see [docs/REPRODUCIBILITY.md](docs/R
 | `make train-tasks` | Kaggle PCOS under `data/kaggle/` |
 | `make mcphases` | Restricted PhysioNet CSVs (never redistributed) |
 | `make foundation` | Rebuilds `data/foundation/foundation_v0.1.json` from seed + local evidence |
+| `make install-pfl` / `make pfl-smoke` | PyTorch + `models/global_pfl_model.pt` (personalized phase) |
+
+**fed-merge-finished:** Aestra UI from `finished` + Model-pFL → LLM doctor follow-ups.
+See [docs/FED_MERGE.md](docs/FED_MERGE.md) and [docs/PFL.md](docs/PFL.md).
+
+**For judges / videos:** [docs/JUDGE_CARD.md](docs/JUDGE_CARD.md) (honest numbers + track map) ·
+[`logic.md`](logic.md) (ChatGPT / narration brief).
+
+**Host the demo:** [docs/DEPLOY.md](docs/DEPLOY.md) (Render / Railway / Docker).
 
 ---
 

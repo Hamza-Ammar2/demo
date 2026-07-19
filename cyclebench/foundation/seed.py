@@ -426,6 +426,20 @@ def build_seed_associations() -> list[Association]:
         strength=StrengthPrior.medium, status=AssociationStatus.model_linked,
         caveats="May be trained on synthetic SWAN-like data until real SWAN is loaded.",
     ))
+    A.append(_a(
+        "assoc.model_phase", "model.hormonal_state", "phase.luteal",
+        "predicted_by_model",
+        "CycleBench personalized phase model (FedPer GRU on mcPHASES).",
+        title="Cycle-phase model signal",
+        talking_point=(
+            "A research sequence model can estimate menstrual phase from daily symptoms "
+            "and wearable-style channels — association only, not a clinical diagnosis."
+        ),
+        ask_doctor="How should we interpret this cycle-phase estimate alongside my history?",
+        match_tags=["model:phase", "has_symptoms"],
+        strength=StrengthPrior.medium, status=AssociationStatus.model_linked,
+        caveats="Short histories may pad a single day ×5; labels are research estimates.",
+    ))
 
     # ===== PCOS cluster =====
     A.append(_a(

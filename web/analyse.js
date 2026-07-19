@@ -248,9 +248,17 @@ async function updateRead(force = false) {
   readInFlight = true;
   softRead.hidden = false;
   try {
+    const consentEl = document.getElementById("research-consent");
+    const researchConsent = !!(consentEl && consentEl.checked);
+    try {
+      await api("/models/consent", {
+        method: "POST",
+        body: JSON.stringify({ consent: researchConsent }),
+      });
+    } catch (_) { /* consent endpoint optional offline */ }
     const d = await api("/analyse/feeling-off", {
       method: "POST",
-      body: JSON.stringify({ intake, free_text: null, use_llm: true, consent: false }),
+      body: JSON.stringify({ intake, free_text: null, use_llm: true, consent: researchConsent }),
     });
     renderRead(d);
   } catch (e) {
@@ -324,13 +332,18 @@ function renderRead(d) {
   const signals = (f.model_signals || []).concat(
     d.menopause_model && !f.model_signals ? [d.menopause_model] : [],
     d.pcos_model && !(f.model_signals || []).some((x) => x.task === "pcos_risk") ? [d.pcos_model] : [],
+    d.phase_model && !(f.model_signals || []).some((x) => x.task === "hormonal_state_phase") ? [d.phase_model] : [],
   );
   if (signals.length) {
     models = `<div class="label" style="margin-top:16px">Model signals</div>` +
       signals.map((m) => {
         const title = m.task === "pcos_risk" ? "PCOS-risk model"
-          : m.task === "menopause_stage" ? "Menopause-stage model" : (m.task || "Model");
-        const detail = m.predicted_stage
+          : m.task === "menopause_stage" ? "Menopause-stage model"
+          : m.task === "hormonal_state_phase" ? "Cycle-phase model (personalized)"
+          : (m.task || "Model");
+        const detail = m.predicted_state
+          ? `${String(m.predicted_state).replace(/_/g, " ")} (${Math.round((m.confidence || 0) * 100)}%)`
+          : m.predicted_stage
           ? `${m.predicted_stage.replace(/_/g, " ")} (${Math.round((m.confidence || 0) * 100)}%)`
           : (m.probability != null ? `P≈${m.probability}` : "");
         return `
@@ -346,8 +359,8 @@ function renderRead(d) {
     <div style="font-size:1.02rem;margin-bottom:12px">${esc(b.opening_statement)}</div>
     <div class="label" style="margin-top:14px">Your patterns</div>
     ${list(b.strongest_findings)}
-    ${foundationHtml}
     ${models}
+    ${foundationHtml}
     <div class="label" style="margin-top:16px">Bring / confirm these</div>
     ${list(b.missing)}
     <div class="label" style="margin-top:16px">Questions to ask Doctor</div>
@@ -371,6 +384,18 @@ function wireFundCards() {
     });
   });
 }
+
+/* ---- research consent: keep UI in sync with backend when toggled ---- */
+document.getElementById("research-consent")?.addEventListener("change", async (e) => {
+  const on = !!e.target.checked;
+  try {
+    await api("/models/consent", {
+      method: "POST",
+      body: JSON.stringify({ consent: on }),
+    });
+  } catch (_) { /* offline */ }
+  if (ready()) updateRead(true);
+});
 
 /* ---- boot: load the data-driven plan ---- */
 (async function boot() {

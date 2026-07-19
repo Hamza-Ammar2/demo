@@ -2,12 +2,14 @@
 
 Design invariant (see docs/MEDICAL_SAFETY.md, ARCHITECTURE.md):
   * The LLM never computes a finding, probability, or medical conclusion.
-  * It is used for exactly two things:
+  * It is used for:
       1. extract_events_from_text: free text -> STRUCTURED intake hints (validated,
          never trusted as fact; the deterministic engine still does the analysis)
       2. rephrase_opening: rewrite the engine's opening statement in warmer plain
-         language WITHOUT adding claims. Output is run through the safety guard; if it
-         fails or drifts, we fall back to the deterministic text.
+         language WITHOUT adding claims.
+      3. compose_doctor_followup: turn *already-computed* Model-pFL phase output +
+         user intake into warm doctor-facing follow-up language (questions /
+         how-to-explain). The LLM must not invent a new phase or diagnosis.
   * Offline-first: with no OPENAI_API_KEY, everything degrades gracefully to
     deterministic behavior so the demo always works.
 """
@@ -156,3 +158,110 @@ def rephrase_opening(opening: str) -> tuple[str, bool]:
         return text, True
     except Exception:
         return opening, False
+
+
+_FOLLOWUP_SYSTEM = (
+    "You help a patient prepare for a doctor's visit. You receive (a) what the person "
+    "said, (b) a RESEARCH cycle-phase *estimate* already computed by a model, and "
+    "(c) suggested ask-doctor questions. STRICT RULES: "
+    "Do NOT diagnose, treat, or claim the phase estimate is certain or causal. "
+    "Do NOT invent a different phase than the one provided. "
+    "Do NOT invent lab results or new symptoms. "
+    "Write 3-5 short sentences in warm first person the patient could say or bring. "
+    "Include how the phase estimate might contextualize their symptoms as an association "
+    "only, plus 1-2 concrete follow-up questions. Preserve hedging."
+)
+
+
+def _deterministic_followup(
+    free_text: str | None,
+    intake: dict,
+    phase_pred: dict,
+    doctor_questions: list[str],
+) -> str:
+    phase = phase_pred.get("predicted_state") or "unknown"
+    conf = phase_pred.get("confidence")
+    conf_s = f" (about {int(round(float(conf) * 100))}%)" if conf is not None else ""
+    syms = [
+        (s.get("type") or "").replace("_", " ")
+        for s in (intake.get("symptoms") or [])
+        if s.get("type")
+    ]
+    sym_bit = ", ".join(syms[:4]) if syms else "the symptoms I've been noticing"
+    said = (free_text or "").strip()
+    lead = f"I've been dealing with {sym_bit}."
+    if said:
+        lead = f"Here's what I described: {said[:280]}{'…' if len(said) > 280 else ''}"
+    pad = phase_pred.get("sequence_padded")
+    pad_note = (
+        " This phase estimate used a short history bootstrap, so treat it lightly."
+        if pad else ""
+    )
+    q = doctor_questions[0] if doctor_questions else (
+        phase_pred.get("ask_doctor")
+        or "How should we interpret this cycle-phase estimate alongside my history?"
+    )
+    return (
+        f"{lead} A research model estimates I may be in the {phase} window{conf_s} — "
+        f"that's an association with symptom/wearable-style patterns, not a diagnosis."
+        f"{pad_note} I'd like to ask: {q}"
+    )
+
+
+def compose_doctor_followup(
+    *,
+    free_text: str | None,
+    intake: dict,
+    phase_pred: dict | None,
+    doctor_questions: list[str] | None = None,
+) -> tuple[str | None, bool]:
+    """Model-agent: phrase doctor follow-ups from Model-pFL + user input.
+
+    Returns (text, used_llm). Never invents a phase — requires phase_pred from pFL/sklearn.
+    """
+    if not phase_pred or not phase_pred.get("predicted_state"):
+        return None, False
+    questions = list(doctor_questions or [])
+    ask = phase_pred.get("ask_doctor")
+    if ask and ask not in questions:
+        questions = [ask] + questions
+    fallback = _deterministic_followup(free_text, intake, phase_pred, questions)
+
+    client = _client()
+    if client is None:
+        if find_violations(fallback):
+            return None, False
+        return fallback, False
+
+    payload = {
+        "user_free_text": (free_text or "")[:800],
+        "intake_symptoms": intake.get("symptoms") or [],
+        "phase_estimate": phase_pred.get("predicted_state"),
+        "phase_confidence": phase_pred.get("confidence"),
+        "phase_model": phase_pred.get("model"),
+        "sequence_padded": phase_pred.get("sequence_padded"),
+        "suggested_questions": questions[:4],
+        "model_statement": phase_pred.get("statement"),
+    }
+    try:
+        resp = client.chat.completions.create(
+            model=_MODEL,
+            messages=[
+                {"role": "system", "content": _FOLLOWUP_SYSTEM},
+                {"role": "user", "content": json.dumps(payload)},
+            ],
+            temperature=0.3,
+        )
+        text = (resp.choices[0].message.content or "").strip()
+        if not text or find_violations(text):
+            return fallback, False
+        # Guard: LLM must not rename the phase
+        phase = str(phase_pred.get("predicted_state") or "")
+        if phase and phase.lower() not in text.lower():
+            # soft: append explicit phase if omitted
+            text = f"{text} (Phase estimate provided by the research model: {phase}.)"
+            if find_violations(text):
+                return fallback, False
+        return text, True
+    except Exception:
+        return fallback, False

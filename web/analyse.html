@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
   <title>I've been feeling off — Aestra</title>
-  <link rel="stylesheet" href="/static/styles.css?v=flo24" />
+  <link rel="stylesheet" href="/static/styles.css?v=flo30" />
 </head>
 <body>
   <div class="wrap">
@@ -45,6 +46,10 @@
           <div id="soft-read" hidden>
             <div class="label" style="margin-top:18px">A soft read — grounded in the data</div>
             <div id="soft-body"></div>
+            <label class="muted consent-row consent-row-bottom" for="research-consent">
+              <input type="checkbox" id="research-consent" />
+              <span>Share anonymized daily phase logs with the research dataset (optional; off by default).</span>
+            </label>
           </div>
         </div>
       </div>
@@ -52,6 +57,6 @@
     </main>
   </div>
   <script src="/static/shared.js"></script>
-  <script src="/static/analyse.js?v=18"></script>
+  <script src="/static/analyse.js?v=23"></script>
 </body>
 </html>

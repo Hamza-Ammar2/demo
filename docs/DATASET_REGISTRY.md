@@ -43,3 +43,18 @@
   - ovarian cyst imaging diagnosis
   - exact calendar date of final menstrual period as a clinical device output
 - Notes: Place harmonized CSV at data/swan/swan_harmonized.csv; see docs/SWAN_ACCESS.md.
+
+## PCOS dataset (Kaggle: shreyasvedpathak/pcos-dataset)
+- License: Kaggle 'copyright-authors' — not redistributed here (adapter + model only) (redistributable: False)
+- Longitudinal: False | Subjects: 541 patients (single-region clinics, Kerala, India)
+- Modalities: clinical vitals, serum hormones (FSH, LH, AMH, PRL, TSH, β-HCG), ultrasound follicle counts, cycle regularity, symptom flags
+- **Can support:**
+  - PCOS-risk association from clinical + hormonal + symptom features
+  - explainable screening signal for research/education
+  - leakage-audited, stratified-split prediction baseline
+- **Must NOT be used for:**
+  - clinical diagnosis of PCOS
+  - generalization beyond a similar clinical population
+  - menopause or cycle-phase prediction
+- Notes: Cross-sectional, class-imbalanced (33% positive). Model trained via cyclebench.model.tasks (pcos_risk).
+

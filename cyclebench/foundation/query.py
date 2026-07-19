@@ -103,6 +103,10 @@ def intake_tags(intake: dict) -> set[str]:
     if "cluster:pcosish" in tags and "cycle:irregular" in tags:
         tags.add("model:pcos")
 
+    # Phase pFL: opt-in whenever the person reported symptoms (modular specialist)
+    if "has_symptoms" in tags:
+        tags.add("model:phase")
+
     bw = intake.get("bloodwork")
     if bw in ("fsh_high", "fsh_normal"):
         tags.add("labs:fsh")
@@ -193,6 +197,39 @@ def _runtime_model_signals(intake: dict, tags: set[str]) -> list[dict[str, Any]]
                 })
         except Exception:
             pass
+
+    # Model-pFL: personalized sequential phase estimate (mcPHASES GRU / FedPer)
+    if "model:phase" in tags:
+        try:
+            from cyclebench.intake import intake_to_pfl_features, phase_relevant
+            from cyclebench.model.predict import hormonal_state_to_finding, predict_hormonal_state
+            if phase_relevant(intake):
+                feats = intake_to_pfl_features(intake)
+                pred = predict_hormonal_state(feats, log_local=True)
+                finding = hormonal_state_to_finding(pred)
+                assert_safe(finding.statement, where="runtime_phase")
+                phase = pred.get("predicted_state")
+                ask = {
+                    "Menstrual": "My symptoms seem strongest around bleeding — what should we track this cycle?",
+                    "Follicular": "Could the first half of my cycle be shaping these symptoms?",
+                    "Fertility": "Do these symptoms line up with my fertile / periovulatory window?",
+                    "Luteal": "Do these symptoms fit a luteal / premenstrual pattern we should explore?",
+                }.get(str(phase), "How should we interpret this cycle-phase estimate alongside my history?")
+                signals.append({
+                    "task": "hormonal_state_phase",
+                    "association_id": "assoc.model_phase",
+                    "predicted_state": phase,
+                    "confidence": pred.get("confidence"),
+                    "probabilities": pred.get("probabilities"),
+                    "statement": finding.statement,
+                    "explanation": pred.get("explanation", []),
+                    "ask_doctor": ask,
+                    "model": pred.get("model"),
+                    "sequence_padded": pred.get("sequence_padded"),
+                    "data_source": "mcphases_pfl",
+                })
+        except Exception:
+            pass
     return signals
 
 
@@ -262,7 +299,9 @@ def assemble_read(
             }:
                 continue
         # Model edges
-        if assoc.relation.value == "predicted_by_model" and not (tags & {"model:pcos", "model:menopause"}):
+        if assoc.relation.value == "predicted_by_model" and not (
+            tags & {"model:pcos", "model:menopause", "model:phase"}
+        ):
             continue
         # population enrichment: require the symptom
         if assoc.relation.value == "population_enriched_in" and not symptom_needs & tags:

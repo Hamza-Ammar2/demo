@@ -1235,6 +1235,25 @@
       "title": "Menopause-stage model signal"
     },
     {
+      "association_id": "assoc.model_phase",
+      "subject_id": "model.hormonal_state",
+      "object_id": "phase.luteal",
+      "relation": "predicted_by_model",
+      "directionality": "bidirectional",
+      "strength_prior": "medium",
+      "population_scope": "general",
+      "caveats": "Short histories may pad a single day \u00d75; labels are research estimates.",
+      "source": "CycleBench personalized phase model (FedPer GRU on mcPHASES).",
+      "status": "model_linked",
+      "match_tags": [
+        "model:phase",
+        "has_symptoms"
+      ],
+      "talking_point": "A research sequence model can estimate menstrual phase from daily symptoms and wearable-style channels \u2014 association only, not a clinical diagnosis.",
+      "ask_doctor": "How should we interpret this cycle-phase estimate alongside my history?",
+      "title": "Cycle-phase model signal"
+    },
+    {
       "association_id": "assoc.irregular_pcos",
       "subject_id": "cycle.irregular",
       "object_id": "cluster.pcos",

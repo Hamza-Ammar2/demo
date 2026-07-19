@@ -161,8 +161,35 @@ textarea, input, select {
   width: 100%; background: rgba(255, 243, 245, 0.9); border: 1px solid var(--line);
   color: var(--ink); padding: 12px 14px; font: inherit; border-radius: var(--radius);
 }
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  accent-color: var(--apricot);
+  flex: 0 0 auto;
+}
 textarea { min-height: 160px; resize: vertical; }
 label { display: block; font-size: 0.85rem; color: var(--muted); margin: 12px 0 6px; }
+label.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  cursor: pointer;
+  max-width: 28rem;
+}
+label.consent-row span { flex: 1; }
+label.consent-row-bottom {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
 
 /* chat */
 .chat {

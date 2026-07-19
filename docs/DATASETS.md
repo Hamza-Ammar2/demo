@@ -1,6 +1,21 @@
 # Datasets
 
-See `docs/DATASET_REGISTRY.md` for the machine-generated capability matrix.
+See `docs/DATASET_REGISTRY.md` for the machine-generated capability matrix
+(regenerate with `python -m cyclebench.adapters.registry`).
+
+## Open vs restricted vs synthetic (judge view)
+
+| Asset | In git? | Redistribute? | Role |
+|-------|---------|---------------|------|
+| NHANES harmonized | Yes | Yes (CC-BY-4.0) | Population hormone reference ranges |
+| Foundation graph | Yes | Yes | Seeded associations + evidence links |
+| CycleBench-Bench cases | Yes | Yes (synthetic) | Engine discrimination / leakage / safety |
+| mcPHASES raw | No (gitignore) | **No** (PhysioNet) | Phase models + aggregates only |
+| SWAN raw | No | **No** (ICPSR) | Menopause when loaded locally |
+| PCOS Kaggle CSV | No | **No** | PCOS-risk task retrain |
+| Menopause shipped metrics | Yes (JSON) | Numbers only | Often `synthetic_swan_like` — check `data_source` |
+
+One-pager: [`JUDGE_CARD.md`](./JUDGE_CARD.md).
 
 ## mcPHASES (PhysioNet) — RESTRICTED, not redistributed
 
