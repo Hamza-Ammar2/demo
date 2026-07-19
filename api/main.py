@@ -188,6 +188,24 @@ def model_metrics() -> dict:
     return out
 
 
+@app.post("/models/train-local")
+def model_train_local() -> dict:
+    from cyclebench.model.pfl import train_local_pfl
+    res = train_local_pfl()
+    if not res.get("ok"):
+        raise HTTPException(400, res.get("error"))
+    return res
+
+
+@app.post("/models/federated-sync")
+def model_federated_sync() -> dict:
+    from cyclebench.model.pfl import federated_sync_pfl
+    res = federated_sync_pfl()
+    if not res.get("ok"):
+        raise HTTPException(400, res.get("error"))
+    return res
+
+
 # Static frontend (served last so API routes take precedence).
 if WEB.exists():
     @app.get("/")

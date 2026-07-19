@@ -35,6 +35,22 @@ def predict_hormonal_state(
     pred_i = int(np.argmax(proba))
     label = str(bundle.classes[pred_i])
     expl = explain_instance(bundle.pipeline, bundle.feature_names, x, top_k=5)
+    
+    # Collect patient symptom data into local logs
+    try:
+        from cyclebench.model.pfl import save_local_log
+        save_local_log(features, label)
+    except Exception:
+        pass
+        
+    # Check if local sequential pFL model is trained and has history
+    try:
+        from cyclebench.model.pfl import run_pfl_inference
+        pfl_pred = run_pfl_inference(features)
+        return pfl_pred
+    except Exception:
+        pass
+
     return {
         "task": bundle.task,
         "predicted_state": label,
