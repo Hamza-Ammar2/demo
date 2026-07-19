@@ -7,6 +7,7 @@ Trained checkpoints for CycleBench Layer 02 / model factory.
 | `hormonal_state_v0.1.joblib` | Cycle phase (multi-class) | `results/model_hormonal_state.json` |
 | `menopause_stage_v0.1.joblib` | Menopause stage category | `results/model_menopause_stage.json` |
 | `pcos_risk_v0.1.joblib` | PCOS risk | `results/model_pcos_risk.json` |
+| `sequence_research_v0.1.pt` | Personalized sequence (research) — FedPer GRU prior | `results/pfl_multi_symptom.json` |
 
 Each checkpoint has a sibling `*.meta.json`.
 

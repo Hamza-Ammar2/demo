@@ -1,7 +1,7 @@
 PY := .venv/bin/python
 PIP := .venv/bin/pip
 
-.PHONY: install test demo benchmark audit mcphases nhanes reference foundation foundation-demo train-models train-tasks model-demo api clean help
+.PHONY: install install-pfl pfl-smoke pfl-full test demo benchmark audit mcphases nhanes reference foundation foundation-demo train-models train-tasks model-demo api clean help
 
 help:
 	@echo "Aestra / CycleBench"
@@ -23,6 +23,12 @@ help:
 	@echo "    make reference     - aggregate corpus reference stats"
 	@echo "    make nhanes        - rebuild open NHANES harmonized export"
 	@echo "    make mcphases      - restricted PhysioNet aggregate validation"
+	@echo ""
+	@echo ""
+	@echo "  Optional pFL research (needs torch + local mcPHASES):"
+	@echo "    make install-pfl   - pip install torch matplotlib"
+	@echo "    make pfl-smoke     - multi_symptom, PFL_ROUNDS=3 → results/"
+	@echo "    make pfl-full      - multi_symptom, 30 rounds (slow)"
 	@echo ""
 	@echo "  make clean           - remove caches"
 
@@ -70,6 +76,15 @@ foundation-demo:
 
 api:
 	.venv/bin/uvicorn api.main:app --reload --port 8000
+
+install-pfl:
+	$(PIP) install 'torch>=2.2' matplotlib
+
+pfl-smoke:
+	PFL_ROUNDS=3 $(PY) -m federated_learning.run multi_symptom
+
+pfl-full:
+	PFL_ROUNDS=30 $(PY) -m federated_learning.run multi_symptom
 
 clean:
 	find . -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null || true

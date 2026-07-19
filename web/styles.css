@@ -313,6 +313,74 @@ label { display: block; font-size: 0.85rem; color: var(--muted); margin: 12px 0 
 }
 .model-chip .mc-conf { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
 
+/* Opt-in Track 02 research — quiet door under the soft read */
+.research-depth {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(40, 20, 30, 0.08);
+}
+.research-depth-btn {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  text-align: left;
+}
+.research-depth-btn:hover:not(:disabled) {
+  color: var(--ink);
+}
+.research-depth-btn:disabled {
+  cursor: default;
+  text-decoration: none;
+  opacity: 0.75;
+}
+.research-depth-panel {
+  margin-top: 14px;
+  padding: 14px 0 4px;
+}
+.research-depth-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+.research-depth-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+.research-depth-lede {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0;
+  color: var(--ink);
+}
+.research-depth-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.research-depth-table th,
+.research-depth-table td {
+  text-align: left;
+  padding: 6px 8px 6px 0;
+  border-bottom: 1px solid rgba(40, 20, 30, 0.08);
+}
+.research-depth-table th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
 .fund-grid {
   display: grid;
   grid-template-columns: 1fr;

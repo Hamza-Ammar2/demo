@@ -1,0 +1,28 @@
+{
+  "experiment": "multi_symptom_temporal",
+  "task": "binary_cramps_from_hormones_and_symptoms",
+  "window": 5,
+  "rounds": 2,
+  "n_clients": 12,
+  "metrics": {
+    "Local Only": {
+      "accuracy": 0.8442171687237479,
+      "sensitivity": 0.7083333333333334,
+      "specificity": 0.8508682053961123,
+      "f1": 0.4957497048406139
+    },
+    "Centralized/FedAvg": {
+      "accuracy": 0.8631509018844546,
+      "sensitivity": 0.0,
+      "specificity": 0.9975490196078431,
+      "f1": NaN
+    },
+    "Personalized FL": {
+      "accuracy": 0.7432935562869772,
+      "sensitivity": 0.5,
+      "specificity": 0.7887388276284434,
+      "f1": 0.389543089963258
+    }
+  },
+  "honesty_note": "Research simulation of FedPer on mcPHASES patient clients. Not a clinical diagnostic model. Walkthrough full-run used 30 rounds; smoke runs may use fewer via PFL_ROUNDS."
+}

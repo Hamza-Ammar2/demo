@@ -321,15 +321,19 @@ function renderRead(d) {
   }
 
   let models = "";
-  const signals = (f.model_signals || []).concat(
-    d.menopause_model && !f.model_signals ? [d.menopause_model] : [],
-    d.pcos_model && !(f.model_signals || []).some((x) => x.task === "pcos_risk") ? [d.pcos_model] : [],
-  );
+  // Product models only — sequence research lives behind Research depth.
+  const signals = (f.model_signals || [])
+    .filter((m) => m && m.task !== "sequence_research")
+    .concat(
+      d.menopause_model && !(f.model_signals || []).some((x) => x.task === "menopause_stage") ? [d.menopause_model] : [],
+      d.pcos_model && !(f.model_signals || []).some((x) => x.task === "pcos_risk") ? [d.pcos_model] : [],
+    );
   if (signals.length) {
     models = `<div class="label" style="margin-top:16px">Model signals</div>` +
       signals.map((m) => {
         const title = m.task === "pcos_risk" ? "PCOS-risk model"
-          : m.task === "menopause_stage" ? "Menopause-stage model" : (m.task || "Model");
+          : m.task === "menopause_stage" ? "Menopause-stage model"
+          : (m.task || "Model");
         const detail = m.predicted_stage
           ? `${m.predicted_stage.replace(/_/g, " ")} (${Math.round((m.confidence || 0) * 100)}%)`
           : (m.probability != null ? `P≈${m.probability}` : "");
@@ -353,6 +357,7 @@ function renderRead(d) {
     <div class="label" style="margin-top:16px">Questions to ask Doctor</div>
     ${list(b.unresolved_questions)}`;
   wireFundCards();
+  wireResearchDepth(d.research_depth_available !== false);
 }
 
 function wireFundCards() {
@@ -370,6 +375,69 @@ function wireFundCards() {
       }
     });
   });
+}
+
+/* ---- Research depth (opt-in Track 02 panel; not part of soft read) ---- */
+let researchDepthLoaded = false;
+function wireResearchDepth(available) {
+  const wrap = document.getElementById("research-depth");
+  const btn = document.getElementById("research-depth-btn");
+  const panel = document.getElementById("research-depth-panel");
+  if (!wrap || !btn || !panel) return;
+  wrap.hidden = false;
+  if (available === false) {
+    btn.disabled = true;
+    btn.textContent = "Research depth · run make pfl-smoke to enable";
+    return;
+  }
+  btn.disabled = false;
+  btn.textContent = "Research depth · privacy-preserving sequence model";
+  if (btn.dataset.wired === "1") return;
+  btn.dataset.wired = "1";
+  btn.addEventListener("click", async () => {
+    const open = panel.hidden;
+    panel.hidden = !open;
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    wrap.classList.toggle("is-open", open);
+    if (!open || researchDepthLoaded) return;
+    panel.innerHTML = `<p class="muted" style="margin:0">Loading research…</p>`;
+    try {
+      const d = await api("/research/depth");
+      researchDepthLoaded = true;
+      panel.innerHTML = renderResearchDepth(d);
+    } catch (e) {
+      panel.innerHTML = `<p class="muted" style="margin:0">${esc(e.message)}</p>`;
+    }
+  });
+}
+
+function renderResearchDepth(d) {
+  const fmt = (v) => (v == null || Number.isNaN(v) ? "—" : Number(v).toFixed(2));
+  const rows = (d.comparison || []).map((r) => `
+    <tr>
+      <td>${esc(r.label)}</td>
+      <td>${fmt(r.accuracy)}</td>
+      <td>${fmt(r.f1)}</td>
+      <td>${fmt(r.sensitivity)}</td>
+      <td>${fmt(r.specificity)}</td>
+    </tr>`).join("");
+  return `
+    <p class="research-depth-eyebrow">${esc(d.eyebrow || "Research depth")}</p>
+    <h3 class="research-depth-title">${esc(d.title || "Personalized sequence (research)")}</h3>
+    <p class="research-depth-lede">${esc(d.lede || "")}</p>
+    <p class="muted" style="font-size:0.8rem;margin:8px 0 12px">${esc(d.needs_personal || "")}</p>
+    <div class="muted" style="font-size:0.78rem;margin-bottom:10px">
+      ${esc(String(d.n_clients ?? "?"))} clients · ${esc(String(d.rounds ?? "?"))} rounds
+      ${d.checkpoint_ready ? " · checkpoint ready" : ""}
+    </div>
+    <table class="research-depth-table">
+      <thead>
+        <tr><th>Approach</th><th>Acc</th><th>F1</th><th>Sens</th><th>Spec</th></tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <p class="muted" style="font-size:0.75rem;margin:12px 0 0">${esc(d.honesty_note || "")}</p>
+  `;
 }
 
 /* ---- boot: load the data-driven plan ---- */

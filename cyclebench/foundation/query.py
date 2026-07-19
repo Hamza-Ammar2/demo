@@ -193,6 +193,9 @@ def _runtime_model_signals(intake: dict, tags: set[str]) -> list[dict[str, Any]]
                 })
         except Exception:
             pass
+
+    # sequence_research is intentionally NOT in the default soft-read signals.
+    # It lives behind the "Research depth" panel (GET /research/depth).
     return signals
 
 

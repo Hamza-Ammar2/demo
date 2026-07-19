@@ -222,6 +222,90 @@ def model_metrics() -> dict:
     return out
 
 
+@app.get("/research/pfl/results")
+def research_pfl_results() -> dict:
+    """Raw FedPer metrics JSONs (written by `make pfl-smoke` / pfl-full)."""
+    import json
+    out = {}
+    for p in sorted(RESULTS.glob("pfl_*.json")):
+        out[p.name] = json.loads(p.read_text())
+    if not out:
+        raise HTTPException(
+            404,
+            "no pFL results yet — run `make install-pfl && make pfl-smoke` "
+            "(requires local mcPHASES under data/mcphases/)",
+        )
+    return out
+
+
+@app.get("/research/depth")
+def research_depth() -> dict:
+    """UI-facing research panel: Personalized sequence (research) / FedPer story.
+
+    Separate from the soft read — product findings stay clean.
+    """
+    import json
+    from cyclebench.model.sequence_research import CHECKPOINT, DISPLAY_NAME, METRICS_PATH
+
+    if not METRICS_PATH.exists():
+        raise HTTPException(
+            404,
+            "Research depth is not available yet. Run `make install-pfl && make pfl-smoke` "
+            "(needs local mcPHASES under data/mcphases/).",
+        )
+    bench = json.loads(METRICS_PATH.read_text())
+    metrics = bench.get("metrics") or {}
+    pfl = metrics.get("Personalized FL") or {}
+    fedavg = metrics.get("Centralized/FedAvg") or {}
+    local = metrics.get("Local Only") or {}
+
+    def _r(v):
+        return round(float(v), 3) if isinstance(v, (int, float)) else None
+
+    return {
+        "title": DISPLAY_NAME,
+        "eyebrow": "Research depth · Track 02",
+        "lede": (
+            "A privacy-preserving sequence model (FedPer-style) trained across patients "
+            "without pooling raw records. This is open science context — not part of your "
+            "doctor soft read, and not a diagnosis."
+        ),
+        "needs_personal": (
+            "A personal estimate needs ≥5 days of hormone + symptom history "
+            "(Mira/wearable-style sequence). Chip intake alone stays at cohort research."
+        ),
+        "checkpoint_ready": CHECKPOINT.exists(),
+        "experiment": bench.get("experiment"),
+        "n_clients": bench.get("n_clients"),
+        "rounds": bench.get("rounds"),
+        "task": bench.get("task"),
+        "honesty_note": bench.get("honesty_note"),
+        "comparison": [
+            {
+                "label": "Local only",
+                "accuracy": _r(local.get("accuracy")),
+                "f1": _r(local.get("f1")),
+                "sensitivity": _r(local.get("sensitivity")),
+                "specificity": _r(local.get("specificity")),
+            },
+            {
+                "label": "FedAvg (centralized-style)",
+                "accuracy": _r(fedavg.get("accuracy")),
+                "f1": _r(fedavg.get("f1")),
+                "sensitivity": _r(fedavg.get("sensitivity")),
+                "specificity": _r(fedavg.get("specificity")),
+            },
+            {
+                "label": "Personalized FL (FedPer)",
+                "accuracy": _r(pfl.get("accuracy")),
+                "f1": _r(pfl.get("f1")),
+                "sensitivity": _r(pfl.get("sensitivity")),
+                "specificity": _r(pfl.get("specificity")),
+            },
+        ],
+    }
+
+
 class ExtractRequest(BaseModel):
     text: str
     use_llm: bool = True
@@ -368,6 +452,8 @@ def analyse_feeling_off(req: FeelingOffRequest) -> dict:
     payload["menopause_model"] = meno
     pcos = next((m for m in foundation.model_signals if m.get("task") == "pcos_risk"), None)
     payload["pcos_model"] = pcos
+    # Research module is opt-in via UI "Research depth" → GET /research/depth
+    payload["research_depth_available"] = (RESULTS / "pfl_multi_symptom.json").exists()
 
     existing = list(payload["brief"].get("unresolved_questions") or [])
     for q in foundation.doctor_questions:

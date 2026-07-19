@@ -22,3 +22,8 @@ openai>=1.40,<2
 
 # Optional: only for scripts/download_kaggle.py
 # kaggle>=1.6,<2
+
+# Optional: Personalized Federated Learning research (federated_learning/)
+# Install with: make install-pfl
+# torch>=2.2
+# matplotlib>=3.8
